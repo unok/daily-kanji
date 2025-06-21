@@ -63,6 +63,7 @@
       "suspicious": {
         "noFallthroughSwitchClause": "off",
         "noExplicitAny": "error",
+        "noArrayIndexKey": "warn",
         "noConsole": {
           "level": "error",
           "options": {

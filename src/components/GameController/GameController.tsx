@@ -1,5 +1,5 @@
-import { KanjiFillBlank } from '../KanjiFillBlank'
+import { KanjiFillBlankNew } from '../KanjiFillBlankNew'
 
 export function GameController() {
-  return <KanjiFillBlank />
+  return <KanjiFillBlankNew />
 }

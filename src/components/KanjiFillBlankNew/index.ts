@@ -1,0 +1,1 @@
+export { KanjiFillBlankNew } from './KanjiFillBlankNew'
