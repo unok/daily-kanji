@@ -1,36 +1,9 @@
 import { useCallback, useEffect, useState } from 'react'
 
+import { type DifficultyLevel, getRandomQuestion } from '../../services/questionService'
 import type { QuestionData } from '../../types/question'
-import { parseQuestion, splitDisplaySentence } from '../../utils/questionParser'
+import { splitDisplaySentence } from '../../utils/questionParser'
 import { MultiKanjiInput } from '../MultiKanjiInput'
-
-// 仮の問題データ（後で外部から読み込むように変更）
-const sampleQuestions: QuestionData[] = [
-  {
-    id: '1',
-    originalSentence: '本日は[晴天|せいてん]なり、[青空|あおぞら]が[美|うつく]しい。',
-    displaySentence: '',
-    inputs: [],
-    difficulty: 'junior',
-    hint: '天気に関する言葉です',
-  },
-  {
-    id: '2',
-    originalSentence: '[環境|かんきょう][保護|ほご]は[重要|じゅうよう]な[課題|かだい]である。',
-    displaySentence: '',
-    inputs: [],
-    difficulty: 'junior',
-    hint: '環境問題に関する言葉です',
-  },
-  {
-    id: '3',
-    originalSentence: '[科学|かがく][技術|ぎじゅつ]の[発展|はってん]により[生活|せいかつ]が[便利|べんり]になった。',
-    displaySentence: '',
-    inputs: [],
-    difficulty: 'junior',
-    hint: '科学と生活に関する言葉です',
-  },
-]
 
 // 類似度計算のためのフォント設定（将来的に使用予定）
 // const _fontList = [
@@ -41,9 +14,13 @@ const sampleQuestions: QuestionData[] = [
 //   'serif',
 // ]
 
-export function KanjiFillBlankNew() {
+interface KanjiFillBlankNewProps {
+  difficulty?: DifficultyLevel
+}
+
+export function KanjiFillBlankNew({ difficulty = 'elementary' }: KanjiFillBlankNewProps) {
   const [currentQuestion, setCurrentQuestion] = useState<QuestionData | null>(null)
-  const [parsedQuestion, setParsedQuestion] = useState<{ displaySentence: string; inputs: QuestionData['inputs'] } | null>(null)
+  const [currentDifficulty, setCurrentDifficulty] = useState<DifficultyLevel>(difficulty)
   const [attemptCount, setAttemptCount] = useState(0)
   const [score, setScore] = useState(0)
   const [totalQuestions, setTotalQuestions] = useState(0)
@@ -52,32 +29,22 @@ export function KanjiFillBlankNew() {
   const [showHint, setShowHint] = useState(false)
   const [isGiveUp, setIsGiveUp] = useState(false)
 
-  // 問題をパースして準備
-  const prepareQuestion = useCallback((question: QuestionData) => {
-    const parsed = parseQuestion(question.originalSentence)
-    setParsedQuestion({
-      displaySentence: parsed.displaySentence,
-      inputs: parsed.inputs,
-    })
-    return {
-      ...question,
-      displaySentence: parsed.displaySentence,
-      inputs: parsed.inputs,
-    }
-  }, [])
+  // 難易度変更時の処理
+  useEffect(() => {
+    setCurrentDifficulty(difficulty)
+  }, [difficulty])
 
   // ランダムな問題を読み込む
   const loadRandomQuestion = useCallback(() => {
-    const question = sampleQuestions[Math.floor(Math.random() * sampleQuestions.length)]
-    const prepared = prepareQuestion(question)
-    setCurrentQuestion(prepared)
+    const question = getRandomQuestion(currentDifficulty)
+    setCurrentQuestion(question)
     setTotalQuestions((prev) => prev + 1)
     setAttemptCount(0)
     setShowResult(false)
     setShowHint(false)
     setResults([])
     setIsGiveUp(false)
-  }, [prepareQuestion])
+  }, [currentDifficulty])
 
   useEffect(() => {
     loadRandomQuestion()
@@ -93,11 +60,11 @@ export function KanjiFillBlankNew() {
   // 答え合わせ
   const checkAnswers = useCallback(
     (canvasImages: string[]) => {
-      if (!parsedQuestion) return
+      if (!currentQuestion) return
 
       setAttemptCount((prev) => prev + 1)
 
-      const newResults = parsedQuestion.inputs.map((input, index) => {
+      const newResults = currentQuestion.inputs.map((input, index) => {
         const similarity = recognizeKanji(canvasImages[index], input.kanji)
         const isCorrect = similarity >= 0.45
 
@@ -122,7 +89,7 @@ export function KanjiFillBlankNew() {
         setShowHint(true)
       }
     },
-    [parsedQuestion, attemptCount, recognizeKanji]
+    [currentQuestion, attemptCount, recognizeKanji]
   )
 
   // リトライ
@@ -134,9 +101,9 @@ export function KanjiFillBlankNew() {
 
   // ギブアップ
   const giveUp = useCallback(() => {
-    if (!parsedQuestion) return
+    if (!currentQuestion) return
 
-    const newResults = parsedQuestion.inputs.map((input) => ({
+    const newResults = currentQuestion.inputs.map((input) => ({
       isCorrect: false,
       input: '',
       answer: input.kanji,
@@ -145,18 +112,18 @@ export function KanjiFillBlankNew() {
     setResults(newResults)
     setShowResult(true)
     setIsGiveUp(true)
-  }, [parsedQuestion])
+  }, [currentQuestion])
 
   // 次の問題へ
   const nextQuestion = useCallback(() => {
     loadRandomQuestion()
   }, [loadRandomQuestion])
 
-  if (!(currentQuestion && parsedQuestion)) {
+  if (!currentQuestion) {
     return <div>Loading...</div>
   }
 
-  const sentenceParts = splitDisplaySentence(parsedQuestion.displaySentence)
+  const sentenceParts = splitDisplaySentence(currentQuestion.displaySentence)
   const allCorrect = results.length > 0 && results.every((r) => r.isCorrect)
 
   return (
@@ -172,7 +139,7 @@ export function KanjiFillBlankNew() {
                 return <span key={`text-${index}`}>{part.content}</span>
               }
               if (part.type === 'input' && part.inputIndex !== undefined) {
-                const input = parsedQuestion.inputs[part.inputIndex]
+                const input = currentQuestion.inputs[part.inputIndex]
                 const result = results[part.inputIndex]
                 return (
                   <span key={`input-${part.inputIndex}`} className="inline-block mx-1 relative">
@@ -192,7 +159,7 @@ export function KanjiFillBlankNew() {
         {/* 入力エリア */}
         <div className="mb-6">
           <div className="text-center mb-4 text-gray-600">下の枠に漢字を書いてください</div>
-          <MultiKanjiInput inputs={parsedQuestion.inputs} onSubmit={checkAnswers} disabled={showResult} />
+          <MultiKanjiInput inputs={currentQuestion.inputs} onSubmit={checkAnswers} disabled={showResult} />
         </div>
 
         {/* 操作ボタン */}
