@@ -1,0 +1,525 @@
+{
+  "grade": 1,
+  "kanji": [
+    {
+      "character": "日",
+      "reading": "ひ、にち",
+      "meaning": "sun, day",
+      "examples": [
+        { "sentence": "あさ、お〔　〕さまが のぼります。", "furigana": "朝、お〔　〕様が 昇ります。", "answer": "日", "hint": "ひ" },
+        { "sentence": "きょうは げつよう〔　〕です。", "furigana": "今日は 月曜〔　〕です。", "answer": "日", "hint": "び" },
+        { "sentence": "まい〔　〕 がっこうに いきます。", "furigana": "毎〔　〕 学校に 行きます。", "answer": "日", "hint": "にち" }
+      ]
+    },
+    {
+      "character": "月",
+      "reading": "つき、げつ",
+      "meaning": "moon, month",
+      "examples": [
+        { "sentence": "よるには 〔　〕が でます。", "furigana": "夜には 〔　〕が 出ます。", "answer": "月", "hint": "つき" },
+        { "sentence": "いち〔　〕は 31にちまで あります。", "furigana": "一〔　〕は 31日まで あります。", "answer": "月", "hint": "がつ" },
+        { "sentence": "〔　〕ようびは えいごの じゅぎょうです。", "furigana": "〔　〕曜日は 英語の 授業です。", "answer": "月", "hint": "げつ" }
+      ]
+    },
+    {
+      "character": "火",
+      "reading": "ひ、か",
+      "meaning": "fire",
+      "examples": [
+        { "sentence": "キャンプで 〔　〕を おこします。", "furigana": "キャンプで 〔　〕を 起こします。", "answer": "火", "hint": "ひ" },
+        { "sentence": "〔　〕ようびは たいいくが あります。", "furigana": "〔　〕曜日は 体育が あります。", "answer": "火", "hint": "か" },
+        { "sentence": "はな〔　〕を みに いきました。", "furigana": "花〔　〕を 見に 行きました。", "answer": "火", "hint": "び" }
+      ]
+    },
+    {
+      "character": "水",
+      "reading": "みず、すい",
+      "meaning": "water",
+      "examples": [
+        { "sentence": "のどが かわいたので 〔　〕を のみます。", "furigana": "喉が 渇いたので 〔　〕を 飲みます。", "answer": "水", "hint": "みず" },
+        { "sentence": "〔　〕ようびは プールの じゅぎょうです。", "furigana": "〔　〕曜日は プールの 授業です。", "answer": "水", "hint": "すい" },
+        { "sentence": "きんぎょは 〔　〕の なかで およぎます。", "furigana": "金魚は 〔　〕の 中で 泳ぎます。", "answer": "水", "hint": "みず" }
+      ]
+    },
+    {
+      "character": "木",
+      "reading": "き、もく",
+      "meaning": "tree, wood",
+      "examples": [
+        { "sentence": "こうえんに おおきな 〔　〕が あります。", "furigana": "公園に 大きな 〔　〕が あります。", "answer": "木", "hint": "き" },
+        { "sentence": "〔　〕ようびは おんがくの じかんです。", "furigana": "〔　〕曜日は 音楽の 時間です。", "answer": "木", "hint": "もく" },
+        { "sentence": "〔　〕のぼりを しました。", "furigana": "〔　〕登りを しました。", "answer": "木", "hint": "き" }
+      ]
+    },
+    {
+      "character": "金",
+      "reading": "かね、きん",
+      "meaning": "gold, money",
+      "examples": [
+        { "sentence": "おとしだまで お〔　〕を もらいました。", "furigana": "お年玉で お〔　〕を もらいました。", "answer": "金", "hint": "かね" },
+        { "sentence": "〔　〕ようびは がっこうが はやく おわります。", "furigana": "〔　〕曜日は 学校が 早く 終わります。", "answer": "金", "hint": "きん" },
+        { "sentence": "〔　〕メダルを とりました。", "furigana": "〔　〕メダルを 取りました。", "answer": "金", "hint": "きん" }
+      ]
+    },
+    {
+      "character": "土",
+      "reading": "つち、ど",
+      "meaning": "earth, soil",
+      "examples": [
+        { "sentence": "はなを うえるために 〔　〕を ほります。", "furigana": "花を 植えるために 〔　〕を 掘ります。", "answer": "土", "hint": "つち" },
+        { "sentence": "〔　〕ようびは がっこうが おやすみです。", "furigana": "〔　〕曜日は 学校が お休みです。", "answer": "土", "hint": "ど" },
+        { "sentence": "こうえんの 〔　〕で あそびました。", "furigana": "公園の 〔　〕で 遊びました。", "answer": "土", "hint": "つち" }
+      ]
+    },
+    {
+      "character": "一",
+      "reading": "いち、ひと",
+      "meaning": "one",
+      "examples": [
+        { "sentence": "りんごを 〔　〕つ たべました。", "furigana": "りんごを 〔　〕つ 食べました。", "answer": "一", "hint": "ひと" },
+        { "sentence": "〔　〕がつ ついたちは おしょうがつです。", "furigana": "〔　〕月 一日は お正月です。", "answer": "一", "hint": "いち" },
+        { "sentence": "〔　〕ばん めの もんだいです。", "furigana": "〔　〕番 目の 問題です。", "answer": "一", "hint": "いち" }
+      ]
+    },
+    {
+      "character": "二",
+      "reading": "に、ふた",
+      "meaning": "two",
+      "examples": [
+        { "sentence": "めが 〔　〕つ あります。", "furigana": "目が 〔　〕つ あります。", "answer": "二", "hint": "ふた" },
+        { "sentence": "〔　〕がつは せつぶんが あります。", "furigana": "〔　〕月は 節分が あります。", "answer": "二", "hint": "に" },
+        { "sentence": "〔　〕かいに あがります。", "furigana": "〔　〕階に 上がります。", "answer": "二", "hint": "に" }
+      ]
+    },
+    {
+      "character": "三",
+      "reading": "さん、みつ",
+      "meaning": "three",
+      "examples": [
+        { "sentence": "しんごうの いろは 〔　〕つです。", "furigana": "信号の 色は 〔　〕つです。", "answer": "三", "hint": "みっ" },
+        { "sentence": "〔　〕がつ みっかは ひなまつりです。", "furigana": "〔　〕月 三日は ひな祭りです。", "answer": "三", "hint": "さん" },
+        { "sentence": "〔　〕かくけいを かきました。", "furigana": "〔　〕角形を 描きました。", "answer": "三", "hint": "さん" }
+      ]
+    },
+    {
+      "character": "四",
+      "reading": "よん、し",
+      "meaning": "four",
+      "examples": [
+        { "sentence": "いすの あしは 〔　〕ほん あります。", "furigana": "椅子の 足は 〔　〕本 あります。", "answer": "四", "hint": "よん" },
+        { "sentence": "〔　〕がつは さくらが さきます。", "furigana": "〔　〕月は 桜が 咲きます。", "answer": "四", "hint": "し" },
+        { "sentence": "〔　〕かくけいは しかくです。", "furigana": "〔　〕角形は 四角です。", "answer": "四", "hint": "し" }
+      ]
+    },
+    {
+      "character": "五",
+      "reading": "ご、いつ",
+      "meaning": "five",
+      "examples": [
+        { "sentence": "てに ゆびが 〔　〕ほん あります。", "furigana": "手に 指が 〔　〕本 あります。", "answer": "五", "hint": "ご" },
+        { "sentence": "〔　〕がつ ごかは こどものひです。", "furigana": "〔　〕月 五日は こどもの日です。", "answer": "五", "hint": "ご" },
+        { "sentence": "ごぜん 〔　〕じに おきました。", "furigana": "午前 〔　〕時に 起きました。", "answer": "五", "hint": "ご" }
+      ]
+    },
+    {
+      "character": "六",
+      "reading": "ろく、むつ",
+      "meaning": "six",
+      "examples": [
+        { "sentence": "さいころの めは 〔　〕つです。", "furigana": "サイコロの 目は 〔　〕つです。", "answer": "六", "hint": "むっ" },
+        { "sentence": "〔　〕がつは あめが おおいです。", "furigana": "〔　〕月は 雨が 多いです。", "answer": "六", "hint": "ろく" },
+        { "sentence": "あさ 〔　〕じに おきます。", "furigana": "朝 〔　〕時に 起きます。", "answer": "六", "hint": "ろく" }
+      ]
+    },
+    {
+      "character": "七",
+      "reading": "なな、しち",
+      "meaning": "seven",
+      "examples": [
+        { "sentence": "にじは 〔　〕いろです。", "furigana": "虹は 〔　〕色です。", "answer": "七", "hint": "なな" },
+        { "sentence": "〔　〕がつ なのかは たなばたです。", "furigana": "〔　〕月 七日は 七夕です。", "answer": "七", "hint": "しち" },
+        { "sentence": "いっしゅうかんは 〔　〕にちです。", "furigana": "一週間は 〔　〕日です。", "answer": "七", "hint": "なの" }
+      ]
+    },
+    {
+      "character": "八",
+      "reading": "はち、やつ",
+      "meaning": "eight",
+      "examples": [
+        { "sentence": "たこの あしは 〔　〕ほんです。", "furigana": "タコの 足は 〔　〕本です。", "answer": "八", "hint": "はっ" },
+        { "sentence": "〔　〕がつは なつやすみです。", "furigana": "〔　〕月は 夏休みです。", "answer": "八", "hint": "はち" },
+        { "sentence": "あさ 〔　〕じに がっこうに いきます。", "furigana": "朝 〔　〕時に 学校に 行きます。", "answer": "八", "hint": "はち" }
+      ]
+    },
+    {
+      "character": "九",
+      "reading": "きゅう、ここの",
+      "meaning": "nine",
+      "examples": [
+        { "sentence": "やきゅうは 〔　〕にんで します。", "furigana": "野球は 〔　〕人で します。", "answer": "九", "hint": "きゅう" },
+        { "sentence": "〔　〕がつは あきの はじまりです。", "furigana": "〔　〕月は 秋の 始まりです。", "answer": "九", "hint": "く" },
+        { "sentence": "〔　〕じに ねます。", "furigana": "〔　〕時に 寝ます。", "answer": "九", "hint": "く" }
+      ]
+    },
+    {
+      "character": "十",
+      "reading": "じゅう、とお",
+      "meaning": "ten",
+      "examples": [
+        { "sentence": "りょうてで ゆびは 〔　〕ほんです。", "furigana": "両手で 指は 〔　〕本です。", "answer": "十", "hint": "じゅっ" },
+        { "sentence": "〔　〕がつは ハロウィンが あります。", "furigana": "〔　〕月は ハロウィンが あります。", "answer": "十", "hint": "じゅう" },
+        { "sentence": "〔　〕えんだまを つかいました。", "furigana": "〔　〕円玉を 使いました。", "answer": "十", "hint": "じゅう" }
+      ]
+    },
+    {
+      "character": "人",
+      "reading": "ひと、じん",
+      "meaning": "person",
+      "examples": [
+        { "sentence": "あの 〔　〕は せんせいです。", "furigana": "あの 〔　〕は 先生です。", "answer": "人", "hint": "ひと" },
+        { "sentence": "にほん〔　〕は はしを つかいます。", "furigana": "日本〔　〕は 箸を 使います。", "answer": "人", "hint": "じん" },
+        { "sentence": "おとなは たいじん、こどもは しょう〔　〕です。", "furigana": "大人は 大人、子供は 小〔　〕です。", "answer": "人", "hint": "にん" }
+      ]
+    },
+    {
+      "character": "口",
+      "reading": "くち、こう",
+      "meaning": "mouth",
+      "examples": [
+        { "sentence": "〔　〕で ごはんを たべます。", "furigana": "〔　〕で ご飯を 食べます。", "answer": "口", "hint": "くち" },
+        { "sentence": "えきの いり〔　〕は あちらです。", "furigana": "駅の 入り〔　〕は あちらです。", "answer": "口", "hint": "ぐち" },
+        { "sentence": "〔　〕を おおきく あけてください。", "furigana": "〔　〕を 大きく 開けてください。", "answer": "口", "hint": "くち" }
+      ]
+    },
+    {
+      "character": "目",
+      "reading": "め、もく",
+      "meaning": "eye",
+      "examples": [
+        { "sentence": "〔　〕で ものを みます。", "furigana": "〔　〕で 物を 見ます。", "answer": "目", "hint": "め" },
+        { "sentence": "いちばん〔　〕の もんだいです。", "furigana": "一番〔　〕の 問題です。", "answer": "目", "hint": "め" },
+        { "sentence": "〔　〕が あおい ひとです。", "furigana": "〔　〕が 青い 人です。", "answer": "目", "hint": "め" }
+      ]
+    },
+    {
+      "character": "耳",
+      "reading": "みみ",
+      "meaning": "ear",
+      "examples": [
+        { "sentence": "〔　〕で おとを ききます。", "furigana": "〔　〕で 音を 聞きます。", "answer": "耳", "hint": "みみ" },
+        { "sentence": "うさぎの 〔　〕は ながいです。", "furigana": "うさぎの 〔　〕は 長いです。", "answer": "耳", "hint": "みみ" },
+        { "sentence": "〔　〕が いたいです。", "furigana": "〔　〕が 痛いです。", "answer": "耳", "hint": "みみ" }
+      ]
+    },
+    {
+      "character": "手",
+      "reading": "て",
+      "meaning": "hand",
+      "examples": [
+        { "sentence": "〔　〕を あらいます。", "furigana": "〔　〕を 洗います。", "answer": "手", "hint": "て" },
+        { "sentence": "〔　〕を あげて しつもんします。", "furigana": "〔　〕を 挙げて 質問します。", "answer": "手", "hint": "て" },
+        { "sentence": "りょう〔　〕で もちます。", "furigana": "両〔　〕で 持ちます。", "answer": "手", "hint": "て" }
+      ]
+    },
+    {
+      "character": "足",
+      "reading": "あし、そく",
+      "meaning": "foot, leg",
+      "examples": [
+        { "sentence": "〔　〕で あるきます。", "furigana": "〔　〕で 歩きます。", "answer": "足", "hint": "あし" },
+        { "sentence": "〔　〕が はやい ひとです。", "furigana": "〔　〕が 速い 人です。", "answer": "足", "hint": "あし" },
+        { "sentence": "くつしたを 〔　〕に はきます。", "furigana": "靴下を 〔　〕に 履きます。", "answer": "足", "hint": "あし" }
+      ]
+    },
+    {
+      "character": "見",
+      "reading": "み",
+      "meaning": "see",
+      "examples": [
+        { "sentence": "テレビを 〔　〕ます。", "furigana": "テレビを 〔　〕ます。", "answer": "見", "hint": "み" },
+        { "sentence": "はなび たいかいを 〔　〕に いきました。", "furigana": "花火 大会を 〔　〕に 行きました。", "answer": "見", "hint": "み" },
+        { "sentence": "ほんを 〔　〕ながら べんきょうします。", "furigana": "本を 〔　〕ながら 勉強します。", "answer": "見", "hint": "み" }
+      ]
+    },
+    {
+      "character": "音",
+      "reading": "おと、おん",
+      "meaning": "sound",
+      "examples": [
+        { "sentence": "ピアノの 〔　〕が きこえます。", "furigana": "ピアノの 〔　〕が 聞こえます。", "answer": "音", "hint": "おと" },
+        { "sentence": "〔　〕がくの じゅぎょうです。", "furigana": "〔　〕楽の 授業です。", "answer": "音", "hint": "おん" },
+        { "sentence": "おおきな 〔　〕で はなします。", "furigana": "大きな 〔　〕で 話します。", "answer": "音", "hint": "おと" }
+      ]
+    },
+    {
+      "character": "力",
+      "reading": "ちから、りょく",
+      "meaning": "power, strength",
+      "examples": [
+        { "sentence": "〔　〕もちの ひとです。", "furigana": "〔　〕持ちの 人です。", "answer": "力", "hint": "ちから" },
+        { "sentence": "ぜん〔　〕で はしります。", "furigana": "全〔　〕で 走ります。", "answer": "力", "hint": "りょく" },
+        { "sentence": "〔　〕を あわせて がんばります。", "furigana": "〔　〕を 合わせて 頑張ります。", "answer": "力", "hint": "ちから" }
+      ]
+    },
+    {
+      "character": "気",
+      "reading": "き",
+      "meaning": "spirit, mind",
+      "examples": [
+        { "sentence": "げん〔　〕に あいさつします。", "furigana": "元〔　〕に 挨拶します。", "answer": "気", "hint": "き" },
+        { "sentence": "〔　〕をつけて いってきます。", "furigana": "〔　〕をつけて 行ってきます。", "answer": "気", "hint": "き" },
+        { "sentence": "やる〔　〕が でました。", "furigana": "やる〔　〕が 出ました。", "answer": "気", "hint": "き" }
+      ]
+    },
+    {
+      "character": "円",
+      "reading": "えん、まる",
+      "meaning": "circle, yen",
+      "examples": [
+        { "sentence": "100〔　〕で かいました。", "furigana": "100〔　〕で 買いました。", "answer": "円", "hint": "えん" },
+        { "sentence": "〔　〕い かたちです。", "furigana": "〔　〕い 形です。", "answer": "円", "hint": "まる" },
+        { "sentence": "ごじゅう〔　〕だまを つかいました。", "furigana": "五十〔　〕玉を 使いました。", "answer": "円", "hint": "えん" }
+      ]
+    },
+    {
+      "character": "入",
+      "reading": "い、はい",
+      "meaning": "enter",
+      "examples": [
+        { "sentence": "へやに 〔　〕ります。", "furigana": "部屋に 〔　〕ります。", "answer": "入", "hint": "はい" },
+        { "sentence": "がっこうに 〔　〕がくします。", "furigana": "学校に 〔　〕学します。", "answer": "入", "hint": "にゅう" },
+        { "sentence": "おふろに 〔　〕ります。", "furigana": "お風呂に 〔　〕ります。", "answer": "入", "hint": "はい" }
+      ]
+    },
+    {
+      "character": "出",
+      "reading": "で、だ",
+      "meaning": "exit, go out",
+      "examples": [
+        { "sentence": "そとに 〔　〕かけます。", "furigana": "外に 〔　〕かけます。", "answer": "出", "hint": "で" },
+        { "sentence": "てがみを 〔　〕します。", "furigana": "手紙を 〔　〕します。", "answer": "出", "hint": "だ" },
+        { "sentence": "いえを 〔　〕ます。", "furigana": "家を 〔　〕ます。", "answer": "出", "hint": "で" }
+      ]
+    },
+    {
+      "character": "立",
+      "reading": "た",
+      "meaning": "stand",
+      "examples": [
+        { "sentence": "〔　〕って ください。", "furigana": "〔　〕って ください。", "answer": "立", "hint": "た" },
+        { "sentence": "〔　〕ちどまります。", "furigana": "〔　〕ち止まります。", "answer": "立", "hint": "た" },
+        { "sentence": "きを つけの しせいで 〔　〕ちます。", "furigana": "気を つけの 姿勢で 〔　〕ちます。", "answer": "立", "hint": "た" }
+      ]
+    },
+    {
+      "character": "休",
+      "reading": "やす",
+      "meaning": "rest",
+      "examples": [
+        { "sentence": "つかれたので 〔　〕みます。", "furigana": "疲れたので 〔　〕みます。", "answer": "休", "hint": "やす" },
+        { "sentence": "にちようびは お〔　〕みです。", "furigana": "日曜日は お〔　〕みです。", "answer": "休", "hint": "やす" },
+        { "sentence": "〔　〕みじかんに あそびます。", "furigana": "〔　〕み時間に 遊びます。", "answer": "休", "hint": "やす" }
+      ]
+    },
+    {
+      "character": "先",
+      "reading": "さき、せん",
+      "meaning": "ahead, previous",
+      "examples": [
+        { "sentence": "〔　〕に いきます。", "furigana": "〔　〕に 行きます。", "answer": "先", "hint": "さき" },
+        { "sentence": "〔　〕せいに あいました。", "furigana": "〔　〕生に 会いました。", "answer": "先", "hint": "せん" },
+        { "sentence": "えんぴつの 〔　〕が とがっています。", "furigana": "鉛筆の 〔　〕が 尖っています。", "answer": "先", "hint": "さき" }
+      ]
+    },
+    {
+      "character": "夕",
+      "reading": "ゆう",
+      "meaning": "evening",
+      "examples": [
+        { "sentence": "〔　〕がたに なりました。", "furigana": "〔　〕方に なりました。", "answer": "夕", "hint": "ゆう" },
+        { "sentence": "〔　〕やけが きれいです。", "furigana": "〔　〕焼けが きれいです。", "answer": "夕", "hint": "ゆう" },
+        { "sentence": "〔　〕ごはんを たべます。", "furigana": "〔　〕ご飯を 食べます。", "answer": "夕", "hint": "ゆう" }
+      ]
+    },
+    {
+      "character": "本",
+      "reading": "ほん、もと",
+      "meaning": "book, origin",
+      "examples": [
+        { "sentence": "〔　〕を よみます。", "furigana": "〔　〕を 読みます。", "answer": "本", "hint": "ほん" },
+        { "sentence": "に〔　〕ごを べんきょうします。", "furigana": "日〔　〕語を 勉強します。", "answer": "本", "hint": "ほん" },
+        { "sentence": "えんぴつを さん〔　〕 かいました。", "furigana": "鉛筆を 三〔　〕 買いました。", "answer": "本", "hint": "ぼん" }
+      ]
+    },
+    {
+      "character": "文",
+      "reading": "ぶん、もん",
+      "meaning": "sentence, writing",
+      "examples": [
+        { "sentence": "さく〔　〕を かきます。", "furigana": "作〔　〕を 書きます。", "answer": "文", "hint": "ぶん" },
+        { "sentence": "〔　〕しょうを よみます。", "furigana": "〔　〕章を 読みます。", "answer": "文", "hint": "ぶん" },
+        { "sentence": "かん〔　〕を つくります。", "furigana": "感〔　〕を 作ります。", "answer": "文", "hint": "ぶん" }
+      ]
+    },
+    {
+      "character": "字",
+      "reading": "じ",
+      "meaning": "character, letter",
+      "examples": [
+        { "sentence": "かん〔　〕を かきます。", "furigana": "漢〔　〕を 書きます。", "answer": "字", "hint": "じ" },
+        { "sentence": "〔　〕を きれいに かきます。", "furigana": "〔　〕を きれいに 書きます。", "answer": "字", "hint": "じ" },
+        { "sentence": "なまえの 〔　〕を おしえてください。", "furigana": "名前の 〔　〕を 教えてください。", "answer": "字", "hint": "じ" }
+      ]
+    },
+    {
+      "character": "学",
+      "reading": "がく、まな",
+      "meaning": "study, school",
+      "examples": [
+        { "sentence": "〔　〕こうに いきます。", "furigana": "〔　〕校に 行きます。", "answer": "学", "hint": "がっ" },
+        { "sentence": "すうがくを 〔　〕びます。", "furigana": "数学を 〔　〕びます。", "answer": "学", "hint": "まな" },
+        { "sentence": "だい〔　〕せいです。", "furigana": "大〔　〕生です。", "answer": "学", "hint": "がく" }
+      ]
+    },
+    {
+      "character": "校",
+      "reading": "こう",
+      "meaning": "school",
+      "examples": [
+        { "sentence": "がっ〔　〕に いきます。", "furigana": "学〔　〕に 行きます。", "answer": "校", "hint": "こう" },
+        { "sentence": "〔　〕ていで あそびます。", "furigana": "〔　〕庭で 遊びます。", "answer": "校", "hint": "こう" },
+        { "sentence": "〔　〕ちょうせんせいです。", "furigana": "〔　〕長先生です。", "answer": "校", "hint": "こう" }
+      ]
+    },
+    {
+      "character": "村",
+      "reading": "むら、そん",
+      "meaning": "village",
+      "examples": [
+        { "sentence": "ちいさな 〔　〕に すんでいます。", "furigana": "小さな 〔　〕に 住んでいます。", "answer": "村", "hint": "むら" },
+        { "sentence": "〔　〕の ひとは みんな しりあいです。", "furigana": "〔　〕の 人は みんな 知り合いです。", "answer": "村", "hint": "むら" },
+        { "sentence": "やまの 〔　〕で そだちました。", "furigana": "山の 〔　〕で 育ちました。", "answer": "村", "hint": "むら" }
+      ]
+    },
+    {
+      "character": "町",
+      "reading": "まち、ちょう",
+      "meaning": "town",
+      "examples": [
+        { "sentence": "〔　〕で かいものを します。", "furigana": "〔　〕で 買い物を します。", "answer": "町", "hint": "まち" },
+        { "sentence": "この 〔　〕は しずかです。", "furigana": "この 〔　〕は 静かです。", "answer": "町", "hint": "まち" },
+        { "sentence": "〔　〕なかを さんぽします。", "furigana": "〔　〕中を 散歩します。", "answer": "町", "hint": "まち" }
+      ]
+    },
+    {
+      "character": "森",
+      "reading": "もり",
+      "meaning": "forest",
+      "examples": [
+        { "sentence": "〔　〕の なかを あるきます。", "furigana": "〔　〕の 中を 歩きます。", "answer": "森", "hint": "もり" },
+        { "sentence": "〔　〕に どうぶつが います。", "furigana": "〔　〕に 動物が います。", "answer": "森", "hint": "もり" },
+        { "sentence": "おおきな 〔　〕が あります。", "furigana": "大きな 〔　〕が あります。", "answer": "森", "hint": "もり" }
+      ]
+    },
+    {
+      "character": "正",
+      "reading": "ただ、せい",
+      "meaning": "correct",
+      "examples": [
+        { "sentence": "〔　〕しい こたえです。", "furigana": "〔　〕しい 答えです。", "answer": "正", "hint": "ただ" },
+        { "sentence": "お〔　〕がつです。", "furigana": "お〔　〕月です。", "answer": "正", "hint": "しょう" },
+        { "sentence": "〔　〕かくに かきます。", "furigana": "〔　〕確に 書きます。", "answer": "正", "hint": "せい" }
+      ]
+    },
+    {
+      "character": "天",
+      "reading": "てん、あま",
+      "meaning": "heaven, sky",
+      "examples": [
+        { "sentence": "〔　〕きが いいです。", "furigana": "〔　〕気が いいです。", "answer": "天", "hint": "てん" },
+        { "sentence": "〔　〕に ほしが みえます。", "furigana": "〔　〕に 星が 見えます。", "answer": "天", "hint": "てん" },
+        { "sentence": "〔　〕のがわが きれいです。", "furigana": "〔　〕の川が きれいです。", "answer": "天", "hint": "あま" }
+      ]
+    },
+    {
+      "character": "雨",
+      "reading": "あめ、う",
+      "meaning": "rain",
+      "examples": [
+        { "sentence": "〔　〕が ふっています。", "furigana": "〔　〕が 降っています。", "answer": "雨", "hint": "あめ" },
+        { "sentence": "〔　〕ぐもが でています。", "furigana": "〔　〕雲が 出ています。", "answer": "雨", "hint": "あま" },
+        { "sentence": "かさを さして 〔　〕を よけます。", "furigana": "傘を さして 〔　〕を 避けます。", "answer": "雨", "hint": "あめ" }
+      ]
+    },
+    {
+      "character": "花",
+      "reading": "はな",
+      "meaning": "flower",
+      "examples": [
+        { "sentence": "きれいな 〔　〕が さきました。", "furigana": "きれいな 〔　〕が 咲きました。", "answer": "花", "hint": "はな" },
+        { "sentence": "〔　〕びんに いけます。", "furigana": "〔　〕瓶に 生けます。", "answer": "花", "hint": "はな" },
+        { "sentence": "〔　〕やで かいました。", "furigana": "〔　〕屋で 買いました。", "answer": "花", "hint": "はな" }
+      ]
+    },
+    {
+      "character": "草",
+      "reading": "くさ",
+      "meaning": "grass",
+      "examples": [
+        { "sentence": "〔　〕が はえています。", "furigana": "〔　〕が 生えています。", "answer": "草", "hint": "くさ" },
+        { "sentence": "〔　〕むしりを します。", "furigana": "〔　〕むしりを します。", "answer": "草", "hint": "くさ" },
+        { "sentence": "みどりの 〔　〕が きれいです。", "furigana": "緑の 〔　〕が きれいです。", "answer": "草", "hint": "くさ" }
+      ]
+    },
+    {
+      "character": "虫",
+      "reading": "むし",
+      "meaning": "insect",
+      "examples": [
+        { "sentence": "〔　〕を つかまえました。", "furigana": "〔　〕を 捕まえました。", "answer": "虫", "hint": "むし" },
+        { "sentence": "なつには 〔　〕が おおいです。", "furigana": "夏には 〔　〕が 多いです。", "answer": "虫", "hint": "むし" },
+        { "sentence": "〔　〕かごに いれます。", "furigana": "〔　〕かごに 入れます。", "answer": "虫", "hint": "むし" }
+      ]
+    },
+    {
+      "character": "犬",
+      "reading": "いぬ、けん",
+      "meaning": "dog",
+      "examples": [
+        { "sentence": "〔　〕を かっています。", "furigana": "〔　〕を 飼っています。", "answer": "犬", "hint": "いぬ" },
+        { "sentence": "〔　〕が ほえています。", "furigana": "〔　〕が 吠えています。", "answer": "犬", "hint": "いぬ" },
+        { "sentence": "かわいい 〔　〕です。", "furigana": "かわいい 〔　〕です。", "answer": "犬", "hint": "いぬ" }
+      ]
+    },
+    {
+      "character": "赤",
+      "reading": "あか",
+      "meaning": "red",
+      "examples": [
+        { "sentence": "〔　〕い りんごです。", "furigana": "〔　〕い りんごです。", "answer": "赤", "hint": "あか" },
+        { "sentence": "しんごうが 〔　〕です。", "furigana": "信号が 〔　〕です。", "answer": "赤", "hint": "あか" },
+        { "sentence": "〔　〕ちゃんが うまれました。", "furigana": "〔　〕ちゃんが 生まれました。", "answer": "赤", "hint": "あか" }
+      ]
+    },
+    {
+      "character": "青",
+      "reading": "あお",
+      "meaning": "blue",
+      "examples": [
+        { "sentence": "そらが 〔　〕いです。", "furigana": "空が 〔　〕いです。", "answer": "青", "hint": "あお" },
+        { "sentence": "〔　〕い うみです。", "furigana": "〔　〕い 海です。", "answer": "青", "hint": "あお" },
+        { "sentence": "しんごうが 〔　〕に なりました。", "furigana": "信号が 〔　〕に なりました。", "answer": "青", "hint": "あお" }
+      ]
+    },
+    {
+      "character": "白",
+      "reading": "しろ",
+      "meaning": "white",
+      "examples": [
+        { "sentence": "〔　〕い ゆきが ふりました。", "furigana": "〔　〕い 雪が 降りました。", "answer": "白", "hint": "しろ" },
+        { "sentence": "〔　〕い くもです。", "furigana": "〔　〕い 雲です。", "answer": "白", "hint": "しろ" },
+        { "sentence": "〔　〕い かみに かきます。", "furigana": "〔　〕い 紙に 書きます。", "answer": "白", "hint": "しろ" }
+      ]
+    }
+  ]
+}

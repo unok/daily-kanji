@@ -1,0 +1,10 @@
+@import "tailwindcss";
+
+/* KanjiCanvas候補ボタンのスタイリング */
+#kanji-candidates button {
+  @apply px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors text-lg font-bold;
+}
+
+#kanji-candidates button:hover {
+  @apply transform scale-110;
+}

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Handwriting Test</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; }
+    canvas { border: 2px solid #000; cursor: crosshair; }
+    button { margin: 5px; padding: 10px; }
+    #result { margin-top: 10px; font-size: 18px; }
+  </style>
+</head>
+<body>
+  <h1>漢字手書きテスト</h1>
+  <canvas id="testCanvas" width="256" height="256" data-candidate-list="candidateList"></canvas>
+  <div>
+    <button onclick="clearCanvas()">クリア</button>
+    <button onclick="recognize()">認識</button>
+  </div>
+  <div id="result"></div>
+  <div id="candidateList"></div>
+
+  <script src="/kanji-canvas.min.js"></script>
+  <script src="/ref-patterns-wrapper.js"></script>
+  <script>
+    // DOMContentLoadedを待つ
+    document.addEventListener('DOMContentLoaded', function() {
+      // KanjiCanvasが読み込まれるまで待つ
+      function initializeKanjiCanvas() {
+        if (typeof KanjiCanvas !== 'undefined') {
+          console.log('Initializing KanjiCanvas...');
+          KanjiCanvas.init('testCanvas');
+          console.log('KanjiCanvas initialized');
+        } else {
+          console.log('Waiting for KanjiCanvas...');
+          setTimeout(initializeKanjiCanvas, 100);
+        }
+      }
+      
+      initializeKanjiCanvas();
+    });
+    
+    function clearCanvas() {
+      if (typeof KanjiCanvas !== 'undefined') {
+        KanjiCanvas.erase('testCanvas');
+        document.getElementById('result').innerHTML = '';
+        document.getElementById('candidateList').innerHTML = '';
+      }
+    }
+    
+    function recognize() {
+      try {
+        console.log('Recognizing...');
+        KanjiCanvas.recognize('testCanvas');
+        // 結果は自動的にdata-candidate-listで指定された要素に表示される
+        setTimeout(() => {
+          const candidates = document.getElementById('candidateList');
+          console.log('Candidates HTML:', candidates.innerHTML);
+        }, 500);
+      } catch (e) {
+        document.getElementById('result').innerHTML = 'エラー: ' + e.message;
+        console.error(e);
+      }
+    }
+  </script>
+</body>
+</html>
