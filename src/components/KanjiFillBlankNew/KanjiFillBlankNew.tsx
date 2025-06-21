@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState } from 'react'
 
 import { type DifficultyLevel, getRandomQuestion } from '../../services/questionService'
 import type { QuestionData } from '../../types/question'
+import { DIFFICULTY_LABELS } from '../../types/question'
 import { splitDisplaySentence } from '../../utils/questionParser'
 import { MultiKanjiInput } from '../MultiKanjiInput'
 
@@ -234,9 +235,19 @@ export function KanjiFillBlankNew({ difficulty = 'elementary' }: KanjiFillBlankN
           スコア: {score} / {totalQuestions}
         </div>
 
-        {/* 難易度表示 */}
-        <div className="text-center mt-2 text-sm text-gray-500">
-          難易度: {currentQuestion.difficulty === 'elementary' ? '小学校' : currentQuestion.difficulty === 'junior' ? '中学校' : '高校'}卒業レベル
+        {/* 難易度とカテゴリー表示 */}
+        <div className="text-center mt-2 space-y-1">
+          <div className="text-sm text-gray-600 font-medium">
+            難易度:{' '}
+            <span
+              className={`font-bold ${
+                currentQuestion.difficulty === 'elementary' ? 'text-green-600' : currentQuestion.difficulty === 'junior' ? 'text-blue-600' : 'text-purple-600'
+              }`}
+            >
+              {DIFFICULTY_LABELS[currentQuestion.difficulty]}
+            </span>
+          </div>
+          <div className="text-xs text-gray-500">カテゴリー: {currentQuestion.category}</div>
         </div>
       </div>
     </div>
