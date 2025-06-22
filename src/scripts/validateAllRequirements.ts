@@ -144,18 +144,22 @@ function validateKanjiCoverage(): ValidationResult {
   }
 }
 
-// 2. 各漢字が5個以上の問題に含まれているかチェック
+// 2. 各漢字が5個以上の問題に含まれているかチェック（修正版）
 function validateKanjiFrequency(): ValidationResult {
-  console.log('\n=== 2. 各漢字5個以上チェック ===')
+  console.log('\n=== 2. 各漢字5個以上チェック（教育漢字のみ） ===')
 
   const allResults: ValidationResult[] = []
 
-  // 全学年の検証
-  const grades = ['elementary1', 'elementary2', 'elementary3', 'elementary4', 'elementary5', 'elementary6', 'junior', 'senior']
-
-  for (const grade of grades) {
-    const questions = loadQuestions(grade)
+  // 小学校の検証
+  for (let grade = 1; grade <= 6; grade++) {
+    const questions = loadQuestions(`elementary${grade}`)
+    const targetKanji = getKanjiByGrade(grade)
     const kanjiCount = new Map<string, number>()
+
+    // 対象漢字のカウントを初期化
+    for (const kanji of targetKanji) {
+      kanjiCount.set(kanji, 0)
+    }
 
     for (const question of questions) {
       const parsed = parseQuestion(question.sentence)
@@ -163,7 +167,9 @@ function validateKanjiFrequency(): ValidationResult {
         if (input.kanji) {
           const kanjiInAnswer = input.kanji.match(/[\u4E00-\u9FAF]/g) || []
           for (const k of kanjiInAnswer) {
-            kanjiCount.set(k, (kanjiCount.get(k) || 0) + 1)
+            if (kanjiCount.has(k)) {
+              kanjiCount.set(k, (kanjiCount.get(k) || 0) + 1)
+            }
           }
         }
       }
@@ -179,14 +185,98 @@ function validateKanjiFrequency(): ValidationResult {
     if (underrepresented.length > 0) {
       allResults.push({
         passed: false,
-        message: `❌ ${grade}: ${underrepresented.length}個の漢字が5回未満 - ${underrepresented.slice(0, 5).join(', ')}${underrepresented.length > 5 ? '...' : ''}`,
+        message: `❌ elementary${grade}: ${underrepresented.length}個の漢字が5回未満 - ${underrepresented.slice(0, 5).join(', ')}${underrepresented.length > 5 ? '...' : ''}`,
       })
     } else {
       allResults.push({
         passed: true,
-        message: `✅ ${grade}: 全ての漢字が5回以上出現`,
+        message: `✅ elementary${grade}: 全ての漢字が5回以上出現`,
       })
     }
+  }
+
+  // 中学校の検証
+  const juniorQuestions = loadQuestions('junior')
+  const juniorTargetKanji = ACTUAL_JUNIOR_KANJI
+  const juniorKanjiCount = new Map<string, number>()
+
+  for (const kanji of juniorTargetKanji) {
+    juniorKanjiCount.set(kanji, 0)
+  }
+
+  for (const question of juniorQuestions) {
+    const parsed = parseQuestion(question.sentence)
+    for (const input of parsed.inputs) {
+      if (input.kanji) {
+        const kanjiInAnswer = input.kanji.match(/[\u4E00-\u9FAF]/g) || []
+        for (const k of kanjiInAnswer) {
+          if (juniorKanjiCount.has(k)) {
+            juniorKanjiCount.set(k, (juniorKanjiCount.get(k) || 0) + 1)
+          }
+        }
+      }
+    }
+  }
+
+  const juniorUnderrepresented: string[] = []
+  for (const [kanji, count] of juniorKanjiCount.entries()) {
+    if (count < 5) {
+      juniorUnderrepresented.push(`${kanji}(${count}回)`)
+    }
+  }
+
+  if (juniorUnderrepresented.length > 0) {
+    allResults.push({
+      passed: false,
+      message: `❌ junior: ${juniorUnderrepresented.length}個の漢字が5回未満`,
+    })
+  } else {
+    allResults.push({
+      passed: true,
+      message: '✅ junior: 全ての漢字が5回以上出現',
+    })
+  }
+
+  // 高校の検証
+  const seniorQuestions = loadQuestions('senior')
+  const seniorTargetKanji = ACTUAL_SENIOR_KANJI
+  const seniorKanjiCount = new Map<string, number>()
+
+  for (const kanji of seniorTargetKanji) {
+    seniorKanjiCount.set(kanji, 0)
+  }
+
+  for (const question of seniorQuestions) {
+    const parsed = parseQuestion(question.sentence)
+    for (const input of parsed.inputs) {
+      if (input.kanji) {
+        const kanjiInAnswer = input.kanji.match(/[\u4E00-\u9FAF]/g) || []
+        for (const k of kanjiInAnswer) {
+          if (seniorKanjiCount.has(k)) {
+            seniorKanjiCount.set(k, (seniorKanjiCount.get(k) || 0) + 1)
+          }
+        }
+      }
+    }
+  }
+
+  const seniorUnderrepresented: string[] = []
+  for (const [kanji, count] of seniorKanjiCount.entries()) {
+    if (count < 5) {
+      seniorUnderrepresented.push(`${kanji}(${count}回)`)
+    }
+  }
+
+  if (seniorUnderrepresented.length > 0) {
+    allResults.push({
+      passed: false,
+      message: `❌ senior: ${seniorUnderrepresented.length}個の漢字が5回未満`,
+    })
+  } else {
+    allResults.push({
+      passed: true,
+      message: '✅ senior: 全ての漢字が5回以上出現',
+    })
   }
 
   const allPassed = allResults.every((r) => r.passed)
@@ -266,7 +356,7 @@ function validateTwoSetLimitAndConsecutive(): ValidationResult {
 
 // メイン処理
 function main() {
-  console.log('🔍 漢字学習システム要件検証ツール')
+  console.log('🔍 漢字学習システム要件検証ツール（修正版）')
   console.log('='.repeat(50))
 
   const results: ValidationResult[] = []
@@ -274,7 +364,7 @@ function main() {
   // 1. 全漢字網羅チェック
   results.push(validateKanjiCoverage())
 
-  // 2. 各漢字5個以上チェック
+  // 2. 各漢字5個以上チェック（修正版）
   results.push(validateKanjiFrequency())
 
   // 3. 2セット制限・連続防止チェック
