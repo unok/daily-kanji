@@ -128,7 +128,6 @@ export function Question({ question, onAnswer }: QuestionProps) {
         <div className="text-2xl font-bold text-center leading-loose">
           <span>{before}</span>
           <span className="inline-block relative mx-1 align-bottom">
-            <span className="text-sm text-red-500 font-medium absolute -top-7 left-0 right-0 text-center whitespace-nowrap">{question.hint}</span>
             <span className="inline-block border-b-2 border-gray-600 px-2 pb-1" style={{ minWidth: `${blankLength * 1.5}em` }}>
               {Array(blankLength).fill('　').join('')}
             </span>

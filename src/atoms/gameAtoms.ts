@@ -5,7 +5,6 @@ export interface Question {
   sentence: string
   answer: string
   grade: number
-  hint?: string
 }
 
 export interface Answer {

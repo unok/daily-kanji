@@ -18,7 +18,6 @@ describe('gameService', () => {
       expect(question).toHaveProperty('sentence')
       expect(question).toHaveProperty('answer')
       expect(question).toHaveProperty('grade')
-      expect(question).toHaveProperty('hint')
       expect(question.sentence).toMatch(/〔\s+〕/)
     })
 
@@ -57,7 +56,6 @@ describe('gameService', () => {
       sentence: '□きな犬',
       answer: '大',
       grade: 1,
-      hint: 'おおきな',
     }
 
     it('正解の場合はtrueを返す', () => {
@@ -83,21 +81,18 @@ describe('gameService', () => {
         sentence: '□きな犬',
         answer: '大',
         grade: 1,
-        hint: 'おおきな',
       },
       {
         id: 'q2',
         sentence: '□さな花',
         answer: '小',
         grade: 1,
-        hint: 'ちいさな',
       },
       {
         id: 'q3',
         sentence: '□学生',
         answer: '中',
         grade: 1,
-        hint: 'ちゅうがくせい',
       },
     ]
 

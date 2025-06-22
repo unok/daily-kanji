@@ -78,9 +78,9 @@ export function MainMenu({ onStart }: MainMenuProps) {
               <p>一度に複数の漢字を練習</p>
             </div>
             <div className="bg-gray-50 p-4 rounded-lg">
-              <div className="text-3xl mb-2">💡</div>
-              <h3 className="font-semibold mb-1">ヒント機能</h3>
-              <p>困ったときはヒントを活用</p>
+              <div className="text-3xl mb-2">🎯</div>
+              <h3 className="font-semibold mb-1">正確な学習</h3>
+              <p>間違えたらすぐに確認</p>
             </div>
           </div>
         </div>

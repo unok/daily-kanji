@@ -10,7 +10,6 @@ describe('Question', () => {
     sentence: '□きな犬',
     answer: '大',
     grade: 1,
-    hint: 'おおきな',
   }
 
   it('問題文が表示される', () => {
@@ -23,28 +22,6 @@ describe('Question', () => {
     expect(screen.getByText('□きな犬')).toBeInTheDocument()
   })
 
-  it('ヒントボタンが表示される', () => {
-    render(
-      <Provider>
-        <Question question={mockQuestion} onAnswer={vi.fn()} />
-      </Provider>
-    )
-
-    expect(screen.getByText('ヒント')).toBeInTheDocument()
-  })
-
-  it('ヒントボタンをクリックするとヒントが表示される', () => {
-    render(
-      <Provider>
-        <Question question={mockQuestion} onAnswer={vi.fn()} />
-      </Provider>
-    )
-
-    const hintButton = screen.getByText('ヒント')
-    fireEvent.click(hintButton)
-
-    expect(screen.getByText('読み: おおきな')).toBeInTheDocument()
-  })
 
   it('手書きキャンバスが表示される', () => {
     render(

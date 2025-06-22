@@ -1,10 +1,16 @@
 import questionsElementary from '../data/questions-elementary.json'
+import questionsElementary1 from '../data/questions-elementary1.json'
+import questionsElementary2 from '../data/questions-elementary2.json'
+import questionsElementary3 from '../data/questions-elementary3.json'
+import questionsElementary4 from '../data/questions-elementary4.json'
+import questionsElementary5 from '../data/questions-elementary5.json'
+import questionsElementary6 from '../data/questions-elementary6.json'
 import questionsJunior from '../data/questions-junior.json'
 import questionsSenior from '../data/questions-senior.json'
 import type { QuestionData } from '../types/question'
 import { parseQuestion } from '../utils/questionParser'
 
-export type DifficultyLevel = 'elementary' | 'junior' | 'senior'
+export type DifficultyLevel = 'elementary' | 'junior' | 'senior' | 'elementary1' | 'elementary2' | 'elementary3' | 'elementary4' | 'elementary5' | 'elementary6'
 
 interface QuestionSet {
   level: DifficultyLevel
@@ -13,30 +19,35 @@ interface QuestionSet {
   questions: Array<{
     id: string
     sentence: string
-    category: string
-    hint: string
+    category?: string
   }>
 }
 
 // 問題データのマップ
-const questionSets: Record<DifficultyLevel, QuestionSet> = {
+const questionSets: Record<string, QuestionSet> = {
   elementary: questionsElementary as QuestionSet,
   junior: questionsJunior as QuestionSet,
   senior: questionsSenior as QuestionSet,
+  elementary1: questionsElementary1 as QuestionSet,
+  elementary2: questionsElementary2 as QuestionSet,
+  elementary3: questionsElementary3 as QuestionSet,
+  elementary4: questionsElementary4 as QuestionSet,
+  elementary5: questionsElementary5 as QuestionSet,
+  elementary6: questionsElementary6 as QuestionSet,
 }
 
 /**
  * 指定された難易度の問題セットを取得
  */
 export function getQuestionSet(difficulty: DifficultyLevel): QuestionSet {
-  return questionSets[difficulty]
+  return questionSets[difficulty as string]
 }
 
 /**
  * 指定された難易度からランダムに問題を取得
  */
 export function getRandomQuestion(difficulty: DifficultyLevel): QuestionData {
-  const questionSet = questionSets[difficulty]
+  const questionSet = questionSets[difficulty as string]
   const randomIndex = Math.floor(Math.random() * questionSet.questions.length)
   const rawQuestion = questionSet.questions[randomIndex]
 
@@ -49,20 +60,19 @@ export function getRandomQuestion(difficulty: DifficultyLevel): QuestionData {
     displaySentence: parsed.displaySentence,
     inputs: parsed.inputs,
     difficulty,
-    hint: rawQuestion.hint,
-    category: rawQuestion.category,
+    category: rawQuestion.category || '',
   }
 }
 
 /**
  * 全難易度の問題数を取得
  */
-export function getQuestionCounts(): Record<DifficultyLevel, number> {
-  return {
-    elementary: questionSets.elementary.questions.length,
-    junior: questionSets.junior.questions.length,
-    senior: questionSets.senior.questions.length,
-  }
+export function getQuestionCounts(): Record<string, number> {
+  const counts: Record<string, number> = {}
+  Object.entries(questionSets).forEach(([key, set]) => {
+    counts[key] = set.questions.length
+  })
+  return counts
 }
 
 /**
@@ -79,8 +89,7 @@ export function getQuestionById(id: string): QuestionData | null {
         displaySentence: parsed.displaySentence,
         inputs: parsed.inputs,
         difficulty: difficulty as DifficultyLevel,
-        hint: question.hint,
-        category: question.category,
+        category: question.category || '',
       }
     }
   }
@@ -94,13 +103,16 @@ export function getCategories(difficulty?: DifficultyLevel): string[] {
   const categories = new Set<string>()
 
   if (difficulty) {
-    for (const q of questionSets[difficulty].questions) {
-      categories.add(q.category)
+    const set = questionSets[difficulty as string]
+    if (set) {
+      for (const q of set.questions) {
+        categories.add(q.category || '')
+      }
     }
   } else {
     for (const set of Object.values(questionSets)) {
       for (const q of set.questions) {
-        categories.add(q.category)
+        categories.add(q.category || '')
       }
     }
   }
@@ -124,15 +136,17 @@ export function getQuestionsByCategory(category: string, difficulty?: Difficulty
           displaySentence: parsed.displaySentence,
           inputs: parsed.inputs,
           difficulty: level,
-          hint: q.hint,
-          category: q.category,
+          category: q.category || '',
         })
       }
     }
   }
 
   if (difficulty) {
-    processQuestionSet(questionSets[difficulty], difficulty)
+    const set = questionSets[difficulty as string]
+    if (set) {
+      processQuestionSet(set, difficulty)
+    }
   } else {
     for (const [level, set] of Object.entries(questionSets)) {
       processQuestionSet(set, level as DifficultyLevel)
@@ -140,4 +154,24 @@ export function getQuestionsByCategory(category: string, difficulty?: Difficulty
   }
 
   return questions
+}
+
+/**
+ * 指定された難易度の問題を取得
+ */
+export function getQuestionsByDifficulty(difficulty: DifficultyLevel): QuestionData[] {
+  const questionSet = questionSets[difficulty as string]
+  if (!questionSet) return []
+
+  return questionSet.questions.map((q) => {
+    const parsed = parseQuestion(q.sentence)
+    return {
+      id: q.id,
+      originalSentence: q.sentence,
+      displaySentence: parsed.displaySentence,
+      inputs: parsed.inputs,
+      difficulty,
+      category: q.category || '',
+    }
+  })
 }

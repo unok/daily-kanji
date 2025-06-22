@@ -17,9 +17,10 @@ import { MultiKanjiInput } from '../MultiKanjiInput'
 
 interface KanjiFillBlankNewProps {
   difficulty?: DifficultyLevel
+  onSessionComplete?: (score: number, total: number) => void
 }
 
-export function KanjiFillBlankNew({ difficulty = 'elementary' }: KanjiFillBlankNewProps) {
+export function KanjiFillBlankNew({ difficulty = 'elementary', onSessionComplete }: KanjiFillBlankNewProps) {
   const [currentQuestion, setCurrentQuestion] = useState<QuestionData | null>(null)
   const [currentDifficulty, setCurrentDifficulty] = useState<DifficultyLevel>(difficulty)
   const [attemptCount, setAttemptCount] = useState(0)
@@ -27,8 +28,9 @@ export function KanjiFillBlankNew({ difficulty = 'elementary' }: KanjiFillBlankN
   const [totalQuestions, setTotalQuestions] = useState(0)
   const [showResult, setShowResult] = useState(false)
   const [results, setResults] = useState<Array<{ isCorrect: boolean; input: string; answer: string }>>([])
-  const [showHint, setShowHint] = useState(false)
   const [isGiveUp, setIsGiveUp] = useState(false)
+  const [sessionScore, setSessionScore] = useState(0)
+  const [sessionQuestions, setSessionQuestions] = useState(0)
 
   // 難易度変更時の処理
   useEffect(() => {
@@ -40,12 +42,19 @@ export function KanjiFillBlankNew({ difficulty = 'elementary' }: KanjiFillBlankN
     const question = getRandomQuestion(currentDifficulty)
     setCurrentQuestion(question)
     setTotalQuestions((prev) => prev + 1)
+    setSessionQuestions((prev) => prev + 1)
     setAttemptCount(0)
     setShowResult(false)
-    setShowHint(false)
     setResults([])
     setIsGiveUp(false)
-  }, [currentDifficulty])
+
+    // 10問ごとにセッション完了を通知
+    if (sessionQuestions >= 9 && onSessionComplete) {
+      onSessionComplete(sessionScore, 10)
+      setSessionScore(0)
+      setSessionQuestions(0)
+    }
+  }, [currentDifficulty, sessionQuestions, sessionScore, onSessionComplete])
 
   useEffect(() => {
     loadRandomQuestion()
@@ -83,11 +92,7 @@ export function KanjiFillBlankNew({ difficulty = 'elementary' }: KanjiFillBlankN
       const allCorrect = newResults.every((r) => r.isCorrect)
       if (allCorrect && attemptCount === 0) {
         setScore((prev) => prev + 1)
-      }
-
-      // 2回目の失敗でヒントを表示
-      if (!allCorrect && attemptCount >= 1) {
-        setShowHint(true)
+        setSessionScore((prev) => prev + 1)
       }
     },
     [currentQuestion, attemptCount, recognizeKanji]
@@ -135,9 +140,9 @@ export function KanjiFillBlankNew({ difficulty = 'elementary' }: KanjiFillBlankN
         {/* 問題文表示エリア */}
         <div className="bg-gray-50 p-8 rounded-lg mb-8">
           <div className="text-2xl text-gray-800 leading-loose text-center">
-            {sentenceParts.map((part, index) => {
+            {sentenceParts.map((part) => {
               if (part.type === 'text') {
-                return <span key={`text-${index}`}>{part.content}</span>
+                return <span key={`text-${part.content}`}>{part.content}</span>
               }
               if (part.type === 'input' && part.inputIndex !== undefined) {
                 const input = currentQuestion.inputs[part.inputIndex]
@@ -201,13 +206,6 @@ export function KanjiFillBlankNew({ difficulty = 'elementary' }: KanjiFillBlankN
             <button type="button" onClick={giveUp} className="px-6 py-3 text-base font-bold bg-gray-500 text-white rounded hover:bg-gray-600 transition-colors">
               ギブアップ
             </button>
-          </div>
-        )}
-
-        {/* ヒント表示 */}
-        {showHint && currentQuestion.hint && (
-          <div className="mt-5 text-center">
-            <div className="mt-3 p-4 bg-orange-50 rounded text-orange-700 text-base">ヒント: {currentQuestion.hint}</div>
           </div>
         )}
 

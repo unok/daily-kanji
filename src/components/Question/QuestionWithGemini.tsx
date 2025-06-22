@@ -11,7 +11,6 @@ interface QuestionProps {
 }
 
 export function Question({ question, onAnswer }: QuestionProps) {
-  const [showHint, setShowHint] = useState(false)
   const [canvasId, setCanvasId] = useState<string>('')
   const [useGemini, setUseGemini] = useState(false)
   const [recognizedChar, setRecognizedChar] = useState<string | null>(null)
@@ -76,19 +75,13 @@ export function Question({ question, onAnswer }: QuestionProps) {
       <div className="mb-6">
         <h2 className="text-2xl font-bold mb-4 text-center">{question.sentence}</h2>
 
-        <div className="text-center mb-4">
-          <button type="button" onClick={() => setShowHint(!showHint)} className="px-4 py-2 bg-yellow-500 text-white rounded hover:bg-yellow-600">
-            ヒント
-          </button>
-
-          {geminiAvailable && (
-            <button type="button" onClick={() => setUseGemini(!useGemini)} className="ml-2 px-4 py-2 bg-purple-500 text-white rounded hover:bg-purple-600">
+        {geminiAvailable && (
+          <div className="text-center mb-4">
+            <button type="button" onClick={() => setUseGemini(!useGemini)} className="px-4 py-2 bg-purple-500 text-white rounded hover:bg-purple-600">
               {useGemini ? 'Gemini Nano使用中' : 'KanjiCanvas使用中'}
             </button>
-          )}
-        </div>
-
-        {showHint && <div className="text-center text-gray-600 mb-4">読み: {question.hint}</div>}
+          </div>
+        )}
       </div>
 
       <WritingCanvas onImageCapture={handleImageCapture} onCanvasReady={handleCanvasReady} />

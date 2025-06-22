@@ -4,7 +4,6 @@ interface QuestionData {
   sentence: string
   kanji: string
   reading: string
-  hint: string
 }
 
 const questionData: QuestionData[] = [
@@ -12,61 +11,51 @@ const questionData: QuestionData[] = [
     sentence: '今日は{kanji}曜日です。',
     kanji: '月',
     reading: 'げつ',
-    hint: '日に似ているが、中の横線が2本',
   },
   {
     sentence: '{kanji}が東から昇る。',
     kanji: '日',
     reading: 'ひ',
-    hint: '四角の中に横線',
   },
   {
     sentence: '公園の{kanji}陰で休む。',
     kanji: '木',
     reading: 'き',
-    hint: '十の下に左右に払い',
   },
   {
     sentence: '冷たい{kanji}を飲む。',
     kanji: '水',
     reading: 'みず',
-    hint: '中央の縦線から左右に払い',
   },
   {
     sentence: '富士{kanji}に登る。',
     kanji: '山',
     reading: 'さん',
-    hint: '縦線とその左右に縦線',
   },
   {
     sentence: '国会{kanji}事堂を見学する。',
     kanji: '議',
     reading: 'ぎ',
-    hint: '言偏（ごんべん）に義',
   },
   {
     sentence: '環境を{kanji}る活動。',
     kanji: '護',
     reading: 'まも',
-    hint: '言偏（ごんべん）に蔵の右側',
   },
   {
     sentence: '{kanji}雑な問題を解く。',
     kanji: '複',
     reading: 'ふく',
-    hint: '衣偏（ころもへん）に复',
   },
   {
     sentence: '自動車を{kanji}転する。',
     kanji: '運',
     reading: 'うん',
-    hint: 'しんにょうに軍',
   },
   {
     sentence: '図書{kanji}で勉強する。',
     kanji: '館',
     reading: 'かん',
-    hint: '食偏（しょくへん）に官',
   },
 ]
 
@@ -88,7 +77,6 @@ export function KanjiFillBlank() {
   const [totalQuestions, setTotalQuestions] = useState(0)
   const [showResult, setShowResult] = useState(false)
   const [isCorrect, setIsCorrect] = useState(false)
-  const [showHint, setShowHint] = useState(false)
   const [showDebug, setShowDebug] = useState(false)
   const [debugInfo, setDebugInfo] = useState<{
     userBBox: { width: number; height: number }
@@ -117,7 +105,6 @@ export function KanjiFillBlank() {
     setTotalQuestions((prev) => prev + 1)
     setAttemptCount(0)
     setShowResult(false)
-    setShowHint(false)
     setDebugInfo(null)
   }, [])
 
@@ -351,9 +338,6 @@ export function KanjiFillBlank() {
       }
     } else {
       setIsCorrect(false)
-      if (attemptCount >= 1) {
-        setShowHint(true)
-      }
     }
   }
 
@@ -375,7 +359,6 @@ export function KanjiFillBlank() {
     setShowResult(false)
     setIsCorrect(false)
     setAttemptCount(0)
-    setShowHint(false)
     setIsGiveUp(false)
     loadRandomQuestion()
   }
@@ -495,21 +478,6 @@ export function KanjiFillBlank() {
             </button>
           )}
         </div>
-
-        {showHint && (
-          <div className="mt-5 text-center">
-            {!showResult && (
-              <button
-                type="button"
-                onClick={() => setShowHint(true)}
-                className="px-4 py-2 text-sm font-bold bg-orange-500 text-white rounded hover:bg-orange-600 transition-colors"
-              >
-                ヒントを見る
-              </button>
-            )}
-            <div className="mt-3 p-4 bg-orange-50 rounded text-orange-700 text-base">書き方のヒント: {currentQuestion.hint}</div>
-          </div>
-        )}
 
         {showResult && (
           <div

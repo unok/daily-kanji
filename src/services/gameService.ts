@@ -24,7 +24,6 @@ export function generateQuestions(_grade: number, count: number): Question[] {
       sentence: example.sentence,
       answer: example.answer,
       grade: kanjiData.grade,
-      hint: example.hint,
     })
   }
 

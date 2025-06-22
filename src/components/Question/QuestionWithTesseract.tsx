@@ -100,7 +100,7 @@ export function Question({ question, onAnswer }: QuestionProps) {
       if (kanjiMatch) {
         setRecognizedChar(kanjiMatch[0])
       } else {
-        // 認識できなかった場合、ヒントと文脈から推測
+        // 認識できなかった場合、文脈から推測
         const candidates = generateContextualCandidates(question)
         if (candidates.length > 0) {
           setRecognizedChar(candidates[0])
@@ -118,19 +118,9 @@ export function Question({ question, onAnswer }: QuestionProps) {
     }
   }
 
-  const generateContextualCandidates = (q: QuestionType): string[] => {
-    // ヒントに基づいて候補を生成
-    const hintToCandidates: { [key: string]: string[] } = {
-      ひ: ['日', '火', '陽'],
-      つき: ['月'],
-      みず: ['水'],
-      き: ['木', '気', '機'],
-      かね: ['金', '鐘'],
-      つち: ['土'],
-      // ... 他のヒントも追加
-    }
-
-    return q.hint ? hintToCandidates[q.hint] || [] : []
+  const generateContextualCandidates = (_q: QuestionType): string[] => {
+    // 文脈に基づいて候補を生成
+    return []
   }
 
   const handleSubmit = () => {
@@ -157,7 +147,6 @@ export function Question({ question, onAnswer }: QuestionProps) {
         <div className="text-2xl font-bold text-center leading-loose">
           <span>{before}</span>
           <span className="inline-block relative mx-1 align-bottom">
-            <span className="text-sm text-red-500 font-medium absolute -top-7 left-0 right-0 text-center whitespace-nowrap">{question.hint}</span>
             <span className="inline-block border-b-2 border-gray-600 px-2 pb-1" style={{ minWidth: `${blankLength * 1.5}em` }}>
               {Array(blankLength).fill('　').join('')}
             </span>

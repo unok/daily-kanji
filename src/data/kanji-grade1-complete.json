@@ -6,9 +6,18 @@
       "reading": "ひ、にち",
       "meaning": "sun, day",
       "examples": [
-        { "sentence": "朝、お〔　〕様が昇ります。", "answer": "日", "hint": "ひ" },
-        { "sentence": "今日は月曜〔　〕です。", "answer": "日", "hint": "び" },
-        { "sentence": "毎〔　〕学校に行きます。", "answer": "日", "hint": "にち" }
+        {
+          "sentence": "朝、お〔　〕様が昇ります。",
+          "answer": "日"
+        },
+        {
+          "sentence": "今日は月曜〔　〕です。",
+          "answer": "日"
+        },
+        {
+          "sentence": "毎〔　〕学校に行きます。",
+          "answer": "日"
+        }
       ]
     },
     {
@@ -16,9 +25,18 @@
       "reading": "つき、げつ",
       "meaning": "moon, month",
       "examples": [
-        { "sentence": "夜には〔　〕が出ます。", "answer": "月", "hint": "つき" },
-        { "sentence": "一〔　〕は三十一日まであります。", "answer": "月", "hint": "がつ" },
-        { "sentence": "〔　〕曜日は英語の授業です。", "answer": "月", "hint": "げつ" }
+        {
+          "sentence": "夜には〔　〕が出ます。",
+          "answer": "月"
+        },
+        {
+          "sentence": "一〔　〕は三十一日まであります。",
+          "answer": "月"
+        },
+        {
+          "sentence": "〔　〕曜日は英語の授業です。",
+          "answer": "月"
+        }
       ]
     },
     {
@@ -26,9 +44,18 @@
       "reading": "ひ、か",
       "meaning": "fire",
       "examples": [
-        { "sentence": "キャンプで〔　〕を起こします。", "answer": "火", "hint": "ひ" },
-        { "sentence": "〔　〕曜日は体育があります。", "answer": "火", "hint": "か" },
-        { "sentence": "花〔　〕を見に行きました。", "answer": "火", "hint": "び" }
+        {
+          "sentence": "キャンプで〔　〕を起こします。",
+          "answer": "火"
+        },
+        {
+          "sentence": "〔　〕曜日は体育があります。",
+          "answer": "火"
+        },
+        {
+          "sentence": "花〔　〕を見に行きました。",
+          "answer": "火"
+        }
       ]
     },
     {
@@ -36,9 +63,18 @@
       "reading": "みず、すい",
       "meaning": "water",
       "examples": [
-        { "sentence": "のどが渇いたので〔　〕を飲みます。", "answer": "水", "hint": "みず" },
-        { "sentence": "〔　〕曜日はプールの授業です。", "answer": "水", "hint": "すい" },
-        { "sentence": "金魚は〔　〕の中で泳ぎます。", "answer": "水", "hint": "みず" }
+        {
+          "sentence": "のどが渇いたので〔　〕を飲みます。",
+          "answer": "水"
+        },
+        {
+          "sentence": "〔　〕曜日はプールの授業です。",
+          "answer": "水"
+        },
+        {
+          "sentence": "金魚は〔　〕の中で泳ぎます。",
+          "answer": "水"
+        }
       ]
     },
     {
@@ -46,9 +82,18 @@
       "reading": "き、もく",
       "meaning": "tree, wood",
       "examples": [
-        { "sentence": "公園に大きな〔　〕があります。", "answer": "木", "hint": "き" },
-        { "sentence": "〔　〕曜日は音楽の時間です。", "answer": "木", "hint": "もく" },
-        { "sentence": "〔　〕登りをしました。", "answer": "木", "hint": "き" }
+        {
+          "sentence": "公園に大きな〔　〕があります。",
+          "answer": "木"
+        },
+        {
+          "sentence": "〔　〕曜日は音楽の時間です。",
+          "answer": "木"
+        },
+        {
+          "sentence": "〔　〕登りをしました。",
+          "answer": "木"
+        }
       ]
     },
     {
@@ -56,9 +101,18 @@
       "reading": "かね、きん",
       "meaning": "gold, money",
       "examples": [
-        { "sentence": "お年玉でお〔　〕をもらいました。", "answer": "金", "hint": "かね" },
-        { "sentence": "〔　〕曜日は学校が早く終わります。", "answer": "金", "hint": "きん" },
-        { "sentence": "〔　〕メダルを取りました。", "answer": "金", "hint": "きん" }
+        {
+          "sentence": "お年玉でお〔　〕をもらいました。",
+          "answer": "金"
+        },
+        {
+          "sentence": "〔　〕曜日は学校が早く終わります。",
+          "answer": "金"
+        },
+        {
+          "sentence": "〔　〕メダルを取りました。",
+          "answer": "金"
+        }
       ]
     },
     {
@@ -66,9 +120,18 @@
       "reading": "つち、ど",
       "meaning": "earth, soil",
       "examples": [
-        { "sentence": "花を植えるために〔　〕を掘ります。", "answer": "土", "hint": "つち" },
-        { "sentence": "〔　〕曜日は学校がお休みです。", "answer": "土", "hint": "ど" },
-        { "sentence": "公園の〔　〕で遊びました。", "answer": "土", "hint": "つち" }
+        {
+          "sentence": "花を植えるために〔　〕を掘ります。",
+          "answer": "土"
+        },
+        {
+          "sentence": "〔　〕曜日は学校がお休みです。",
+          "answer": "土"
+        },
+        {
+          "sentence": "公園の〔　〕で遊びました。",
+          "answer": "土"
+        }
       ]
     },
     {
@@ -76,9 +139,18 @@
       "reading": "いち、ひと",
       "meaning": "one",
       "examples": [
-        { "sentence": "りんごを〔　　〕つ食べました。", "answer": "一", "hint": "ひと" },
-        { "sentence": "〔　〕月一日はお正月です。", "answer": "一", "hint": "いち" },
-        { "sentence": "〔　〕番目の問題です。", "answer": "一", "hint": "いち" }
+        {
+          "sentence": "りんごを〔　　〕つ食べました。",
+          "answer": "一"
+        },
+        {
+          "sentence": "〔　〕月一日はお正月です。",
+          "answer": "一"
+        },
+        {
+          "sentence": "〔　〕番目の問題です。",
+          "answer": "一"
+        }
       ]
     },
     {
@@ -86,9 +158,18 @@
       "reading": "に、ふた",
       "meaning": "two",
       "examples": [
-        { "sentence": "目が〔　　〕つあります。", "answer": "二", "hint": "ふた" },
-        { "sentence": "〔　〕月は節分があります。", "answer": "二", "hint": "に" },
-        { "sentence": "〔　〕階に上がります。", "answer": "二", "hint": "に" }
+        {
+          "sentence": "目が〔　　〕つあります。",
+          "answer": "二"
+        },
+        {
+          "sentence": "〔　〕月は節分があります。",
+          "answer": "二"
+        },
+        {
+          "sentence": "〔　〕階に上がります。",
+          "answer": "二"
+        }
       ]
     },
     {
@@ -96,9 +177,18 @@
       "reading": "さん、みつ",
       "meaning": "three",
       "examples": [
-        { "sentence": "信号の色は〔　　〕つです。", "answer": "三", "hint": "みっ" },
-        { "sentence": "〔　〕月三日はひな祭りです。", "answer": "三", "hint": "さん" },
-        { "sentence": "〔　〕角形を描きました。", "answer": "三", "hint": "さん" }
+        {
+          "sentence": "信号の色は〔　　〕つです。",
+          "answer": "三"
+        },
+        {
+          "sentence": "〔　〕月三日はひな祭りです。",
+          "answer": "三"
+        },
+        {
+          "sentence": "〔　〕角形を描きました。",
+          "answer": "三"
+        }
       ]
     },
     {
@@ -106,9 +196,18 @@
       "reading": "よん、し",
       "meaning": "four",
       "examples": [
-        { "sentence": "椅子の足は〔　〕本あります。", "answer": "四", "hint": "よん" },
-        { "sentence": "〔　〕月は桜が咲きます。", "answer": "四", "hint": "し" },
-        { "sentence": "〔　〕時に起きました。", "answer": "四", "hint": "よ" }
+        {
+          "sentence": "椅子の足は〔　〕本あります。",
+          "answer": "四"
+        },
+        {
+          "sentence": "〔　〕月は桜が咲きます。",
+          "answer": "四"
+        },
+        {
+          "sentence": "〔　〕時に起きました。",
+          "answer": "四"
+        }
       ]
     },
     {
@@ -116,9 +215,18 @@
       "reading": "ご、いつ",
       "meaning": "five",
       "examples": [
-        { "sentence": "手に指が〔　〕本あります。", "answer": "五", "hint": "ご" },
-        { "sentence": "〔　〕月五日はこどもの日です。", "answer": "五", "hint": "ご" },
-        { "sentence": "午前〔　〕時に起きました。", "answer": "五", "hint": "ご" }
+        {
+          "sentence": "手に指が〔　〕本あります。",
+          "answer": "五"
+        },
+        {
+          "sentence": "〔　〕月五日はこどもの日です。",
+          "answer": "五"
+        },
+        {
+          "sentence": "午前〔　〕時に起きました。",
+          "answer": "五"
+        }
       ]
     },
     {
@@ -126,9 +234,18 @@
       "reading": "ろく、むつ",
       "meaning": "six",
       "examples": [
-        { "sentence": "サイコロの目は〔　　〕つです。", "answer": "六", "hint": "むっ" },
-        { "sentence": "〔　〕月は雨が多いです。", "answer": "六", "hint": "ろく" },
-        { "sentence": "朝〔　〕時に起きます。", "answer": "六", "hint": "ろく" }
+        {
+          "sentence": "サイコロの目は〔　　〕つです。",
+          "answer": "六"
+        },
+        {
+          "sentence": "〔　〕月は雨が多いです。",
+          "answer": "六"
+        },
+        {
+          "sentence": "朝〔　〕時に起きます。",
+          "answer": "六"
+        }
       ]
     },
     {
@@ -136,9 +253,18 @@
       "reading": "なな、しち",
       "meaning": "seven",
       "examples": [
-        { "sentence": "虹は〔　〕色です。", "answer": "七", "hint": "なな" },
-        { "sentence": "〔　〕月七日は七夕です。", "answer": "七", "hint": "しち" },
-        { "sentence": "一週間は〔　〕日です。", "answer": "七", "hint": "なの" }
+        {
+          "sentence": "虹は〔　〕色です。",
+          "answer": "七"
+        },
+        {
+          "sentence": "〔　〕月七日は七夕です。",
+          "answer": "七"
+        },
+        {
+          "sentence": "一週間は〔　〕日です。",
+          "answer": "七"
+        }
       ]
     },
     {
@@ -146,9 +272,18 @@
       "reading": "はち、やつ",
       "meaning": "eight",
       "examples": [
-        { "sentence": "タコの足は〔　〕本です。", "answer": "八", "hint": "はっ" },
-        { "sentence": "〔　〕月は夏休みです。", "answer": "八", "hint": "はち" },
-        { "sentence": "朝〔　〕時に学校に行きます。", "answer": "八", "hint": "はち" }
+        {
+          "sentence": "タコの足は〔　〕本です。",
+          "answer": "八"
+        },
+        {
+          "sentence": "〔　〕月は夏休みです。",
+          "answer": "八"
+        },
+        {
+          "sentence": "朝〔　〕時に学校に行きます。",
+          "answer": "八"
+        }
       ]
     },
     {
@@ -156,9 +291,18 @@
       "reading": "きゅう、ここの",
       "meaning": "nine",
       "examples": [
-        { "sentence": "野球は〔　〕人でします。", "answer": "九", "hint": "きゅう" },
-        { "sentence": "〔　〕月は秋の始まりです。", "answer": "九", "hint": "く" },
-        { "sentence": "〔　〕時に寝ます。", "answer": "九", "hint": "く" }
+        {
+          "sentence": "野球は〔　〕人でします。",
+          "answer": "九"
+        },
+        {
+          "sentence": "〔　〕月は秋の始まりです。",
+          "answer": "九"
+        },
+        {
+          "sentence": "〔　〕時に寝ます。",
+          "answer": "九"
+        }
       ]
     },
     {
@@ -166,9 +310,18 @@
       "reading": "じゅう、とお",
       "meaning": "ten",
       "examples": [
-        { "sentence": "両手で指は〔　　〕本です。", "answer": "十", "hint": "じゅっ" },
-        { "sentence": "〔　　〕月はハロウィンがあります。", "answer": "十", "hint": "じゅう" },
-        { "sentence": "〔　　〕円玉を使いました。", "answer": "十", "hint": "じゅう" }
+        {
+          "sentence": "両手で指は〔　　〕本です。",
+          "answer": "十"
+        },
+        {
+          "sentence": "〔　　〕月はハロウィンがあります。",
+          "answer": "十"
+        },
+        {
+          "sentence": "〔　　〕円玉を使いました。",
+          "answer": "十"
+        }
       ]
     },
     {
@@ -176,9 +329,18 @@
       "reading": "ひと、じん",
       "meaning": "person",
       "examples": [
-        { "sentence": "あの〔　〕は先生です。", "answer": "人", "hint": "ひと" },
-        { "sentence": "日本〔　〕は箸を使います。", "answer": "人", "hint": "じん" },
-        { "sentence": "大人は大人、子供は小〔　〕です。", "answer": "人", "hint": "にん" }
+        {
+          "sentence": "あの〔　〕は先生です。",
+          "answer": "人"
+        },
+        {
+          "sentence": "日本〔　〕は箸を使います。",
+          "answer": "人"
+        },
+        {
+          "sentence": "大人は大人、子供は小〔　〕です。",
+          "answer": "人"
+        }
       ]
     },
     {
@@ -186,9 +348,18 @@
       "reading": "くち、こう",
       "meaning": "mouth",
       "examples": [
-        { "sentence": "〔　〕でご飯を食べます。", "answer": "口", "hint": "くち" },
-        { "sentence": "駅の入り〔　〕はあちらです。", "answer": "口", "hint": "ぐち" },
-        { "sentence": "〔　〕を大きく開けてください。", "answer": "口", "hint": "くち" }
+        {
+          "sentence": "〔　〕でご飯を食べます。",
+          "answer": "口"
+        },
+        {
+          "sentence": "駅の入り〔　〕はあちらです。",
+          "answer": "口"
+        },
+        {
+          "sentence": "〔　〕を大きく開けてください。",
+          "answer": "口"
+        }
       ]
     },
     {
@@ -196,9 +367,18 @@
       "reading": "め、もく",
       "meaning": "eye",
       "examples": [
-        { "sentence": "〔　〕で物を見ます。", "answer": "目", "hint": "め" },
-        { "sentence": "一番〔　〕の問題です。", "answer": "目", "hint": "め" },
-        { "sentence": "〔　〕が青い人です。", "answer": "目", "hint": "め" }
+        {
+          "sentence": "〔　〕で物を見ます。",
+          "answer": "目"
+        },
+        {
+          "sentence": "一番〔　〕の問題です。",
+          "answer": "目"
+        },
+        {
+          "sentence": "〔　〕が青い人です。",
+          "answer": "目"
+        }
       ]
     },
     {
@@ -206,9 +386,18 @@
       "reading": "みみ",
       "meaning": "ear",
       "examples": [
-        { "sentence": "〔　　〕で音を聞きます。", "answer": "耳", "hint": "みみ" },
-        { "sentence": "うさぎの〔　　〕は長いです。", "answer": "耳", "hint": "みみ" },
-        { "sentence": "〔　　〕が痛いです。", "answer": "耳", "hint": "みみ" }
+        {
+          "sentence": "〔　　〕で音を聞きます。",
+          "answer": "耳"
+        },
+        {
+          "sentence": "うさぎの〔　　〕は長いです。",
+          "answer": "耳"
+        },
+        {
+          "sentence": "〔　　〕が痛いです。",
+          "answer": "耳"
+        }
       ]
     },
     {
@@ -216,9 +405,18 @@
       "reading": "て",
       "meaning": "hand",
       "examples": [
-        { "sentence": "〔　〕を洗います。", "answer": "手", "hint": "て" },
-        { "sentence": "〔　〕を挙げて質問します。", "answer": "手", "hint": "て" },
-        { "sentence": "両〔　〕で持ちます。", "answer": "手", "hint": "て" }
+        {
+          "sentence": "〔　〕を洗います。",
+          "answer": "手"
+        },
+        {
+          "sentence": "〔　〕を挙げて質問します。",
+          "answer": "手"
+        },
+        {
+          "sentence": "両〔　〕で持ちます。",
+          "answer": "手"
+        }
       ]
     },
     {
@@ -226,9 +424,18 @@
       "reading": "あし、そく",
       "meaning": "foot, leg",
       "examples": [
-        { "sentence": "〔　　〕で歩きます。", "answer": "足", "hint": "あし" },
-        { "sentence": "〔　　〕が速い人です。", "answer": "足", "hint": "あし" },
-        { "sentence": "靴下を〔　　〕に履きます。", "answer": "足", "hint": "あし" }
+        {
+          "sentence": "〔　　〕で歩きます。",
+          "answer": "足"
+        },
+        {
+          "sentence": "〔　　〕が速い人です。",
+          "answer": "足"
+        },
+        {
+          "sentence": "靴下を〔　　〕に履きます。",
+          "answer": "足"
+        }
       ]
     },
     {
@@ -236,9 +443,18 @@
       "reading": "み",
       "meaning": "see",
       "examples": [
-        { "sentence": "テレビを〔　〕ます。", "answer": "見", "hint": "み" },
-        { "sentence": "花火大会を〔　〕に行きました。", "answer": "見", "hint": "み" },
-        { "sentence": "本を〔　〕ながら勉強します。", "answer": "見", "hint": "み" }
+        {
+          "sentence": "テレビを〔　〕ます。",
+          "answer": "見"
+        },
+        {
+          "sentence": "花火大会を〔　〕に行きました。",
+          "answer": "見"
+        },
+        {
+          "sentence": "本を〔　〕ながら勉強します。",
+          "answer": "見"
+        }
       ]
     },
     {
@@ -246,9 +462,18 @@
       "reading": "おと、おん",
       "meaning": "sound",
       "examples": [
-        { "sentence": "ピアノの〔　　〕が聞こえます。", "answer": "音", "hint": "おと" },
-        { "sentence": "〔　〕楽の授業です。", "answer": "音", "hint": "おん" },
-        { "sentence": "大きな〔　　〕で話します。", "answer": "音", "hint": "おと" }
+        {
+          "sentence": "ピアノの〔　　〕が聞こえます。",
+          "answer": "音"
+        },
+        {
+          "sentence": "〔　〕楽の授業です。",
+          "answer": "音"
+        },
+        {
+          "sentence": "大きな〔　　〕で話します。",
+          "answer": "音"
+        }
       ]
     },
     {
@@ -256,9 +481,18 @@
       "reading": "ちから、りょく",
       "meaning": "power, strength",
       "examples": [
-        { "sentence": "〔　　　〕持ちの人です。", "answer": "力", "hint": "ちから" },
-        { "sentence": "全〔　　　〕で走ります。", "answer": "力", "hint": "りょく" },
-        { "sentence": "〔　　　〕を合わせて頑張ります。", "answer": "力", "hint": "ちから" }
+        {
+          "sentence": "〔　　　〕持ちの人です。",
+          "answer": "力"
+        },
+        {
+          "sentence": "全〔　　　〕で走ります。",
+          "answer": "力"
+        },
+        {
+          "sentence": "〔　　　〕を合わせて頑張ります。",
+          "answer": "力"
+        }
       ]
     },
     {
@@ -266,9 +500,18 @@
       "reading": "き",
       "meaning": "spirit, mind",
       "examples": [
-        { "sentence": "元〔　〕に挨拶します。", "answer": "気", "hint": "き" },
-        { "sentence": "〔　〕をつけて行ってきます。", "answer": "気", "hint": "き" },
-        { "sentence": "やる〔　〕が出ました。", "answer": "気", "hint": "き" }
+        {
+          "sentence": "元〔　〕に挨拶します。",
+          "answer": "気"
+        },
+        {
+          "sentence": "〔　〕をつけて行ってきます。",
+          "answer": "気"
+        },
+        {
+          "sentence": "やる〔　〕が出ました。",
+          "answer": "気"
+        }
       ]
     },
     {
@@ -276,9 +519,18 @@
       "reading": "えん、まる",
       "meaning": "circle, yen",
       "examples": [
-        { "sentence": "百〔　〕で買いました。", "answer": "円", "hint": "えん" },
-        { "sentence": "〔　　〕い形です。", "answer": "円", "hint": "まる" },
-        { "sentence": "五十〔　〕玉を使いました。", "answer": "円", "hint": "えん" }
+        {
+          "sentence": "百〔　〕で買いました。",
+          "answer": "円"
+        },
+        {
+          "sentence": "〔　　〕い形です。",
+          "answer": "円"
+        },
+        {
+          "sentence": "五十〔　〕玉を使いました。",
+          "answer": "円"
+        }
       ]
     },
     {
@@ -286,9 +538,18 @@
       "reading": "い、はい",
       "meaning": "enter",
       "examples": [
-        { "sentence": "部屋に〔　　〕ります。", "answer": "入", "hint": "はい" },
-        { "sentence": "〔　　〕学式があります。", "answer": "入", "hint": "にゅう" },
-        { "sentence": "お風呂に〔　　〕ります。", "answer": "入", "hint": "はい" }
+        {
+          "sentence": "部屋に〔　　〕ります。",
+          "answer": "入"
+        },
+        {
+          "sentence": "〔　　〕学式があります。",
+          "answer": "入"
+        },
+        {
+          "sentence": "お風呂に〔　　〕ります。",
+          "answer": "入"
+        }
       ]
     },
     {
@@ -296,9 +557,18 @@
       "reading": "で、だ",
       "meaning": "exit, go out",
       "examples": [
-        { "sentence": "外に〔　〕かけます。", "answer": "出", "hint": "で" },
-        { "sentence": "手紙を〔　〕します。", "answer": "出", "hint": "だ" },
-        { "sentence": "家を〔　〕ます。", "answer": "出", "hint": "で" }
+        {
+          "sentence": "外に〔　〕かけます。",
+          "answer": "出"
+        },
+        {
+          "sentence": "手紙を〔　〕します。",
+          "answer": "出"
+        },
+        {
+          "sentence": "家を〔　〕ます。",
+          "answer": "出"
+        }
       ]
     },
     {
@@ -306,9 +576,18 @@
       "reading": "た",
       "meaning": "stand",
       "examples": [
-        { "sentence": "〔　〕ってください。", "answer": "立", "hint": "た" },
-        { "sentence": "〔　〕ち止まります。", "answer": "立", "hint": "た" },
-        { "sentence": "気をつけの姿勢で〔　〕ちます。", "answer": "立", "hint": "た" }
+        {
+          "sentence": "〔　〕ってください。",
+          "answer": "立"
+        },
+        {
+          "sentence": "〔　〕ち止まります。",
+          "answer": "立"
+        },
+        {
+          "sentence": "気をつけの姿勢で〔　〕ちます。",
+          "answer": "立"
+        }
       ]
     },
     {
@@ -316,9 +595,18 @@
       "reading": "やす",
       "meaning": "rest",
       "examples": [
-        { "sentence": "疲れたので〔　　〕みます。", "answer": "休", "hint": "やす" },
-        { "sentence": "日曜日はお〔　　〕みです。", "answer": "休", "hint": "やす" },
-        { "sentence": "〔　　〕み時間に遊びます。", "answer": "休", "hint": "やす" }
+        {
+          "sentence": "疲れたので〔　　〕みます。",
+          "answer": "休"
+        },
+        {
+          "sentence": "日曜日はお〔　　〕みです。",
+          "answer": "休"
+        },
+        {
+          "sentence": "〔　　〕み時間に遊びます。",
+          "answer": "休"
+        }
       ]
     },
     {
@@ -326,9 +614,18 @@
       "reading": "さき、せん",
       "meaning": "ahead, previous",
       "examples": [
-        { "sentence": "〔　　〕に行きます。", "answer": "先", "hint": "さき" },
-        { "sentence": "〔　　〕生に会いました。", "answer": "先生", "hint": "せん" },
-        { "sentence": "鉛筆の〔　　〕が尖っています。", "answer": "先", "hint": "さき" }
+        {
+          "sentence": "〔　　〕に行きます。",
+          "answer": "先"
+        },
+        {
+          "sentence": "〔　　〕生に会いました。",
+          "answer": "先生"
+        },
+        {
+          "sentence": "鉛筆の〔　　〕が尖っています。",
+          "answer": "先"
+        }
       ]
     },
     {
@@ -336,9 +633,18 @@
       "reading": "ゆう",
       "meaning": "evening",
       "examples": [
-        { "sentence": "〔　　〕方になりました。", "answer": "夕", "hint": "ゆう" },
-        { "sentence": "〔　　〕焼けがきれいです。", "answer": "夕", "hint": "ゆう" },
-        { "sentence": "〔　　〕ご飯を食べます。", "answer": "夕", "hint": "ゆう" }
+        {
+          "sentence": "〔　　〕方になりました。",
+          "answer": "夕"
+        },
+        {
+          "sentence": "〔　　〕焼けがきれいです。",
+          "answer": "夕"
+        },
+        {
+          "sentence": "〔　　〕ご飯を食べます。",
+          "answer": "夕"
+        }
       ]
     },
     {
@@ -346,9 +652,18 @@
       "reading": "ほん、もと",
       "meaning": "book, origin",
       "examples": [
-        { "sentence": "〔　〕を読みます。", "answer": "本", "hint": "ほん" },
-        { "sentence": "日〔　〕語を勉強します。", "answer": "本", "hint": "ほん" },
-        { "sentence": "鉛筆を三〔　〕買いました。", "answer": "本", "hint": "ぼん" }
+        {
+          "sentence": "〔　〕を読みます。",
+          "answer": "本"
+        },
+        {
+          "sentence": "日〔　〕語を勉強します。",
+          "answer": "本"
+        },
+        {
+          "sentence": "鉛筆を三〔　〕買いました。",
+          "answer": "本"
+        }
       ]
     },
     {
@@ -356,9 +671,18 @@
       "reading": "ぶん、もん",
       "meaning": "sentence, writing",
       "examples": [
-        { "sentence": "作〔　〕を書きます。", "answer": "文", "hint": "ぶん" },
-        { "sentence": "〔　〕章を読みます。", "answer": "文", "hint": "ぶん" },
-        { "sentence": "感〔　〕を作ります。", "answer": "文", "hint": "ぶん" }
+        {
+          "sentence": "作〔　〕を書きます。",
+          "answer": "文"
+        },
+        {
+          "sentence": "〔　〕章を読みます。",
+          "answer": "文"
+        },
+        {
+          "sentence": "感〔　〕を作ります。",
+          "answer": "文"
+        }
       ]
     },
     {
@@ -366,9 +690,18 @@
       "reading": "じ",
       "meaning": "character, letter",
       "examples": [
-        { "sentence": "漢〔　〕を書きます。", "answer": "字", "hint": "じ" },
-        { "sentence": "〔　〕をきれいに書きます。", "answer": "字", "hint": "じ" },
-        { "sentence": "名前の〔　〕を教えてください。", "answer": "字", "hint": "じ" }
+        {
+          "sentence": "漢〔　〕を書きます。",
+          "answer": "字"
+        },
+        {
+          "sentence": "〔　〕をきれいに書きます。",
+          "answer": "字"
+        },
+        {
+          "sentence": "名前の〔　〕を教えてください。",
+          "answer": "字"
+        }
       ]
     },
     {
@@ -376,9 +709,18 @@
       "reading": "がく、まな",
       "meaning": "study, school",
       "examples": [
-        { "sentence": "〔　　〕校に行きます。", "answer": "学校", "hint": "がっ" },
-        { "sentence": "数学を〔　　〕びます。", "answer": "学", "hint": "まな" },
-        { "sentence": "大〔　〕生です。", "answer": "学", "hint": "がく" }
+        {
+          "sentence": "〔　　〕校に行きます。",
+          "answer": "学校"
+        },
+        {
+          "sentence": "数学を〔　　〕びます。",
+          "answer": "学"
+        },
+        {
+          "sentence": "大〔　〕生です。",
+          "answer": "学"
+        }
       ]
     },
     {
@@ -386,9 +728,18 @@
       "reading": "こう",
       "meaning": "school",
       "examples": [
-        { "sentence": "学〔　〕に行きます。", "answer": "校", "hint": "こう" },
-        { "sentence": "〔　〕庭で遊びます。", "answer": "校", "hint": "こう" },
-        { "sentence": "〔　〕長先生です。", "answer": "校", "hint": "こう" }
+        {
+          "sentence": "学〔　〕に行きます。",
+          "answer": "校"
+        },
+        {
+          "sentence": "〔　〕庭で遊びます。",
+          "answer": "校"
+        },
+        {
+          "sentence": "〔　〕長先生です。",
+          "answer": "校"
+        }
       ]
     },
     {
@@ -396,9 +747,18 @@
       "reading": "むら、そん",
       "meaning": "village",
       "examples": [
-        { "sentence": "小さな〔　　〕に住んでいます。", "answer": "村", "hint": "むら" },
-        { "sentence": "〔　　〕の人はみんな知り合いです。", "answer": "村", "hint": "むら" },
-        { "sentence": "山の〔　　〕で育ちました。", "answer": "村", "hint": "むら" }
+        {
+          "sentence": "小さな〔　　〕に住んでいます。",
+          "answer": "村"
+        },
+        {
+          "sentence": "〔　　〕の人はみんな知り合いです。",
+          "answer": "村"
+        },
+        {
+          "sentence": "山の〔　　〕で育ちました。",
+          "answer": "村"
+        }
       ]
     },
     {
@@ -406,9 +766,18 @@
       "reading": "まち、ちょう",
       "meaning": "town",
       "examples": [
-        { "sentence": "〔　　〕で買い物をします。", "answer": "町", "hint": "まち" },
-        { "sentence": "この〔　　〕は静かです。", "answer": "町", "hint": "まち" },
-        { "sentence": "〔　　〕中を散歩します。", "answer": "町", "hint": "まち" }
+        {
+          "sentence": "〔　　〕で買い物をします。",
+          "answer": "町"
+        },
+        {
+          "sentence": "この〔　　〕は静かです。",
+          "answer": "町"
+        },
+        {
+          "sentence": "〔　　〕中を散歩します。",
+          "answer": "町"
+        }
       ]
     },
     {
@@ -416,9 +785,18 @@
       "reading": "もり",
       "meaning": "forest",
       "examples": [
-        { "sentence": "〔　　〕の中を歩きます。", "answer": "森", "hint": "もり" },
-        { "sentence": "〔　　〕に動物がいます。", "answer": "森", "hint": "もり" },
-        { "sentence": "大きな〔　　〕があります。", "answer": "森", "hint": "もり" }
+        {
+          "sentence": "〔　　〕の中を歩きます。",
+          "answer": "森"
+        },
+        {
+          "sentence": "〔　　〕に動物がいます。",
+          "answer": "森"
+        },
+        {
+          "sentence": "大きな〔　　〕があります。",
+          "answer": "森"
+        }
       ]
     },
     {
@@ -426,9 +804,18 @@
       "reading": "ただ、せい",
       "meaning": "correct",
       "examples": [
-        { "sentence": "〔　　　〕しい答えです。", "answer": "正", "hint": "ただ" },
-        { "sentence": "お〔　　　〕月です。", "answer": "正", "hint": "しょう" },
-        { "sentence": "〔　　〕確に書きます。", "answer": "正", "hint": "せい" }
+        {
+          "sentence": "〔　　　〕しい答えです。",
+          "answer": "正"
+        },
+        {
+          "sentence": "お〔　　　〕月です。",
+          "answer": "正"
+        },
+        {
+          "sentence": "〔　　〕確に書きます。",
+          "answer": "正"
+        }
       ]
     },
     {
@@ -436,9 +823,18 @@
       "reading": "てん、あま",
       "meaning": "heaven, sky",
       "examples": [
-        { "sentence": "〔　〕気がいいです。", "answer": "天", "hint": "てん" },
-        { "sentence": "〔　〕に星が見えます。", "answer": "天", "hint": "てん" },
-        { "sentence": "〔　　〕の川がきれいです。", "answer": "天", "hint": "あま" }
+        {
+          "sentence": "〔　〕気がいいです。",
+          "answer": "天"
+        },
+        {
+          "sentence": "〔　〕に星が見えます。",
+          "answer": "天"
+        },
+        {
+          "sentence": "〔　　〕の川がきれいです。",
+          "answer": "天"
+        }
       ]
     },
     {
@@ -446,9 +842,18 @@
       "reading": "あめ、う",
       "meaning": "rain",
       "examples": [
-        { "sentence": "〔　　〕が降っています。", "answer": "雨", "hint": "あめ" },
-        { "sentence": "〔　　〕雲が出ています。", "answer": "雨", "hint": "あま" },
-        { "sentence": "傘をさして〔　　〕を避けます。", "answer": "雨", "hint": "あめ" }
+        {
+          "sentence": "〔　　〕が降っています。",
+          "answer": "雨"
+        },
+        {
+          "sentence": "〔　　〕雲が出ています。",
+          "answer": "雨"
+        },
+        {
+          "sentence": "傘をさして〔　　〕を避けます。",
+          "answer": "雨"
+        }
       ]
     },
     {
@@ -456,9 +861,18 @@
       "reading": "はな",
       "meaning": "flower",
       "examples": [
-        { "sentence": "きれいな〔　　〕が咲きました。", "answer": "花", "hint": "はな" },
-        { "sentence": "〔　　〕瓶に生けます。", "answer": "花", "hint": "はな" },
-        { "sentence": "〔　　〕屋で買いました。", "answer": "花", "hint": "はな" }
+        {
+          "sentence": "きれいな〔　　〕が咲きました。",
+          "answer": "花"
+        },
+        {
+          "sentence": "〔　　〕瓶に生けます。",
+          "answer": "花"
+        },
+        {
+          "sentence": "〔　　〕屋で買いました。",
+          "answer": "花"
+        }
       ]
     },
     {
@@ -466,9 +880,18 @@
       "reading": "くさ",
       "meaning": "grass",
       "examples": [
-        { "sentence": "〔　　〕が生えています。", "answer": "草", "hint": "くさ" },
-        { "sentence": "〔　　〕むしりをします。", "answer": "草", "hint": "くさ" },
-        { "sentence": "緑の〔　　〕がきれいです。", "answer": "草", "hint": "くさ" }
+        {
+          "sentence": "〔　　〕が生えています。",
+          "answer": "草"
+        },
+        {
+          "sentence": "〔　　〕むしりをします。",
+          "answer": "草"
+        },
+        {
+          "sentence": "緑の〔　　〕がきれいです。",
+          "answer": "草"
+        }
       ]
     },
     {
@@ -476,9 +899,18 @@
       "reading": "むし",
       "meaning": "insect",
       "examples": [
-        { "sentence": "〔　　〕を捕まえました。", "answer": "虫", "hint": "むし" },
-        { "sentence": "夏には〔　　〕が多いです。", "answer": "虫", "hint": "むし" },
-        { "sentence": "〔　　〕かごに入れます。", "answer": "虫", "hint": "むし" }
+        {
+          "sentence": "〔　　〕を捕まえました。",
+          "answer": "虫"
+        },
+        {
+          "sentence": "夏には〔　　〕が多いです。",
+          "answer": "虫"
+        },
+        {
+          "sentence": "〔　　〕かごに入れます。",
+          "answer": "虫"
+        }
       ]
     },
     {
@@ -486,9 +918,18 @@
       "reading": "いぬ、けん",
       "meaning": "dog",
       "examples": [
-        { "sentence": "〔　　〕を飼っています。", "answer": "犬", "hint": "いぬ" },
-        { "sentence": "〔　　〕が吠えています。", "answer": "犬", "hint": "いぬ" },
-        { "sentence": "かわいい〔　　〕です。", "answer": "犬", "hint": "いぬ" }
+        {
+          "sentence": "〔　　〕を飼っています。",
+          "answer": "犬"
+        },
+        {
+          "sentence": "〔　　〕が吠えています。",
+          "answer": "犬"
+        },
+        {
+          "sentence": "かわいい〔　　〕です。",
+          "answer": "犬"
+        }
       ]
     },
     {
@@ -496,9 +937,18 @@
       "reading": "あか",
       "meaning": "red",
       "examples": [
-        { "sentence": "〔　　〕いりんごです。", "answer": "赤", "hint": "あか" },
-        { "sentence": "信号が〔　〕です。", "answer": "赤", "hint": "あか" },
-        { "sentence": "〔　　〕ちゃんが生まれました。", "answer": "赤", "hint": "あか" }
+        {
+          "sentence": "〔　　〕いりんごです。",
+          "answer": "赤"
+        },
+        {
+          "sentence": "信号が〔　〕です。",
+          "answer": "赤"
+        },
+        {
+          "sentence": "〔　　〕ちゃんが生まれました。",
+          "answer": "赤"
+        }
       ]
     },
     {
@@ -506,9 +956,18 @@
       "reading": "あお",
       "meaning": "blue",
       "examples": [
-        { "sentence": "空が〔　　〕いです。", "answer": "青", "hint": "あお" },
-        { "sentence": "〔　　〕い海です。", "answer": "青", "hint": "あお" },
-        { "sentence": "信号が〔　〕になりました。", "answer": "青", "hint": "あお" }
+        {
+          "sentence": "空が〔　　〕いです。",
+          "answer": "青"
+        },
+        {
+          "sentence": "〔　　〕い海です。",
+          "answer": "青"
+        },
+        {
+          "sentence": "信号が〔　〕になりました。",
+          "answer": "青"
+        }
       ]
     },
     {
@@ -516,9 +975,18 @@
       "reading": "しろ",
       "meaning": "white",
       "examples": [
-        { "sentence": "〔　　〕い雪が降りました。", "answer": "白", "hint": "しろ" },
-        { "sentence": "〔　　〕い雲です。", "answer": "白", "hint": "しろ" },
-        { "sentence": "〔　　〕い紙に書きます。", "answer": "白", "hint": "しろ" }
+        {
+          "sentence": "〔　　〕い雪が降りました。",
+          "answer": "白"
+        },
+        {
+          "sentence": "〔　　〕い雲です。",
+          "answer": "白"
+        },
+        {
+          "sentence": "〔　　〕い紙に書きます。",
+          "answer": "白"
+        }
       ]
     }
   ]
