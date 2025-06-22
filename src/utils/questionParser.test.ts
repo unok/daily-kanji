@@ -103,6 +103,59 @@ describe('questionParser', () => {
         groupSize: 1,
       })
     })
+
+    it('同じ問題文で2セットまでに制限し、間に文字を挟む', () => {
+      const result = parseQuestion('[病気|びょうき]で[病気|びょうき]になった[病気|びょうき]の人')
+
+      // 3つ目の[病気|びょうき]は無視され、2セットのみ処理される
+      expect(result.displaySentence).toBe('〔　〕〔　〕で〔　〕〔　〕になった[病気|びょうき]の人')
+      expect(result.inputs).toHaveLength(4) // 2セット × 2文字 = 4
+
+      // 1セット目
+      expect(result.inputs[0]).toEqual({
+        kanji: '病',
+        reading: 'びょうき',
+        position: 0,
+        index: 0,
+        groupId: 0,
+        isGroupStart: true,
+        groupSize: 2,
+      })
+      expect(result.inputs[1]).toEqual({
+        kanji: '気',
+        reading: '',
+        position: 1,
+        index: 1,
+        groupId: 0,
+        isGroupStart: false,
+        groupSize: 2,
+      })
+
+      // 2セット目
+      expect(result.inputs[2]).toEqual({
+        kanji: '病',
+        reading: 'びょうき',
+        position: 10,
+        index: 2,
+        groupId: 1,
+        isGroupStart: true,
+        groupSize: 2,
+      })
+      expect(result.inputs[3]).toEqual({
+        kanji: '気',
+        reading: '',
+        position: 11,
+        index: 3,
+        groupId: 1,
+        isGroupStart: false,
+        groupSize: 2,
+      })
+    })
+
+    it('入力の間に文字がない場合はエラーにする', () => {
+      // 連続して同じ入力が来る場合
+      expect(() => parseQuestion('[今日|きょう][今日|きょう]の天気')).toThrow('同じ入力欄が連続しています')
+    })
   })
 
   describe('calculateInputWidth', () => {

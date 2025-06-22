@@ -11,9 +11,11 @@
     "lint:check": "biome check .",
     "preview": "vite preview",
     "all:check": "run-s lint lint:check lint:fix test:ui build",
-    "test": "vitest",
+    "test": "vitest --run",
     "test:ui": "vitest --run",
-    "prepare": "husky"
+    "prepare": "husky",
+    "validate": "tsx src/scripts/validateAllRequirements.ts",
+    "validate:all": "run-s test:ui validate"
   },
   "dependencies": {
     "@biomejs/biome": "^2.0.0",

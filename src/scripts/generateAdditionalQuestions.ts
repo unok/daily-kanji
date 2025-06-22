@@ -1,8 +1,7 @@
 import { readFileSync, writeFileSync } from 'node:fs'
 
-import { EDUCATION_KANJI } from '../data/education-kanji'
-import { getQuestionsByDifficulty } from '../services/questionService'
-import type { QuestionInput } from '../types/question'
+import { EDUCATION_KANJI } from '../data/kanji-lists/education-kanji'
+import { type DifficultyLevel, getQuestionsByDifficulty } from '../services/questionService'
 
 // 使用回数が少ない漢字を特定して追加問題を生成
 function generateAdditionalQuestions() {
@@ -10,18 +9,18 @@ function generateAdditionalQuestions() {
 
   // 現在の使用回数をカウント
   for (let grade = 1; grade <= 6; grade++) {
-    const questions = getQuestionsByDifficulty(`elementary${grade}` as any)
+    const questions = getQuestionsByDifficulty(`elementary${grade}` as DifficultyLevel)
 
-    questions.forEach((question) => {
-      question.inputs.forEach((input: QuestionInput) => {
+    for (const question of questions) {
+      for (const input of question.inputs) {
         if (input.kanji) {
           const kanjiInAnswer = input.kanji.match(/[\u4E00-\u9FAF]/g) || []
-          kanjiInAnswer.forEach((k) => {
+          for (const k of kanjiInAnswer) {
             allKanjiCount.set(k, (allKanjiCount.get(k) || 0) + 1)
-          })
+          }
         }
-      })
-    })
+      }
+    }
   }
 
   // 各学年で5回未満の漢字を特定
@@ -29,26 +28,26 @@ function generateAdditionalQuestions() {
     const targetKanji = EDUCATION_KANJI[grade as keyof typeof EDUCATION_KANJI]
     const underrepresented: { kanji: string; count: number }[] = []
 
-    targetKanji.forEach((kanji) => {
+    for (const kanji of targetKanji) {
       const count = allKanjiCount.get(kanji) || 0
       if (count < 5) {
         underrepresented.push({ kanji, count })
       }
-    })
+    }
 
     if (underrepresented.length === 0) continue
 
     // 既存のファイルを読み込み
-    const filePath = `/home/unok/git/daily-kanji/daily-kanji/src/data/questions-elementary${grade}.json`
+    const filePath = `/home/unok/git/daily-kanji/daily-kanji/src/data/questions/questions-elementary${grade}.json`
     const data = JSON.parse(readFileSync(filePath, 'utf8'))
     const existingCount = data.questions.length
 
     // 追加する問題を生成
-    const additionalQuestions: any[] = []
+    const additionalQuestions: { id: string; sentence: string }[] = []
     let questionId = existingCount + 1
 
     // 各漢字について、5回になるまで問題を追加
-    underrepresented.forEach(({ kanji, count }) => {
+    for (const { kanji, count } of underrepresented) {
       const needed = 5 - count
       for (let i = 0; i < needed; i++) {
         additionalQuestions.push({
@@ -56,7 +55,7 @@ function generateAdditionalQuestions() {
           sentence: generateSentence(kanji, grade),
         })
       }
-    })
+    }
 
     // ファイルを更新
     data.questions = [...data.questions, ...additionalQuestions]

@@ -1,12 +1,12 @@
-import questionsElementary from '../data/questions-elementary.json'
-import questionsElementary1 from '../data/questions-elementary1.json'
-import questionsElementary2 from '../data/questions-elementary2.json'
-import questionsElementary3 from '../data/questions-elementary3.json'
-import questionsElementary4 from '../data/questions-elementary4.json'
-import questionsElementary5 from '../data/questions-elementary5.json'
-import questionsElementary6 from '../data/questions-elementary6.json'
-import questionsJunior from '../data/questions-junior.json'
-import questionsSenior from '../data/questions-senior.json'
+import questionsElementary from '../data/questions/questions-elementary.json'
+import questionsElementary1 from '../data/questions/questions-elementary1.json'
+import questionsElementary2 from '../data/questions/questions-elementary2.json'
+import questionsElementary3 from '../data/questions/questions-elementary3.json'
+import questionsElementary4 from '../data/questions/questions-elementary4.json'
+import questionsElementary5 from '../data/questions/questions-elementary5.json'
+import questionsElementary6 from '../data/questions/questions-elementary6.json'
+import questionsJunior from '../data/questions/questions-junior.json'
+import questionsSenior from '../data/questions/questions-senior.json'
 import type { QuestionData } from '../types/question'
 import { parseQuestion } from '../utils/questionParser'
 
@@ -69,9 +69,9 @@ export function getRandomQuestion(difficulty: DifficultyLevel): QuestionData {
  */
 export function getQuestionCounts(): Record<string, number> {
   const counts: Record<string, number> = {}
-  Object.entries(questionSets).forEach(([key, set]) => {
+  for (const [key, set] of Object.entries(questionSets)) {
     counts[key] = set.questions.length
-  })
+  }
   return counts
 }
 

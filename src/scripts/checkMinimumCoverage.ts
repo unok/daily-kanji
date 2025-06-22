@@ -1,4 +1,4 @@
-import { EDUCATION_KANJI } from '../data/education-kanji'
+import { EDUCATION_KANJI } from '../data/kanji-lists/education-kanji'
 import { type DifficultyLevel, getQuestionsByDifficulty } from '../services/questionService'
 
 // 5回未満の漢字を特定

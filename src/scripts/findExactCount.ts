@@ -1,4 +1,4 @@
-import { EDUCATION_KANJI } from '../data/education-kanji'
+import { EDUCATION_KANJI } from '../data/kanji-lists/education-kanji'
 import { type DifficultyLevel, getQuestionsByDifficulty } from '../services/questionService'
 
 // 特定の回数の漢字を見つける

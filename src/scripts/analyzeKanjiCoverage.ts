@@ -1,6 +1,5 @@
-import { EDUCATION_KANJI } from '../data/education-kanji'
-import { getQuestionsByDifficulty } from '../services/questionService'
-import type { QuestionInput } from '../types/question'
+import { EDUCATION_KANJI } from '../data/kanji-lists/education-kanji'
+import { type DifficultyLevel, getQuestionsByDifficulty } from '../services/questionService'
 
 // 各学年の漢字出現回数を分析
 function analyzeKanjiCoverage() {
@@ -9,20 +8,20 @@ function analyzeKanjiCoverage() {
 
   // 各学年の分析
   for (let grade = 1; grade <= 6; grade++) {
-    const questions = getQuestionsByDifficulty(`elementary${grade}` as any)
+    const questions = getQuestionsByDifficulty(`elementary${grade}` as DifficultyLevel)
     const kanjiCount = new Map<string, number>()
 
-    questions.forEach((question) => {
-      question.inputs.forEach((input: QuestionInput) => {
+    for (const question of questions) {
+      for (const input of question.inputs) {
         if (input.kanji) {
           const kanjiInAnswer = input.kanji.match(/[\u4E00-\u9FAF]/g) || []
-          kanjiInAnswer.forEach((k) => {
+          for (const k of kanjiInAnswer) {
             kanjiCount.set(k, (kanjiCount.get(k) || 0) + 1)
             allKanjiCount.set(k, (allKanjiCount.get(k) || 0) + 1)
-          })
+          }
         }
-      })
-    })
+      }
+    }
 
     gradeKanjiUsage[grade] = kanjiCount
   }
@@ -34,14 +33,14 @@ function analyzeKanjiCoverage() {
     const missingKanji: string[] = []
     const underrepresentedKanji: { kanji: string; count: number }[] = []
 
-    targetKanji.forEach((kanji) => {
+    for (const kanji of targetKanji) {
       const count = usedKanji.get(kanji) || 0
       if (count === 0) {
         missingKanji.push(kanji)
       } else if (count < 5) {
         underrepresentedKanji.push({ kanji, count })
       }
-    })
+    }
     if (missingKanji.length > 0) {
     }
     if (underrepresentedKanji.length > 0) {

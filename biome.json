@@ -4,6 +4,19 @@
     "includes": ["src/**/*", "*.js", "*.ts", "*.tsx", "*.json", "*.md"],
     "maxSize": 1048576
   },
+  "overrides": [
+    {
+      "includes": ["src/scripts/validateAllRequirements.ts", "src/scripts/addMissingKanjiQuestions.ts", "src/scripts/simplifyMissingKanji.ts"],
+      "linter": {
+        "rules": {
+          "suspicious": {
+            "noConsole": "off",
+            "noAssignInExpressions": "off"
+          }
+        }
+      }
+    }
+  ],
   "assist": {
     "actions": {
       "source": {

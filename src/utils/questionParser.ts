@@ -20,16 +20,44 @@ export function parseQuestion(originalSentence: string): ParseResult {
     match = pattern.exec(originalSentence)
   }
 
+  // 同じ入力欄の出現回数をカウント
+  const inputCounts = new Map<string, number>()
+  const processedMatches: RegExpExecArray[] = []
+
+  // 連続チェックと2セット制限
+  for (let i = 0; i < matches.length; i++) {
+    const m = matches[i]
+    const key = `${m[1]}|${m[2]}`
+
+    // 連続する同じ入力欄をチェック
+    if (i > 0) {
+      const prevMatch = matches[i - 1]
+      const prevKey = `${prevMatch[1]}|${prevMatch[2]}`
+      // 前の入力欄の終了位置と現在の入力欄の開始位置が隣接している場合
+      if (prevKey === key && prevMatch.index + prevMatch[0].length === m.index) {
+        throw new Error('同じ入力欄が連続しています')
+      }
+    }
+
+    // 同じ入力欄は2セットまで
+    const count = (inputCounts.get(key) || 0) + 1
+    if (count <= 2) {
+      inputCounts.set(key, count)
+      processedMatches.push(m)
+    }
+  }
+
   // まず入力欄情報を順番に保存（複数文字の場合は一文字ずつ分割）
   let inputIndex = 0
   let groupId = 0
-  for (const m of matches) {
+  for (const m of processedMatches) {
     const kanjiChars = m[1].split('')
     const reading = m[2]
     const groupSize = kanjiChars.length
 
     // 複数文字の場合、各文字に対して入力欄を作成
-    kanjiChars.forEach((kanji, charIndex) => {
+    for (let charIndex = 0; charIndex < kanjiChars.length; charIndex++) {
+      const kanji = kanjiChars[charIndex]
       inputs.push({
         kanji: kanji,
         reading: charIndex === 0 ? reading : '', // 読みは最初の文字にのみ設定
@@ -39,13 +67,13 @@ export function parseQuestion(originalSentence: string): ParseResult {
         isGroupStart: charIndex === 0,
         groupSize: groupSize,
       })
-    })
+    }
     groupId++
   }
 
   // 後ろから置換していく（インデックスがずれないように）
-  for (let i = matches.length - 1; i >= 0; i--) {
-    const m = matches[i]
+  for (let i = processedMatches.length - 1; i >= 0; i--) {
+    const m = processedMatches[i]
     const kanjiChars = m[1].split('')
     const startPos = m.index
 

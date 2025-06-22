@@ -1,7 +1,6 @@
 import { readFileSync, writeFileSync } from 'node:fs'
 
 import { getQuestionsByDifficulty } from '../services/questionService'
-import type { QuestionInput } from '../types/question'
 
 // 高校の問題を各漢字5回以上になるまで拡張
 function expandSeniorQuestions() {
@@ -9,36 +8,36 @@ function expandSeniorQuestions() {
   const kanjiCount = new Map<string, number>()
 
   // 現在の漢字使用回数をカウント
-  questions.forEach((question) => {
-    question.inputs.forEach((input: QuestionInput) => {
+  for (const question of questions) {
+    for (const input of question.inputs) {
       if (input.kanji) {
         const kanjiInAnswer = input.kanji.match(/[\u4E00-\u9FAF]/g) || []
-        kanjiInAnswer.forEach((k) => {
+        for (const k of kanjiInAnswer) {
           kanjiCount.set(k, (kanjiCount.get(k) || 0) + 1)
-        })
+        }
       }
-    })
-  })
+    }
+  }
 
   // 5回未満の漢字を特定
   const underrepresented: { kanji: string; count: number; needed: number }[] = []
-  kanjiCount.forEach((count, kanji) => {
+  for (const [kanji, count] of kanjiCount) {
     if (count < 5) {
       underrepresented.push({ kanji, count, needed: 5 - count })
     }
-  })
+  }
 
-  const _totalNeeded = underrepresented.reduce((sum, item) => sum + item.needed, 0)
+  // const _totalNeeded = underrepresented.reduce((sum, item) => sum + item.needed, 0)
 
   // 既存ファイルを読み込み
-  const filePath = '/home/unok/git/daily-kanji/daily-kanji/src/data/questions-senior.json'
+  const filePath = '/home/unok/git/daily-kanji/daily-kanji/src/data/questions/questions-senior.json'
   const data = JSON.parse(readFileSync(filePath, 'utf8'))
 
   let questionId = data.questions.length + 1
-  const additionalQuestions: any[] = []
+  const additionalQuestions: { id: string; sentence: string }[] = []
 
   // 各漢字について、5回になるまで問題を追加
-  underrepresented.forEach(({ kanji, needed }) => {
+  for (const { kanji, needed } of underrepresented) {
     for (let i = 0; i < needed; i++) {
       additionalQuestions.push({
         id: `sen-${questionId.toString().padStart(3, '0')}`,
@@ -46,7 +45,7 @@ function expandSeniorQuestions() {
       })
       questionId++
     }
-  })
+  }
 
   // ファイルを更新
   data.questions = [...data.questions, ...additionalQuestions]
