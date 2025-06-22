@@ -6,12 +6,21 @@
   },
   "overrides": [
     {
-      "includes": ["src/scripts/validateAllRequirements.ts", "src/scripts/addMissingKanjiQuestions.ts", "src/scripts/simplifyMissingKanji.ts"],
+      "includes": [
+        "src/scripts/validateAllRequirements.ts",
+        "src/scripts/addMissingKanjiQuestions.ts",
+        "src/scripts/simplifyMissingKanji.ts",
+        "src/scripts/addGradeQuestions.ts",
+        "src/scripts/analyzeSpecificGrade.ts"
+      ],
       "linter": {
         "rules": {
           "suspicious": {
             "noConsole": "off",
             "noAssignInExpressions": "off"
+          },
+          "complexity": {
+            "noForEach": "off"
           }
         }
       }

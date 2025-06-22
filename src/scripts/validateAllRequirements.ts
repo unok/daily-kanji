@@ -2,7 +2,7 @@
 
 import { readFileSync } from 'node:fs'
 
-import { getAllElementaryKanji } from '../data/kanji-lists/education-kanji'
+import { getKanjiByGrade } from '../data/kanji-lists/education-kanji'
 import { ACTUAL_JUNIOR_KANJI, ACTUAL_SENIOR_KANJI } from '../data/kanji-lists/jouyou-kanji'
 import { parseQuestion } from '../utils/questionParser'
 
@@ -27,7 +27,7 @@ function validateKanjiCoverage(): ValidationResult {
   // 小学校の検証
   for (let grade = 1; grade <= 6; grade++) {
     const questions = loadQuestions(`elementary${grade}`)
-    const targetKanji = getAllElementaryKanji()[grade - 1]
+    const targetKanji = getKanjiByGrade(grade)
     const usedKanji = new Set<string>()
 
     for (const question of questions) {
