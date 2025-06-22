@@ -142,7 +142,7 @@ export function KanjiFillBlankNew({ difficulty = 'elementary', onSessionComplete
 
         {/* 問題文表示エリア */}
         <div className="bg-gray-50 p-8 rounded-lg mb-8">
-          <div className="text-2xl text-gray-800 text-center inline-flex flex-wrap items-center justify-center" style={{ minHeight: '4rem' }}>
+          <div className="text-2xl text-gray-800 text-center flex flex-wrap items-center justify-center mx-auto" style={{ minHeight: '4rem' }}>
             {(() => {
               const elements: JSX.Element[] = []
               const skipIndices = new Set<number>()
