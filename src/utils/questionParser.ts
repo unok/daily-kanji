@@ -23,7 +23,7 @@ export function parseQuestion(originalSentence: string): ParseResult {
   // まず入力欄情報を順番に保存（複数文字の場合は一文字ずつ分割）
   let inputIndex = 0
   let groupId = 0
-  matches.forEach((m) => {
+  for (const m of matches) {
     const kanjiChars = m[1].split('')
     const reading = m[2]
     const groupSize = kanjiChars.length
@@ -41,7 +41,7 @@ export function parseQuestion(originalSentence: string): ParseResult {
       })
     })
     groupId++
-  })
+  }
 
   // 後ろから置換していく（インデックスがずれないように）
   for (let i = matches.length - 1; i >= 0; i--) {
