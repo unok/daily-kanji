@@ -1,4 +1,4 @@
-import { fireEvent, render, screen } from '@testing-library/react'
+import { render, screen } from '@testing-library/react'
 import { Provider } from 'jotai'
 import { describe, expect, it, vi } from 'vitest'
 
@@ -21,7 +21,6 @@ describe('Question', () => {
 
     expect(screen.getByText('□きな犬')).toBeInTheDocument()
   })
-
 
   it('手書きキャンバスが表示される', () => {
     render(

@@ -5,6 +5,9 @@ export interface KanjiInput {
   reading: string // 読み方
   position: number // 文章内の位置（何文字目か）
   index: number // 入力欄のインデックス（0から始まる）
+  groupId?: number // 同じグループの入力欄（例：「病気」の「病」と「気」）
+  isGroupStart?: boolean // グループの最初かどうか
+  groupSize?: number // グループのサイズ
 }
 
 export interface QuestionData {

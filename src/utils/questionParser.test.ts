@@ -4,35 +4,71 @@ import { calculateInputWidth, parseQuestion, splitDisplaySentence } from './ques
 
 describe('questionParser', () => {
   describe('parseQuestion', () => {
-    it('単一の入力欄を正しくパースする', () => {
+    it('単一の入力欄を正しくパースする（複数文字は一文字ずつ分割）', () => {
       const result = parseQuestion('本日は[晴天|せいてん]なり')
 
-      expect(result.displaySentence).toBe('本日は〔　　〕なり')
-      expect(result.inputs).toHaveLength(1)
+      expect(result.displaySentence).toBe('本日は〔　〕〔　〕なり')
+      expect(result.inputs).toHaveLength(2)
       expect(result.inputs[0]).toEqual({
-        kanji: '晴天',
+        kanji: '晴',
         reading: 'せいてん',
         position: 3,
         index: 0,
+        groupId: 0,
+        isGroupStart: true,
+        groupSize: 2,
+      })
+      expect(result.inputs[1]).toEqual({
+        kanji: '天',
+        reading: '',
+        position: 4,
+        index: 1,
+        groupId: 0,
+        isGroupStart: false,
+        groupSize: 2,
       })
     })
 
     it('複数の入力欄を正しくパースする', () => {
       const result = parseQuestion('[今日|きょう]は[晴天|せいてん]なり')
 
-      expect(result.displaySentence).toBe('〔　　〕は〔　　〕なり')
-      expect(result.inputs).toHaveLength(2)
+      expect(result.displaySentence).toBe('〔　〕〔　〕は〔　〕〔　〕なり')
+      expect(result.inputs).toHaveLength(4)
       expect(result.inputs[0]).toEqual({
-        kanji: '今日',
+        kanji: '今',
         reading: 'きょう',
         position: 0,
         index: 0,
+        groupId: 0,
+        isGroupStart: true,
+        groupSize: 2,
       })
       expect(result.inputs[1]).toEqual({
-        kanji: '晴天',
+        kanji: '日',
+        reading: '',
+        position: 1,
+        index: 1,
+        groupId: 0,
+        isGroupStart: false,
+        groupSize: 2,
+      })
+      expect(result.inputs[2]).toEqual({
+        kanji: '晴',
         reading: 'せいてん',
         position: 9,
-        index: 1,
+        index: 2,
+        groupId: 1,
+        isGroupStart: true,
+        groupSize: 2,
+      })
+      expect(result.inputs[3]).toEqual({
+        kanji: '天',
+        reading: '',
+        position: 10,
+        index: 3,
+        groupId: 1,
+        isGroupStart: false,
+        groupSize: 2,
       })
     })
 
@@ -46,8 +82,26 @@ describe('questionParser', () => {
     it('1文字の漢字も正しく処理する', () => {
       const result = parseQuestion('[今|いま]、[雨|あめ]が降る')
 
-      expect(result.displaySentence).toBe('〔　　〕、〔　　〕が降る')
+      expect(result.displaySentence).toBe('〔　〕、〔　〕が降る')
       expect(result.inputs).toHaveLength(2)
+      expect(result.inputs[0]).toEqual({
+        kanji: '今',
+        reading: 'いま',
+        position: 0,
+        index: 0,
+        groupId: 0,
+        isGroupStart: true,
+        groupSize: 1,
+      })
+      expect(result.inputs[1]).toEqual({
+        kanji: '雨',
+        reading: 'あめ',
+        position: 7,
+        index: 1,
+        groupId: 1,
+        isGroupStart: true,
+        groupSize: 1,
+      })
     })
   })
 
@@ -68,22 +122,25 @@ describe('questionParser', () => {
 
   describe('splitDisplaySentence', () => {
     it('入力欄を含む文章を正しく分割する', () => {
-      const parts = splitDisplaySentence('本日は〔　　〕なり')
+      const parts = splitDisplaySentence('本日は〔　〕〔　〕なり')
 
-      expect(parts).toHaveLength(3)
+      expect(parts).toHaveLength(4)
       expect(parts[0]).toEqual({ type: 'text', content: '本日は' })
-      expect(parts[1]).toEqual({ type: 'input', content: '〔　　〕', inputIndex: 0 })
-      expect(parts[2]).toEqual({ type: 'text', content: 'なり' })
+      expect(parts[1]).toEqual({ type: 'input', content: '〔　〕', inputIndex: 0 })
+      expect(parts[2]).toEqual({ type: 'input', content: '〔　〕', inputIndex: 1 })
+      expect(parts[3]).toEqual({ type: 'text', content: 'なり' })
     })
 
     it('複数の入力欄を含む文章を正しく分割する', () => {
-      const parts = splitDisplaySentence('〔　　〕は〔　　〕なり')
+      const parts = splitDisplaySentence('〔　〕〔　〕は〔　〕〔　〕なり')
 
-      expect(parts).toHaveLength(4)
-      expect(parts[0]).toEqual({ type: 'input', content: '〔　　〕', inputIndex: 0 })
-      expect(parts[1]).toEqual({ type: 'text', content: 'は' })
-      expect(parts[2]).toEqual({ type: 'input', content: '〔　　〕', inputIndex: 1 })
-      expect(parts[3]).toEqual({ type: 'text', content: 'なり' })
+      expect(parts).toHaveLength(6)
+      expect(parts[0]).toEqual({ type: 'input', content: '〔　〕', inputIndex: 0 })
+      expect(parts[1]).toEqual({ type: 'input', content: '〔　〕', inputIndex: 1 })
+      expect(parts[2]).toEqual({ type: 'text', content: 'は' })
+      expect(parts[3]).toEqual({ type: 'input', content: '〔　〕', inputIndex: 2 })
+      expect(parts[4]).toEqual({ type: 'input', content: '〔　〕', inputIndex: 3 })
+      expect(parts[5]).toEqual({ type: 'text', content: 'なり' })
     })
 
     it('入力欄がない場合は全てテキストとして返す', () => {

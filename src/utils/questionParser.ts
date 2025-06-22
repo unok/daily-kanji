@@ -20,25 +20,38 @@ export function parseQuestion(originalSentence: string): ParseResult {
     match = pattern.exec(originalSentence)
   }
 
-  // まず入力欄情報を順番に保存
-  matches.forEach((m, index) => {
-    inputs.push({
-      kanji: m[1],
-      reading: m[2],
-      position: m.index,
-      index: index,
+  // まず入力欄情報を順番に保存（複数文字の場合は一文字ずつ分割）
+  let inputIndex = 0
+  let groupId = 0
+  matches.forEach((m) => {
+    const kanjiChars = m[1].split('')
+    const reading = m[2]
+    const groupSize = kanjiChars.length
+
+    // 複数文字の場合、各文字に対して入力欄を作成
+    kanjiChars.forEach((kanji, charIndex) => {
+      inputs.push({
+        kanji: kanji,
+        reading: charIndex === 0 ? reading : '', // 読みは最初の文字にのみ設定
+        position: m.index + charIndex,
+        index: inputIndex++,
+        groupId: groupId,
+        isGroupStart: charIndex === 0,
+        groupSize: groupSize,
+      })
     })
+    groupId++
   })
 
   // 後ろから置換していく（インデックスがずれないように）
   for (let i = matches.length - 1; i >= 0; i--) {
     const m = matches[i]
-    const kanji = m[1]
+    const kanjiChars = m[1].split('')
     const startPos = m.index
 
-    // 表示用文章の該当部分を置換
-    const placeholder = `〔${'　'.repeat(Math.max(2, kanji.length))}〕`
-    displaySentence = displaySentence.substring(0, startPos) + placeholder + displaySentence.substring(startPos + m[0].length)
+    // 各文字に対して個別の入力欄を作成
+    const placeholders = kanjiChars.map(() => '〔　〕').join('')
+    displaySentence = displaySentence.substring(0, startPos) + placeholders + displaySentence.substring(startPos + m[0].length)
   }
 
   return {

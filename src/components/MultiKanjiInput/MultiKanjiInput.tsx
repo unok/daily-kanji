@@ -163,48 +163,85 @@ export function MultiKanjiInput({ inputs, onSubmit, disabled = false }: MultiKan
     onSubmit(images)
   }, [getCanvasImages, onSubmit])
 
+  // 入力欄をグループ化
+  const groupedInputs: { groupId: number; inputs: (KanjiInput & { arrayIndex: number })[] }[] = []
+  let currentGroup: (KanjiInput & { arrayIndex: number })[] = []
+  let currentGroupId: number | undefined
+
+  inputs.forEach((input, index) => {
+    const inputWithIndex = { ...input, arrayIndex: index }
+
+    if (currentGroupId === undefined || currentGroupId !== input.groupId) {
+      if (currentGroup.length > 0) {
+        groupedInputs.push({ groupId: currentGroupId ?? 0, inputs: currentGroup })
+      }
+      currentGroup = [inputWithIndex]
+      currentGroupId = input.groupId
+    } else {
+      currentGroup.push(inputWithIndex)
+    }
+  })
+
+  if (currentGroup.length > 0 && currentGroupId !== undefined) {
+    groupedInputs.push({ groupId: currentGroupId, inputs: currentGroup })
+  }
+
   return (
     <div className="space-y-6">
-      <div className="flex flex-wrap gap-4 justify-center items-start">
-        {inputs.map((input, index) => (
-          <div key={`input-${input.index}`} className="flex flex-col items-center">
-            <div className="text-sm text-gray-600 mb-1 font-medium">{input.reading}</div>
-            <div className="relative">
-              <canvas
-                ref={(el) => {
-                  canvasRefs.current[index] = el
-                }}
-                width={100}
-                height={100}
-                className={`border-2 ${focusedIndex === index ? 'border-blue-500' : 'border-gray-400'} rounded bg-white cursor-crosshair ${
-                  disabled ? 'opacity-50' : ''
-                }`}
-                tabIndex={disabled ? -1 : 0}
-                onMouseDown={handleMouseDown(index)}
-                onMouseMove={handleMouseMove(index)}
-                onMouseUp={handleMouseUp(index)}
-                onMouseOut={handleMouseUp(index)}
-                onBlur={handleMouseUp(index)}
-                onTouchStart={handleTouchStart(index)}
-                onTouchMove={handleTouchMove(index)}
-                onTouchEnd={handleTouchEnd(index)}
-              />
-              <svg className="absolute top-0 left-0 w-full h-full pointer-events-none">
-                <title>Canvas grid lines</title>
-                <line x1="50" y1="0" x2="50" y2="100" stroke="#e0e0e0" strokeWidth="1" strokeDasharray="2, 2" />
-                <line x1="0" y1="50" x2="100" y2="50" stroke="#e0e0e0" strokeWidth="1" strokeDasharray="2, 2" />
-              </svg>
+      <div className="flex flex-wrap gap-6 justify-center items-start">
+        {groupedInputs.map((group) => {
+          const firstInput = group.inputs[0]
+          const hasReading = firstInput.isGroupStart && firstInput.reading
+
+          return (
+            <div key={`group-${group.groupId}`} className="flex flex-col items-center">
+              {hasReading && <div className="text-sm text-gray-600 mb-2 font-medium">{firstInput.reading}</div>}
+              <div className="flex gap-1">
+                {group.inputs.map((input) => {
+                  const index = input.arrayIndex
+                  return (
+                    <div key={`input-${input.index}`} className="flex flex-col items-center">
+                      <div className="relative">
+                        <canvas
+                          ref={(el) => {
+                            canvasRefs.current[index] = el
+                          }}
+                          width={80}
+                          height={80}
+                          className={`border-2 ${focusedIndex === index ? 'border-blue-500' : 'border-gray-400'} rounded bg-white cursor-crosshair ${
+                            disabled ? 'opacity-50' : ''
+                          }`}
+                          tabIndex={disabled ? -1 : 0}
+                          onMouseDown={handleMouseDown(index)}
+                          onMouseMove={handleMouseMove(index)}
+                          onMouseUp={handleMouseUp(index)}
+                          onMouseOut={handleMouseUp(index)}
+                          onBlur={handleMouseUp(index)}
+                          onTouchStart={handleTouchStart(index)}
+                          onTouchMove={handleTouchMove(index)}
+                          onTouchEnd={handleTouchEnd(index)}
+                        />
+                        <svg className="absolute top-0 left-0 w-full h-full pointer-events-none">
+                          <title>Canvas grid lines</title>
+                          <line x1="40" y1="0" x2="40" y2="80" stroke="#e0e0e0" strokeWidth="1" strokeDasharray="2, 2" />
+                          <line x1="0" y1="40" x2="80" y2="40" stroke="#e0e0e0" strokeWidth="1" strokeDasharray="2, 2" />
+                        </svg>
+                      </div>
+                      <button
+                        type="button"
+                        onClick={() => clearCanvas(index)}
+                        className="mt-1 text-xs text-red-600 hover:text-red-700 disabled:opacity-50"
+                        disabled={disabled}
+                      >
+                        消す
+                      </button>
+                    </div>
+                  )
+                })}
+              </div>
             </div>
-            <button
-              type="button"
-              onClick={() => clearCanvas(index)}
-              className="mt-1 text-xs text-red-600 hover:text-red-700 disabled:opacity-50"
-              disabled={disabled}
-            >
-              消す
-            </button>
-          </div>
-        ))}
+          )
+        })}
       </div>
 
       <div className="flex gap-3 justify-center">

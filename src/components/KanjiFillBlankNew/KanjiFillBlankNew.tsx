@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react'
+import { type JSX, useCallback, useEffect, useState } from 'react'
 
 import { type DifficultyLevel, getRandomQuestion } from '../../services/questionService'
 import type { QuestionData } from '../../types/question'
@@ -31,6 +31,7 @@ export function KanjiFillBlankNew({ difficulty = 'elementary', onSessionComplete
   const [isGiveUp, setIsGiveUp] = useState(false)
   const [sessionScore, setSessionScore] = useState(0)
   const [sessionQuestions, setSessionQuestions] = useState(0)
+  const [_isFirstLoad, setIsFirstLoad] = useState(true)
 
   // 難易度変更時の処理
   useEffect(() => {
@@ -42,22 +43,16 @@ export function KanjiFillBlankNew({ difficulty = 'elementary', onSessionComplete
     const question = getRandomQuestion(currentDifficulty)
     setCurrentQuestion(question)
     setTotalQuestions((prev) => prev + 1)
-    setSessionQuestions((prev) => prev + 1)
     setAttemptCount(0)
     setShowResult(false)
     setResults([])
     setIsGiveUp(false)
-
-    // 10問ごとにセッション完了を通知
-    if (sessionQuestions >= 9 && onSessionComplete) {
-      onSessionComplete(sessionScore, 10)
-      setSessionScore(0)
-      setSessionQuestions(0)
-    }
-  }, [currentDifficulty, sessionQuestions, sessionScore, onSessionComplete])
+  }, [currentDifficulty])
 
   useEffect(() => {
+    setSessionQuestions(1)
     loadRandomQuestion()
+    setIsFirstLoad(false)
   }, [loadRandomQuestion])
 
   // キャンバスから漢字を認識する（簡易版）
@@ -122,8 +117,16 @@ export function KanjiFillBlankNew({ difficulty = 'elementary', onSessionComplete
 
   // 次の問題へ
   const nextQuestion = useCallback(() => {
-    loadRandomQuestion()
-  }, [loadRandomQuestion])
+    // 10問完了時にセッション結果を表示
+    if (sessionQuestions === 10 && onSessionComplete) {
+      onSessionComplete(sessionScore, 10)
+      setSessionScore(0)
+      setSessionQuestions(0)
+    } else {
+      setSessionQuestions((prev) => prev + 1)
+      loadRandomQuestion()
+    }
+  }, [loadRandomQuestion, sessionQuestions, sessionScore, onSessionComplete])
 
   if (!currentQuestion) {
     return <div>Loading...</div>
@@ -139,26 +142,72 @@ export function KanjiFillBlankNew({ difficulty = 'elementary', onSessionComplete
 
         {/* 問題文表示エリア */}
         <div className="bg-gray-50 p-8 rounded-lg mb-8">
-          <div className="text-2xl text-gray-800 leading-loose text-center">
-            {sentenceParts.map((part) => {
-              if (part.type === 'text') {
-                return <span key={`text-${part.content}`}>{part.content}</span>
-              }
-              if (part.type === 'input' && part.inputIndex !== undefined) {
-                const input = currentQuestion.inputs[part.inputIndex]
-                const result = results[part.inputIndex]
-                return (
-                  <span key={`input-${part.inputIndex}`} className="inline-block mx-1 relative">
-                    <span className="inline-block w-20 h-12 border-2 border-blue-500 rounded bg-white text-center leading-10 align-middle">
-                      {showResult && (result?.isCorrect || isGiveUp) && (
-                        <span className={`font-bold text-xl ${result?.isCorrect ? 'text-green-600' : 'text-red-600'}`}>{input.kanji}</span>
-                      )}
+          <div className="text-2xl text-gray-800 text-center inline-flex flex-wrap items-center justify-center" style={{ minHeight: '4rem' }}>
+            {(() => {
+              const elements: JSX.Element[] = []
+              const skipIndices = new Set<number>()
+
+              sentenceParts.forEach((part, partIndex) => {
+                if (part.type === 'text') {
+                  elements.push(
+                    <span key={`text-${part.content}-${partIndex}`} className="inline-block align-middle" style={{ position: 'relative', top: '-2px' }}>
+                      {part.content}
                     </span>
-                  </span>
-                )
-              }
-              return null
-            })}
+                  )
+                } else if (part.type === 'input' && part.inputIndex !== undefined && !skipIndices.has(partIndex)) {
+                  const input = currentQuestion.inputs[part.inputIndex]
+
+                  // グループの最初の入力欄の場合
+                  if (input.isGroupStart && input.groupSize && input.groupSize > 1) {
+                    const groupInputs: JSX.Element[] = []
+
+                    // 同じグループの入力欄を収集
+                    for (let i = 0; i < input.groupSize; i++) {
+                      const currentPart = sentenceParts[partIndex + i]
+                      if (currentPart?.type === 'input' && currentPart.inputIndex !== undefined) {
+                        const currentInput = currentQuestion.inputs[currentPart.inputIndex]
+                        const currentResult = results[currentPart.inputIndex]
+                        skipIndices.add(partIndex + i)
+
+                        groupInputs.push(
+                          <span
+                            key={`input-${currentPart.inputIndex}`}
+                            className="inline-flex w-12 h-12 border-2 border-blue-500 rounded bg-white items-center justify-center"
+                          >
+                            {showResult && (currentResult?.isCorrect || isGiveUp) && (
+                              <span className={`font-bold text-xl ${currentResult?.isCorrect ? 'text-green-600' : 'text-red-600'}`}>{currentInput.kanji}</span>
+                            )}
+                          </span>
+                        )
+                      }
+                    }
+
+                    // グループ全体をラップして、ふりがなを上に表示
+                    elements.push(
+                      <span key={`group-${input.groupId}`} className="inline-block mx-1 relative align-middle">
+                        {input.reading && <span className="absolute -top-5 left-0 right-0 text-center text-xs text-gray-500">{input.reading}</span>}
+                        <span className="inline-flex gap-0.5">{groupInputs}</span>
+                      </span>
+                    )
+                  } else if (!input.groupId || input.groupSize === 1) {
+                    // 単独の入力欄
+                    const result = results[part.inputIndex]
+                    elements.push(
+                      <span key={`input-${part.inputIndex}`} className="inline-block mx-1 relative align-middle">
+                        {input.reading && <span className="absolute -top-5 left-0 right-0 text-center text-xs text-gray-500">{input.reading}</span>}
+                        <span className="inline-flex w-12 h-12 border-2 border-blue-500 rounded bg-white items-center justify-center">
+                          {showResult && (result?.isCorrect || isGiveUp) && (
+                            <span className={`font-bold text-xl ${result?.isCorrect ? 'text-green-600' : 'text-red-600'}`}>{input.kanji}</span>
+                          )}
+                        </span>
+                      </span>
+                    )
+                  }
+                }
+              })
+
+              return elements
+            })()}
           </div>
         </div>
 
