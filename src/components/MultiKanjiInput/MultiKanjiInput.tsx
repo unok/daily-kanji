@@ -28,7 +28,10 @@ export function MultiKanjiInput({ inputs, onSubmit, disabled = false }: MultiKan
       if (canvas) {
         const context = canvas.getContext('2d')
         if (context) {
-          context.lineWidth = 6
+          // キャンバスをクリア
+          context.clearRect(0, 0, canvas.width, canvas.height)
+
+          context.lineWidth = 10
           context.lineCap = 'round'
           context.strokeStyle = '#000'
 
@@ -188,7 +191,7 @@ export function MultiKanjiInput({ inputs, onSubmit, disabled = false }: MultiKan
 
   return (
     <div className="space-y-6">
-      <div className="flex flex-wrap gap-6 justify-center items-start">
+      <div className="flex flex-col gap-8 items-center">
         {groupedInputs.map((group) => {
           const firstInput = group.inputs[0]
           const hasReading = firstInput.isGroupStart && firstInput.reading
@@ -196,7 +199,7 @@ export function MultiKanjiInput({ inputs, onSubmit, disabled = false }: MultiKan
           return (
             <div key={`group-${group.groupId}`} className="flex flex-col items-center">
               {hasReading && <div className="text-sm text-gray-600 mb-2 font-medium">{firstInput.reading}</div>}
-              <div className="flex gap-1">
+              <div className="flex flex-col gap-4">
                 {group.inputs.map((input) => {
                   const index = input.arrayIndex
                   return (
@@ -206,11 +209,12 @@ export function MultiKanjiInput({ inputs, onSubmit, disabled = false }: MultiKan
                           ref={(el) => {
                             canvasRefs.current[index] = el
                           }}
-                          width={80}
-                          height={80}
-                          className={`border-2 ${focusedIndex === index ? 'border-blue-500' : 'border-gray-400'} rounded bg-white cursor-crosshair ${
+                          width={400}
+                          height={400}
+                          className={`border-4 ${focusedIndex === index ? 'border-blue-500' : 'border-gray-400'} rounded-lg bg-white cursor-crosshair ${
                             disabled ? 'opacity-50' : ''
-                          }`}
+                          } max-w-full`}
+                          style={{ touchAction: 'none', maxWidth: '90vw', maxHeight: '90vw' }}
                           tabIndex={disabled ? -1 : 0}
                           onMouseDown={handleMouseDown(index)}
                           onMouseMove={handleMouseMove(index)}
@@ -223,14 +227,14 @@ export function MultiKanjiInput({ inputs, onSubmit, disabled = false }: MultiKan
                         />
                         <svg className="absolute top-0 left-0 w-full h-full pointer-events-none">
                           <title>Canvas grid lines</title>
-                          <line x1="40" y1="0" x2="40" y2="80" stroke="#e0e0e0" strokeWidth="1" strokeDasharray="2, 2" />
-                          <line x1="0" y1="40" x2="80" y2="40" stroke="#e0e0e0" strokeWidth="1" strokeDasharray="2, 2" />
+                          <line x1="200" y1="0" x2="200" y2="400" stroke="#e0e0e0" strokeWidth="2" strokeDasharray="5, 5" />
+                          <line x1="0" y1="200" x2="400" y2="200" stroke="#e0e0e0" strokeWidth="2" strokeDasharray="5, 5" />
                         </svg>
                       </div>
                       <button
                         type="button"
                         onClick={() => clearCanvas(index)}
-                        className="mt-1 text-xs text-red-600 hover:text-red-700 disabled:opacity-50"
+                        className="mt-4 text-xl px-6 py-2 text-red-600 hover:text-red-700 disabled:opacity-50 border-2 border-red-300 rounded-lg hover:bg-red-50 font-medium"
                         disabled={disabled}
                       >
                         消す

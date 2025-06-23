@@ -58,8 +58,9 @@ export function KanjiFillBlankNew({ difficulty = 'elementary', onSessionComplete
   // キャンバスから漢字を認識する（簡易版）
   const recognizeKanji = useCallback((canvasDataUrl: string, _expectedKanji: string): number => {
     // TODO: 実際の認識処理を実装
-    // 現在は仮の実装として、キャンバスにデータがあれば0.5、なければ0を返す
-    return canvasDataUrl ? 0.5 : 0
+    // 現在は仮の実装として、キャンバスにデータがあれば0.3、なければ0を返す
+    // 0.45未満なので常に不正解となり、ユーザーが答えを見て自己評価する
+    return canvasDataUrl ? 0.3 : 0
   }, [])
 
   // 答え合わせ
@@ -270,9 +271,7 @@ export function KanjiFillBlankNew({ difficulty = 'elementary', onSessionComplete
             ) : isGiveUp ? (
               <span>正解は上に表示されています。次も頑張りましょう！</span>
             ) : (
-              <span>
-                {results.filter((r) => r.isCorrect).length} / {results.length} 問正解。 もう一度挑戦してみましょう。
-              </span>
+              <span>正解は上に赤で表示されています。自分の答えと比べてみましょう。</span>
             )}
           </div>
         )}
