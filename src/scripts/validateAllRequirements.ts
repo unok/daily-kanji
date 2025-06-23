@@ -288,12 +288,12 @@ function validateKanjiFrequency(): ValidationResult {
   }
 }
 
-// 3. 2セット制限と連続防止チェック
+// 3. 2セット制限・連続防止・入力欄数チェック
 function validateTwoSetLimitAndConsecutive(): ValidationResult {
-  console.log('\n=== 3. 2セット制限・連続防止チェック ===')
+  console.log('\n=== 3. 2セット制限・連続防止・入力欄数チェック ===')
 
   const allResults: ValidationResult[] = []
-  const grades = ['elementary1', 'elementary2', 'elementary3', 'elementary4', 'elementary5', 'elementary6', 'junior', 'senior']
+  const grades = ['elementary', 'elementary1', 'elementary2', 'elementary3', 'elementary4', 'elementary5', 'elementary6', 'junior', 'senior']
 
   for (const grade of grades) {
     const questions = loadQuestions(grade)
@@ -305,17 +305,41 @@ function validateTwoSetLimitAndConsecutive(): ValidationResult {
         // parseQuestionを通すことで2セット制限と連続チェックが実行される
         parseQuestion(question.sentence)
 
-        // 3セット以上ある問題をチェック
+        // 入力欄を抽出
         const pattern = /\[([^|]+)\|([^\]]+)\]/g
-        const matches: string[] = []
+        const matches: Array<{ kanji: string; reading: string; index: number; fullMatch: string }> = []
         let match: RegExpExecArray | null
         while ((match = pattern.exec(question.sentence)) !== null) {
-          matches.push(`${match[1]}|${match[2]}`)
+          matches.push({
+            kanji: match[1],
+            reading: match[2],
+            index: match.index,
+            fullMatch: match[0],
+          })
         }
 
+        // 1. 入力欄の総数チェック（2つまで）
+        if (matches.length > 2) {
+          hasViolation = true
+          violations.push(`問題"${question.sentence.substring(0, 30)}..."で入力欄が${matches.length}個（上限2個）`)
+        }
+
+        // 2. 異なる入力欄の連続チェック
+        for (let i = 1; i < matches.length; i++) {
+          const prev = matches[i - 1]
+          const curr = matches[i]
+          if (prev.index + prev.fullMatch.length === curr.index) {
+            hasViolation = true
+            violations.push(`問題"${question.sentence.substring(0, 30)}..."で[${prev.kanji}]と[${curr.kanji}]が連続`)
+            break // 1つ見つかれば十分
+          }
+        }
+
+        // 3. 同じ入力欄の3セット以上チェック
         const counts = new Map<string, number>()
         for (const m of matches) {
-          counts.set(m, (counts.get(m) || 0) + 1)
+          const key = `${m.kanji}|${m.reading}`
+          counts.set(key, (counts.get(key) || 0) + 1)
         }
 
         for (const [key, count] of counts.entries()) {
@@ -340,7 +364,73 @@ function validateTwoSetLimitAndConsecutive(): ValidationResult {
     } else {
       allResults.push({
         passed: true,
-        message: `✅ ${grade}: 2セット制限・連続防止OK`,
+        message: `✅ ${grade}: 2セット制限・連続防止・入力欄数OK`,
+      })
+    }
+  }
+
+  const allPassed = allResults.every((r) => r.passed)
+  const summary = allResults.map((r) => r.message).join('\n')
+
+  return {
+    passed: allPassed,
+    message: summary,
+  }
+}
+
+// 4. 読みの最初の文字重複チェック
+function validateFirstCharacterDuplication(): ValidationResult {
+  console.log('\n=== 4. 読みの最初の文字重複チェック ===')
+
+  const allResults: ValidationResult[] = []
+  const grades = ['elementary', 'elementary1', 'elementary2', 'elementary3', 'elementary4', 'elementary5', 'elementary6', 'junior', 'senior']
+
+  for (const grade of grades) {
+    const questions = loadQuestions(grade)
+    let hasViolation = false
+    const violations: string[] = []
+
+    for (const question of questions) {
+      // 問題文から読みを抽出
+      const pattern = /\[([^|]+)\|([^\]]+)\]/g
+      const readings: string[] = []
+      let match: RegExpExecArray | null
+
+      while ((match = pattern.exec(question.sentence)) !== null) {
+        const reading = match[2]
+        if (reading && reading.length > 0) {
+          readings.push(reading)
+        }
+      }
+
+      // 読みの最初の文字でグループ化
+      const firstCharCounts = new Map<string, string[]>()
+      for (const reading of readings) {
+        const firstChar = reading.charAt(0)
+        if (!firstCharCounts.has(firstChar)) {
+          firstCharCounts.set(firstChar, [])
+        }
+        firstCharCounts.get(firstChar)?.push(reading)
+      }
+
+      // 同じ最初の文字を持つ読みが3つ以上ある場合は違反
+      for (const [firstChar, readingList] of firstCharCounts.entries()) {
+        if (readingList.length >= 3) {
+          hasViolation = true
+          violations.push(`問題"${question.sentence.substring(0, 30)}..."で「${firstChar}」で始まる読みが${readingList.length}個: ${readingList.join(', ')}`)
+        }
+      }
+    }
+
+    if (hasViolation) {
+      allResults.push({
+        passed: false,
+        message: `❌ ${grade}: 読みの最初の文字重複あり - ${violations.slice(0, 3).join('; ')}${violations.length > 3 ? '...' : ''}`,
+      })
+    } else {
+      allResults.push({
+        passed: true,
+        message: `✅ ${grade}: 読みの最初の文字重複なし`,
       })
     }
   }
@@ -369,6 +459,9 @@ function main() {
 
   // 3. 2セット制限・連続防止チェック
   results.push(validateTwoSetLimitAndConsecutive())
+
+  // 4. 読みの最初の文字重複チェック
+  results.push(validateFirstCharacterDuplication())
 
   // 最終結果
   console.log(`\n${'='.repeat(50)}`)
