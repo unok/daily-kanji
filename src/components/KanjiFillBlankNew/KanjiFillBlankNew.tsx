@@ -32,6 +32,20 @@ export function KanjiFillBlankNew({ difficulty = 'elementary', onSessionComplete
   const [sessionScore, setSessionScore] = useState(0)
   const [sessionQuestions, setSessionQuestions] = useState(0)
   const [_isFirstLoad, setIsFirstLoad] = useState(true)
+  const [showDebug, setShowDebug] = useState(false)
+  const [debugInfo, setDebugInfo] = useState<
+    Array<{
+      kanji: string
+      similarity: number
+      fontResults?: Array<{
+        font: string
+        f1Score: number
+        precision: number
+        recall: number
+        isBest: boolean
+      }>
+    }>
+  >([])
 
   // 難易度変更時の処理
   useEffect(() => {
@@ -55,31 +69,58 @@ export function KanjiFillBlankNew({ difficulty = 'elementary', onSessionComplete
     setIsFirstLoad(false)
   }, [loadRandomQuestion])
 
-  // キャンバスから漢字を認識する（簡易版）
-  const recognizeKanji = useCallback((canvasDataUrl: string, _expectedKanji: string): number => {
-    // TODO: 実際の認識処理を実装
-    // 現在は仮の実装として、キャンバスにデータがあれば0.3、なければ0を返す
-    // 0.45未満なので常に不正解となり、ユーザーが答えを見て自己評価する
-    return canvasDataUrl ? 0.3 : 0
+  // キャンバスから漢字を認識する
+  const recognizeKanjiScore = useCallback(async (canvasDataUrl: string, expectedKanji: string): Promise<number> => {
+    const { recognizeKanji } = await import('../../utils/kanjiRecognition')
+    return recognizeKanji(canvasDataUrl, expectedKanji)
+  }, [])
+
+  // デバッグ情報付きで認識する
+  const recognizeKanjiWithDebug = useCallback(async (canvasDataUrl: string, expectedKanji: string) => {
+    const { recognizeKanjiWithDebug: recognizeDebug } = await import('../../utils/kanjiRecognition')
+    return recognizeDebug(canvasDataUrl, expectedKanji)
   }, [])
 
   // 答え合わせ
   const checkAnswers = useCallback(
-    (canvasImages: string[]) => {
+    async (canvasImages: string[]) => {
       if (!currentQuestion) return
 
       setAttemptCount((prev) => prev + 1)
 
-      const newResults = currentQuestion.inputs.map((input, index) => {
-        const similarity = recognizeKanji(canvasImages[index], input.kanji)
-        const isCorrect = similarity >= 0.45
+      const debugData: typeof debugInfo = []
 
-        return {
-          isCorrect,
-          input: canvasImages[index] ? '入力あり' : '未入力',
-          answer: input.kanji,
-        }
-      })
+      const newResults = await Promise.all(
+        currentQuestion.inputs.map(async (input, index) => {
+          if (showDebug) {
+            const debugResult = await recognizeKanjiWithDebug(canvasImages[index], input.kanji)
+            debugData.push({
+              kanji: input.kanji,
+              similarity: debugResult.bestScore,
+              fontResults: debugResult.results,
+            })
+
+            const isCorrect = debugResult.bestScore >= 0.45
+            return {
+              isCorrect,
+              input: canvasImages[index] ? `類似度: ${(debugResult.bestScore * 100).toFixed(1)}%` : '未入力',
+              answer: input.kanji,
+            }
+          }
+          const similarity = await recognizeKanjiScore(canvasImages[index], input.kanji)
+          const isCorrect = similarity >= 0.45
+
+          return {
+            isCorrect,
+            input: canvasImages[index] ? `類似度: ${(similarity * 100).toFixed(1)}%` : '未入力',
+            answer: input.kanji,
+          }
+        })
+      )
+
+      if (showDebug) {
+        setDebugInfo(debugData)
+      }
 
       setResults(newResults)
       setShowResult(true)
@@ -91,7 +132,7 @@ export function KanjiFillBlankNew({ difficulty = 'elementary', onSessionComplete
         setSessionScore((prev) => prev + 1)
       }
     },
-    [currentQuestion, attemptCount, recognizeKanji]
+    [currentQuestion, attemptCount, recognizeKanjiScore, recognizeKanjiWithDebug, showDebug]
   )
 
   // リトライ
@@ -271,7 +312,10 @@ export function KanjiFillBlankNew({ difficulty = 'elementary', onSessionComplete
             ) : isGiveUp ? (
               <span>正解は上に表示されています。次も頑張りましょう！</span>
             ) : (
-              <span>正解は上に赤で表示されています。自分の答えと比べてみましょう。</span>
+              <span>
+                {results.filter((r) => r.isCorrect).length} / {results.length} 問正解。
+                {results.some((r) => !r.isCorrect) && ' もう一度挑戦してみましょう。'}
+              </span>
             )}
           </div>
         )}
@@ -295,6 +339,44 @@ export function KanjiFillBlankNew({ difficulty = 'elementary', onSessionComplete
           </div>
           <div className="text-xs text-gray-500">カテゴリー: {currentQuestion.category}</div>
         </div>
+
+        {/* デバッグ情報 */}
+        <div className="mt-6 text-center">
+          <label className="inline-flex items-center cursor-pointer">
+            <input type="checkbox" checked={showDebug} onChange={(e) => setShowDebug(e.target.checked)} className="sr-only peer" />
+            <div className="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600" />
+            <span className="ml-3 text-sm font-medium text-gray-700">デバッグ情報を表示</span>
+          </label>
+        </div>
+
+        {/* デバッグ情報表示 */}
+        {showDebug && showResult && debugInfo.length > 0 && (
+          <div className="mt-4 bg-gray-100 p-4 rounded-lg text-left text-sm">
+            <h3 className="font-bold text-gray-700 mb-2">認識結果の詳細</h3>
+            {debugInfo.map((info, index) => (
+              <div key={`debug-${info.kanji}-${index}`} className="mb-4 bg-white p-3 rounded">
+                <div className="font-semibold mb-2">
+                  「{info.kanji}」の認識結果 - 最高スコア: {(info.similarity * 100).toFixed(1)}%
+                </div>
+                {info.fontResults && (
+                  <div className="space-y-1 text-xs">
+                    {info.fontResults.map((result) => (
+                      <div key={`font-${result.font}`} className={`flex justify-between ${result.isBest ? 'font-bold text-blue-600' : 'text-gray-600'}`}>
+                        <span>
+                          {result.isBest ? '★ ' : '　 '}
+                          {result.font}:
+                        </span>
+                        <span>
+                          {(result.f1Score * 100).toFixed(1)}% (適合率: {(result.precision * 100).toFixed(1)}%, 再現率: {(result.recall * 100).toFixed(1)}%)
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+        )}
       </div>
     </div>
   )
