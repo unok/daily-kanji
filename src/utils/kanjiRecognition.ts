@@ -169,8 +169,8 @@ function calculateSimilarityWithFont(userCanvas: HTMLCanvasElement, userBBox: Bo
       // 周囲のピクセルも確認（位置のずれを許容）
       let refAlpha = refData[idx + 3]
 
-      // 1ピクセルのずれを許容
-      const tolerance = 1
+      // 2ピクセルのずれを許容（線が太くなったため）
+      const tolerance = 2
       for (let dy = -tolerance; dy <= tolerance && refAlpha <= 50; dy++) {
         for (let dx = -tolerance; dx <= tolerance && refAlpha <= 50; dx++) {
           const nx = x + dx

@@ -31,7 +31,7 @@ export function MultiKanjiInput({ inputs, onSubmit, disabled = false }: MultiKan
           // キャンバスをクリア
           context.clearRect(0, 0, canvas.width, canvas.height)
 
-          context.lineWidth = 10
+          context.lineWidth = 20
           context.lineCap = 'round'
           context.strokeStyle = '#000'
 
