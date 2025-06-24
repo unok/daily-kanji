@@ -1,12 +1,91 @@
 import questionsElementary from '../data/questions/questions-elementary.json'
-import questionsElementary1 from '../data/questions/questions-elementary1.json'
-import questionsElementary2 from '../data/questions/questions-elementary2.json'
-import questionsElementary3 from '../data/questions/questions-elementary3.json'
-import questionsElementary4 from '../data/questions/questions-elementary4.json'
-import questionsElementary5 from '../data/questions/questions-elementary5.json'
-import questionsElementary6 from '../data/questions/questions-elementary6.json'
-import questionsJunior from '../data/questions/questions-junior.json'
-import questionsSenior from '../data/questions/questions-senior.json'
+// Elementary 1 parts
+import questionsElementary1Part1 from '../data/questions/questions-elementary1-part1.json'
+import questionsElementary1Part2 from '../data/questions/questions-elementary1-part2.json'
+import questionsElementary1Part3 from '../data/questions/questions-elementary1-part3.json'
+import questionsElementary1Part4 from '../data/questions/questions-elementary1-part4.json'
+import questionsElementary1Part5 from '../data/questions/questions-elementary1-part5.json'
+import questionsElementary1Part6 from '../data/questions/questions-elementary1-part6.json'
+// Elementary 2 parts
+import questionsElementary2Part1 from '../data/questions/questions-elementary2-part1.json'
+import questionsElementary2Part2 from '../data/questions/questions-elementary2-part2.json'
+import questionsElementary2Part3 from '../data/questions/questions-elementary2-part3.json'
+import questionsElementary2Part4 from '../data/questions/questions-elementary2-part4.json'
+import questionsElementary2Part5 from '../data/questions/questions-elementary2-part5.json'
+import questionsElementary2Part6 from '../data/questions/questions-elementary2-part6.json'
+import questionsElementary2Part7 from '../data/questions/questions-elementary2-part7.json'
+import questionsElementary2Part8 from '../data/questions/questions-elementary2-part8.json'
+// Elementary 3 parts
+import questionsElementary3Part1 from '../data/questions/questions-elementary3-part1.json'
+import questionsElementary3Part2 from '../data/questions/questions-elementary3-part2.json'
+import questionsElementary3Part3 from '../data/questions/questions-elementary3-part3.json'
+import questionsElementary3Part4 from '../data/questions/questions-elementary3-part4.json'
+import questionsElementary3Part5 from '../data/questions/questions-elementary3-part5.json'
+import questionsElementary3Part6 from '../data/questions/questions-elementary3-part6.json'
+import questionsElementary3Part7 from '../data/questions/questions-elementary3-part7.json'
+import questionsElementary3Part8 from '../data/questions/questions-elementary3-part8.json'
+// Elementary 4 parts
+import questionsElementary4Part1 from '../data/questions/questions-elementary4-part1.json'
+import questionsElementary4Part2 from '../data/questions/questions-elementary4-part2.json'
+import questionsElementary4Part3 from '../data/questions/questions-elementary4-part3.json'
+import questionsElementary4Part4 from '../data/questions/questions-elementary4-part4.json'
+import questionsElementary4Part5 from '../data/questions/questions-elementary4-part5.json'
+import questionsElementary4Part6 from '../data/questions/questions-elementary4-part6.json'
+import questionsElementary4Part7 from '../data/questions/questions-elementary4-part7.json'
+import questionsElementary4Part8 from '../data/questions/questions-elementary4-part8.json'
+// Elementary 5 parts
+import questionsElementary5Part1 from '../data/questions/questions-elementary5-part1.json'
+import questionsElementary5Part2 from '../data/questions/questions-elementary5-part2.json'
+import questionsElementary5Part3 from '../data/questions/questions-elementary5-part3.json'
+import questionsElementary5Part4 from '../data/questions/questions-elementary5-part4.json'
+import questionsElementary5Part5 from '../data/questions/questions-elementary5-part5.json'
+import questionsElementary5Part6 from '../data/questions/questions-elementary5-part6.json'
+import questionsElementary5Part7 from '../data/questions/questions-elementary5-part7.json'
+import questionsElementary5Part8 from '../data/questions/questions-elementary5-part8.json'
+// Elementary 6 parts
+import questionsElementary6Part1 from '../data/questions/questions-elementary6-part1.json'
+import questionsElementary6Part2 from '../data/questions/questions-elementary6-part2.json'
+import questionsElementary6Part3 from '../data/questions/questions-elementary6-part3.json'
+import questionsElementary6Part4 from '../data/questions/questions-elementary6-part4.json'
+import questionsElementary6Part5 from '../data/questions/questions-elementary6-part5.json'
+import questionsElementary6Part6 from '../data/questions/questions-elementary6-part6.json'
+import questionsElementary6Part7 from '../data/questions/questions-elementary6-part7.json'
+import questionsElementary6Part8 from '../data/questions/questions-elementary6-part8.json'
+import questionsElementary6Part9 from '../data/questions/questions-elementary6-part9.json'
+// Junior parts
+import questionsJuniorPart1 from '../data/questions/questions-junior-part1.json'
+import questionsJuniorPart2 from '../data/questions/questions-junior-part2.json'
+import questionsJuniorPart3 from '../data/questions/questions-junior-part3.json'
+import questionsJuniorPart4 from '../data/questions/questions-junior-part4.json'
+import questionsJuniorPart5 from '../data/questions/questions-junior-part5.json'
+import questionsJuniorPart6 from '../data/questions/questions-junior-part6.json'
+import questionsJuniorPart7 from '../data/questions/questions-junior-part7.json'
+import questionsJuniorPart8 from '../data/questions/questions-junior-part8.json'
+import questionsJuniorPart9 from '../data/questions/questions-junior-part9.json'
+import questionsJuniorPart10 from '../data/questions/questions-junior-part10.json'
+import questionsJuniorPart11 from '../data/questions/questions-junior-part11.json'
+import questionsJuniorPart12 from '../data/questions/questions-junior-part12.json'
+import questionsJuniorPart13 from '../data/questions/questions-junior-part13.json'
+import questionsJuniorPart14 from '../data/questions/questions-junior-part14.json'
+import questionsJuniorPart15 from '../data/questions/questions-junior-part15.json'
+import questionsJuniorPart16 from '../data/questions/questions-junior-part16.json'
+import questionsJuniorPart17 from '../data/questions/questions-junior-part17.json'
+import questionsJuniorPart18 from '../data/questions/questions-junior-part18.json'
+// Senior parts
+import questionsSeniorPart1 from '../data/questions/questions-senior-part1.json'
+import questionsSeniorPart2 from '../data/questions/questions-senior-part2.json'
+import questionsSeniorPart3 from '../data/questions/questions-senior-part3.json'
+import questionsSeniorPart4 from '../data/questions/questions-senior-part4.json'
+import questionsSeniorPart5 from '../data/questions/questions-senior-part5.json'
+import questionsSeniorPart6 from '../data/questions/questions-senior-part6.json'
+import questionsSeniorPart7 from '../data/questions/questions-senior-part7.json'
+import questionsSeniorPart8 from '../data/questions/questions-senior-part8.json'
+import questionsSeniorPart9 from '../data/questions/questions-senior-part9.json'
+import questionsSeniorPart10 from '../data/questions/questions-senior-part10.json'
+import questionsSeniorPart11 from '../data/questions/questions-senior-part11.json'
+import questionsSeniorPart12 from '../data/questions/questions-senior-part12.json'
+import questionsSeniorPart13 from '../data/questions/questions-senior-part13.json'
+import questionsSeniorPart14 from '../data/questions/questions-senior-part14.json'
 import type { QuestionData } from '../types/question'
 import { parseQuestion } from '../utils/questionParser'
 
@@ -23,17 +102,116 @@ interface QuestionSet {
   }>
 }
 
+// Helper function to merge multiple parts of a question set
+function mergeQuestionSets(...parts: QuestionSet[]): QuestionSet {
+  const first = parts[0]
+  const allQuestions = parts.flatMap((part) => part.questions)
+  return {
+    level: first.level,
+    title: first.title.replace(/ \(Part \d+\/\d+\)/, ''), // Remove part info
+    description: first.description,
+    questions: allQuestions,
+  }
+}
+
 // 問題データのマップ
 const questionSets: Record<string, QuestionSet> = {
   elementary: questionsElementary as QuestionSet,
-  junior: questionsJunior as QuestionSet,
-  senior: questionsSenior as QuestionSet,
-  elementary1: questionsElementary1 as QuestionSet,
-  elementary2: questionsElementary2 as QuestionSet,
-  elementary3: questionsElementary3 as QuestionSet,
-  elementary4: questionsElementary4 as QuestionSet,
-  elementary5: questionsElementary5 as QuestionSet,
-  elementary6: questionsElementary6 as QuestionSet,
+  junior: mergeQuestionSets(
+    questionsJuniorPart1 as QuestionSet,
+    questionsJuniorPart2 as QuestionSet,
+    questionsJuniorPart3 as QuestionSet,
+    questionsJuniorPart4 as QuestionSet,
+    questionsJuniorPart5 as QuestionSet,
+    questionsJuniorPart6 as QuestionSet,
+    questionsJuniorPart7 as QuestionSet,
+    questionsJuniorPart8 as QuestionSet,
+    questionsJuniorPart9 as QuestionSet,
+    questionsJuniorPart10 as QuestionSet,
+    questionsJuniorPart11 as QuestionSet,
+    questionsJuniorPart12 as QuestionSet,
+    questionsJuniorPart13 as QuestionSet,
+    questionsJuniorPart14 as QuestionSet,
+    questionsJuniorPart15 as QuestionSet,
+    questionsJuniorPart16 as QuestionSet,
+    questionsJuniorPart17 as QuestionSet,
+    questionsJuniorPart18 as QuestionSet
+  ),
+  senior: mergeQuestionSets(
+    questionsSeniorPart1 as QuestionSet,
+    questionsSeniorPart2 as QuestionSet,
+    questionsSeniorPart3 as QuestionSet,
+    questionsSeniorPart4 as QuestionSet,
+    questionsSeniorPart5 as QuestionSet,
+    questionsSeniorPart6 as QuestionSet,
+    questionsSeniorPart7 as QuestionSet,
+    questionsSeniorPart8 as QuestionSet,
+    questionsSeniorPart9 as QuestionSet,
+    questionsSeniorPart10 as QuestionSet,
+    questionsSeniorPart11 as QuestionSet,
+    questionsSeniorPart12 as QuestionSet,
+    questionsSeniorPart13 as QuestionSet,
+    questionsSeniorPart14 as QuestionSet
+  ),
+  elementary1: mergeQuestionSets(
+    questionsElementary1Part1 as QuestionSet,
+    questionsElementary1Part2 as QuestionSet,
+    questionsElementary1Part3 as QuestionSet,
+    questionsElementary1Part4 as QuestionSet,
+    questionsElementary1Part5 as QuestionSet,
+    questionsElementary1Part6 as QuestionSet
+  ),
+  elementary2: mergeQuestionSets(
+    questionsElementary2Part1 as QuestionSet,
+    questionsElementary2Part2 as QuestionSet,
+    questionsElementary2Part3 as QuestionSet,
+    questionsElementary2Part4 as QuestionSet,
+    questionsElementary2Part5 as QuestionSet,
+    questionsElementary2Part6 as QuestionSet,
+    questionsElementary2Part7 as QuestionSet,
+    questionsElementary2Part8 as QuestionSet
+  ),
+  elementary3: mergeQuestionSets(
+    questionsElementary3Part1 as QuestionSet,
+    questionsElementary3Part2 as QuestionSet,
+    questionsElementary3Part3 as QuestionSet,
+    questionsElementary3Part4 as QuestionSet,
+    questionsElementary3Part5 as QuestionSet,
+    questionsElementary3Part6 as QuestionSet,
+    questionsElementary3Part7 as QuestionSet,
+    questionsElementary3Part8 as QuestionSet
+  ),
+  elementary4: mergeQuestionSets(
+    questionsElementary4Part1 as QuestionSet,
+    questionsElementary4Part2 as QuestionSet,
+    questionsElementary4Part3 as QuestionSet,
+    questionsElementary4Part4 as QuestionSet,
+    questionsElementary4Part5 as QuestionSet,
+    questionsElementary4Part6 as QuestionSet,
+    questionsElementary4Part7 as QuestionSet,
+    questionsElementary4Part8 as QuestionSet
+  ),
+  elementary5: mergeQuestionSets(
+    questionsElementary5Part1 as QuestionSet,
+    questionsElementary5Part2 as QuestionSet,
+    questionsElementary5Part3 as QuestionSet,
+    questionsElementary5Part4 as QuestionSet,
+    questionsElementary5Part5 as QuestionSet,
+    questionsElementary5Part6 as QuestionSet,
+    questionsElementary5Part7 as QuestionSet,
+    questionsElementary5Part8 as QuestionSet
+  ),
+  elementary6: mergeQuestionSets(
+    questionsElementary6Part1 as QuestionSet,
+    questionsElementary6Part2 as QuestionSet,
+    questionsElementary6Part3 as QuestionSet,
+    questionsElementary6Part4 as QuestionSet,
+    questionsElementary6Part5 as QuestionSet,
+    questionsElementary6Part6 as QuestionSet,
+    questionsElementary6Part7 as QuestionSet,
+    questionsElementary6Part8 as QuestionSet,
+    questionsElementary6Part9 as QuestionSet
+  ),
 }
 
 /**
