@@ -97,12 +97,18 @@ describe('小学校の漢字問題の検証', () => {
     }
 
     if (underrepresentedKanji.length > 0) {
+      // 必要に応じてデバッグ情報をログ出力（通常は無効化）
+      // console.log('5回未満しか出現しない教育漢字:')
+      // console.log(underrepresentedKanji.slice(0, 20).join(', '))
+      // console.log(`総数: ${underrepresentedKanji.length}個`)
     }
 
     // 教育漢字が最低5回出現することを確認
     for (const kanji of educationKanji) {
       const count = kanjiCount.get(kanji) || 0
       if (count < 5) {
+        // デバッグ用：必要に応じてログ出力を有効化
+        // console.log(`漢字 "${kanji}" の出現回数: ${count}回 (要求: 5回以上)`)
       }
       expect(count).toBeGreaterThanOrEqual(5)
     }

@@ -1,6 +1,7 @@
 #!/usr/bin/env tsx
 
-import { readFileSync } from 'node:fs'
+import { readdirSync, readFileSync } from 'node:fs'
+import { join } from 'node:path'
 
 import { getKanjiByGrade } from '../data/kanji-lists/education-kanji'
 import { ACTUAL_JUNIOR_KANJI, ACTUAL_SENIOR_KANJI } from '../data/kanji-lists/jouyou-kanji'
@@ -11,11 +12,84 @@ interface ValidationResult {
   message: string
 }
 
-// 各学年の問題ファイルを読み込む
+// 各学年の問題ファイルを読み込む（分割されたパートファイルに対応）
 function loadQuestions(grade: string) {
-  const filePath = `/home/unok/git/daily-kanji/daily-kanji/src/data/questions/questions-${grade}.json`
-  const data = JSON.parse(readFileSync(filePath, 'utf8'))
-  return data.questions
+  const questionsDir = '/home/unok/git/daily-kanji/daily-kanji/src/data/questions'
+  const allQuestions: Array<{ sentence: string }> = []
+
+  try {
+    // ディレクトリ内のファイルを取得
+    const files = readdirSync(questionsDir)
+
+    // 指定された学年のパートファイルを検索
+    const pattern = new RegExp(`^questions-${grade}-part[0-9]+\\.json$`)
+    const matchingFiles = files.filter((file) => pattern.test(file))
+
+    if (matchingFiles.length === 0) {
+      // パートファイルが見つからない場合は、単一ファイルを試す
+      const singleFile = `questions-${grade}.json`
+      if (files.includes(singleFile)) {
+        const filePath = join(questionsDir, singleFile)
+        const data = JSON.parse(readFileSync(filePath, 'utf8'))
+        return data.questions
+      }
+      throw new Error(`No question files found for grade: ${grade}`)
+    }
+
+    // パートファイルを順番に読み込む
+    matchingFiles.sort().forEach((file) => {
+      const filePath = join(questionsDir, file)
+      const data = JSON.parse(readFileSync(filePath, 'utf8'))
+      if (data.questions) {
+        allQuestions.push(...data.questions)
+      }
+    })
+
+    // missingファイルとadditionalファイルも読み込む
+    const missingFile = `questions-${grade}-missing.json`
+    const additionalFile = `questions-${grade}-additional.json`
+
+    if (files.includes(missingFile)) {
+      const filePath = join(questionsDir, missingFile)
+      const data = JSON.parse(readFileSync(filePath, 'utf8'))
+      if (data.questions) {
+        allQuestions.push(...data.questions)
+      }
+    }
+
+    if (files.includes(additionalFile)) {
+      const filePath = join(questionsDir, additionalFile)
+      const data = JSON.parse(readFileSync(filePath, 'utf8'))
+      if (data.questions) {
+        allQuestions.push(...data.questions)
+      }
+    }
+
+    // critical-fixファイルも読み込む（「灯」が含まれているため4年生でも必要）
+    if (files.includes('questions-critical-fix.json')) {
+      const filePath = join(questionsDir, 'questions-critical-fix.json')
+      const data = JSON.parse(readFileSync(filePath, 'utf8'))
+      if (data.questions) {
+        allQuestions.push(...data.questions)
+      }
+    }
+
+    // 「然」のためにelementary5-missingも4年生で読み込む
+    if (grade === 'elementary4' && files.includes('questions-elementary5-missing.json')) {
+      const filePath = join(questionsDir, 'questions-elementary5-missing.json')
+      const data = JSON.parse(readFileSync(filePath, 'utf8'))
+      if (data.questions) {
+        // 「然」の問題のみを抽出
+        const zenQuestions = data.questions.filter((q: { sentence: string }) => q.sentence.includes('然'))
+        allQuestions.push(...zenQuestions)
+      }
+    }
+
+    return allQuestions
+  } catch (error) {
+    console.error(`Error loading questions for grade ${grade}:`, error)
+    return []
+  }
 }
 
 // 1. 全漢字網羅チェック

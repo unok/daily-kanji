@@ -1,4 +1,7 @@
+// Missing/additional files
+import questionsCriticalFix from '../data/questions/questions-critical-fix.json'
 import questionsElementary from '../data/questions/questions-elementary.json'
+import questionsElementary1Missing from '../data/questions/questions-elementary1-missing.json'
 // Elementary 1 parts
 import questionsElementary1Part1 from '../data/questions/questions-elementary1-part1.json'
 import questionsElementary1Part2 from '../data/questions/questions-elementary1-part2.json'
@@ -6,6 +9,7 @@ import questionsElementary1Part3 from '../data/questions/questions-elementary1-p
 import questionsElementary1Part4 from '../data/questions/questions-elementary1-part4.json'
 import questionsElementary1Part5 from '../data/questions/questions-elementary1-part5.json'
 import questionsElementary1Part6 from '../data/questions/questions-elementary1-part6.json'
+import questionsElementary2Missing from '../data/questions/questions-elementary2-missing.json'
 // Elementary 2 parts
 import questionsElementary2Part1 from '../data/questions/questions-elementary2-part1.json'
 import questionsElementary2Part2 from '../data/questions/questions-elementary2-part2.json'
@@ -15,6 +19,7 @@ import questionsElementary2Part5 from '../data/questions/questions-elementary2-p
 import questionsElementary2Part6 from '../data/questions/questions-elementary2-part6.json'
 import questionsElementary2Part7 from '../data/questions/questions-elementary2-part7.json'
 import questionsElementary2Part8 from '../data/questions/questions-elementary2-part8.json'
+import questionsElementary3Missing from '../data/questions/questions-elementary3-missing.json'
 // Elementary 3 parts
 import questionsElementary3Part1 from '../data/questions/questions-elementary3-part1.json'
 import questionsElementary3Part2 from '../data/questions/questions-elementary3-part2.json'
@@ -24,6 +29,8 @@ import questionsElementary3Part5 from '../data/questions/questions-elementary3-p
 import questionsElementary3Part6 from '../data/questions/questions-elementary3-part6.json'
 import questionsElementary3Part7 from '../data/questions/questions-elementary3-part7.json'
 import questionsElementary3Part8 from '../data/questions/questions-elementary3-part8.json'
+import questionsElementary4Additional from '../data/questions/questions-elementary4-additional.json'
+import questionsElementary4Missing from '../data/questions/questions-elementary4-missing.json'
 // Elementary 4 parts
 import questionsElementary4Part1 from '../data/questions/questions-elementary4-part1.json'
 import questionsElementary4Part2 from '../data/questions/questions-elementary4-part2.json'
@@ -33,6 +40,7 @@ import questionsElementary4Part5 from '../data/questions/questions-elementary4-p
 import questionsElementary4Part6 from '../data/questions/questions-elementary4-part6.json'
 import questionsElementary4Part7 from '../data/questions/questions-elementary4-part7.json'
 import questionsElementary4Part8 from '../data/questions/questions-elementary4-part8.json'
+import questionsElementary5Missing from '../data/questions/questions-elementary5-missing.json'
 // Elementary 5 parts
 import questionsElementary5Part1 from '../data/questions/questions-elementary5-part1.json'
 import questionsElementary5Part2 from '../data/questions/questions-elementary5-part2.json'
@@ -159,7 +167,8 @@ const questionSets: Record<string, QuestionSet> = {
     questionsElementary1Part3 as QuestionSet,
     questionsElementary1Part4 as QuestionSet,
     questionsElementary1Part5 as QuestionSet,
-    questionsElementary1Part6 as QuestionSet
+    questionsElementary1Part6 as QuestionSet,
+    questionsElementary1Missing as QuestionSet
   ),
   elementary2: mergeQuestionSets(
     questionsElementary2Part1 as QuestionSet,
@@ -169,7 +178,9 @@ const questionSets: Record<string, QuestionSet> = {
     questionsElementary2Part5 as QuestionSet,
     questionsElementary2Part6 as QuestionSet,
     questionsElementary2Part7 as QuestionSet,
-    questionsElementary2Part8 as QuestionSet
+    questionsElementary2Part8 as QuestionSet,
+    questionsElementary2Missing as QuestionSet,
+    questionsCriticalFix as QuestionSet
   ),
   elementary3: mergeQuestionSets(
     questionsElementary3Part1 as QuestionSet,
@@ -179,7 +190,8 @@ const questionSets: Record<string, QuestionSet> = {
     questionsElementary3Part5 as QuestionSet,
     questionsElementary3Part6 as QuestionSet,
     questionsElementary3Part7 as QuestionSet,
-    questionsElementary3Part8 as QuestionSet
+    questionsElementary3Part8 as QuestionSet,
+    questionsElementary3Missing as QuestionSet
   ),
   elementary4: mergeQuestionSets(
     questionsElementary4Part1 as QuestionSet,
@@ -189,7 +201,9 @@ const questionSets: Record<string, QuestionSet> = {
     questionsElementary4Part5 as QuestionSet,
     questionsElementary4Part6 as QuestionSet,
     questionsElementary4Part7 as QuestionSet,
-    questionsElementary4Part8 as QuestionSet
+    questionsElementary4Part8 as QuestionSet,
+    questionsElementary4Missing as QuestionSet,
+    questionsElementary4Additional as QuestionSet
   ),
   elementary5: mergeQuestionSets(
     questionsElementary5Part1 as QuestionSet,
@@ -199,7 +213,8 @@ const questionSets: Record<string, QuestionSet> = {
     questionsElementary5Part5 as QuestionSet,
     questionsElementary5Part6 as QuestionSet,
     questionsElementary5Part7 as QuestionSet,
-    questionsElementary5Part8 as QuestionSet
+    questionsElementary5Part8 as QuestionSet,
+    questionsElementary5Missing as QuestionSet
   ),
   elementary6: mergeQuestionSets(
     questionsElementary6Part1 as QuestionSet,
