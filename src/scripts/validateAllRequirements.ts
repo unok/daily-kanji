@@ -78,6 +78,15 @@ function loadQuestions(grade: string) {
       }
     }
 
+    // juniorの場合、questions-junior-additional.jsonも読み込む
+    if (grade === 'junior' && files.includes('questions-junior-additional.json')) {
+      const filePath = join(questionsDir, 'questions-junior-additional.json')
+      const data = JSON.parse(readFileSync(filePath, 'utf8'))
+      if (data.questions) {
+        allQuestions.push(...data.questions)
+      }
+    }
+
     // 「然」のためにelementary5-missingも4年生で読み込む
     if (grade === 'elementary4' && files.includes('questions-elementary5-missing.json')) {
       const filePath = join(questionsDir, 'questions-elementary5-missing.json')
@@ -304,6 +313,10 @@ function validateKanjiFrequency(): ValidationResult {
   }
 
   if (juniorUnderrepresented.length > 0) {
+    console.log('\n中学校の使用回数が5回未満の漢字:')
+    juniorUnderrepresented.forEach((item) => {
+      console.log(`  ${item}`)
+    })
     allResults.push({
       passed: false,
       message: `❌ junior: ${juniorUnderrepresented.length}個の漢字が5回未満`,

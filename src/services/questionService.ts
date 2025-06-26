@@ -1,4 +1,5 @@
 // Missing/additional files
+// Missing/additional files
 import questionsCriticalFix from '../data/questions/questions-critical-fix.json'
 import questionsElementary from '../data/questions/questions-elementary.json'
 import questionsElementary1Missing from '../data/questions/questions-elementary1-missing.json'
@@ -60,6 +61,7 @@ import questionsElementary6Part6 from '../data/questions/questions-elementary6-p
 import questionsElementary6Part7 from '../data/questions/questions-elementary6-part7.json'
 import questionsElementary6Part8 from '../data/questions/questions-elementary6-part8.json'
 import questionsElementary6Part9 from '../data/questions/questions-elementary6-part9.json'
+import questionsJuniorAdditional from '../data/questions/questions-junior-additional.json'
 // Junior parts
 import questionsJuniorPart1 from '../data/questions/questions-junior-part1.json'
 import questionsJuniorPart2 from '../data/questions/questions-junior-part2.json'
@@ -143,7 +145,8 @@ const questionSets: Record<string, QuestionSet> = {
     questionsJuniorPart15 as QuestionSet,
     questionsJuniorPart16 as QuestionSet,
     questionsJuniorPart17 as QuestionSet,
-    questionsJuniorPart18 as QuestionSet
+    questionsJuniorPart18 as QuestionSet,
+    questionsJuniorAdditional as QuestionSet
   ),
   senior: mergeQuestionSets(
     questionsSeniorPart1 as QuestionSet,
