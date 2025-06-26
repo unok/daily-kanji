@@ -2,10 +2,14 @@
 
 import { readdirSync, readFileSync } from 'node:fs'
 import { join } from 'node:path'
+import { fileURLToPath } from 'node:url'
 
 import { getKanjiByGrade } from '../data/kanji-lists/education-kanji'
 import { ACTUAL_JUNIOR_KANJI, ACTUAL_SENIOR_KANJI } from '../data/kanji-lists/jouyou-kanji'
 import { parseQuestion } from '../utils/questionParser'
+
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = join(__filename, '..')
 
 interface ValidationResult {
   passed: boolean
@@ -14,7 +18,7 @@ interface ValidationResult {
 
 // 各学年の問題ファイルを読み込む（分割されたパートファイルに対応）
 function loadQuestions(grade: string) {
-  const questionsDir = '/home/unok/git/daily-kanji/daily-kanji/src/data/questions'
+  const questionsDir = join(__dirname, '../data/questions')
   const allQuestions: Array<{ sentence: string }> = []
 
   try {
