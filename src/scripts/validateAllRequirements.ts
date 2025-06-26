@@ -19,7 +19,7 @@ interface ValidationResult {
 // 各学年の問題ファイルを読み込む（分割されたパートファイルに対応）
 function loadQuestions(grade: string) {
   const questionsDir = join(__dirname, '../data/questions')
-  const allQuestions: Array<{ sentence: string }> = []
+  const allQuestions: Array<{ id?: string; sentence: string }> = []
 
   try {
     // ディレクトリ内のファイルを取得
@@ -48,55 +48,6 @@ function loadQuestions(grade: string) {
         allQuestions.push(...data.questions)
       }
     })
-
-    // missingファイルとadditionalファイルも読み込む
-    const missingFile = `questions-${grade}-missing.json`
-    const additionalFile = `questions-${grade}-additional.json`
-
-    if (files.includes(missingFile)) {
-      const filePath = join(questionsDir, missingFile)
-      const data = JSON.parse(readFileSync(filePath, 'utf8'))
-      if (data.questions) {
-        allQuestions.push(...data.questions)
-      }
-    }
-
-    if (files.includes(additionalFile)) {
-      const filePath = join(questionsDir, additionalFile)
-      const data = JSON.parse(readFileSync(filePath, 'utf8'))
-      if (data.questions) {
-        allQuestions.push(...data.questions)
-      }
-    }
-
-    // critical-fixファイルも読み込む（「灯」が含まれているため4年生でも必要）
-    if (files.includes('questions-critical-fix.json')) {
-      const filePath = join(questionsDir, 'questions-critical-fix.json')
-      const data = JSON.parse(readFileSync(filePath, 'utf8'))
-      if (data.questions) {
-        allQuestions.push(...data.questions)
-      }
-    }
-
-    // juniorの場合、questions-junior-additional.jsonも読み込む
-    if (grade === 'junior' && files.includes('questions-junior-additional.json')) {
-      const filePath = join(questionsDir, 'questions-junior-additional.json')
-      const data = JSON.parse(readFileSync(filePath, 'utf8'))
-      if (data.questions) {
-        allQuestions.push(...data.questions)
-      }
-    }
-
-    // 「然」のためにelementary5-missingも4年生で読み込む
-    if (grade === 'elementary4' && files.includes('questions-elementary5-missing.json')) {
-      const filePath = join(questionsDir, 'questions-elementary5-missing.json')
-      const data = JSON.parse(readFileSync(filePath, 'utf8'))
-      if (data.questions) {
-        // 「然」の問題のみを抽出
-        const zenQuestions = data.questions.filter((q: { sentence: string }) => q.sentence.includes('然'))
-        allQuestions.push(...zenQuestions)
-      }
-    }
 
     return allQuestions
   } catch (error) {
@@ -384,7 +335,7 @@ function validateTwoSetLimitAndConsecutive(): ValidationResult {
   console.log('\n=== 3. 2セット制限・連続防止・入力欄数チェック ===')
 
   const allResults: ValidationResult[] = []
-  const grades = ['elementary', 'elementary1', 'elementary2', 'elementary3', 'elementary4', 'elementary5', 'elementary6', 'junior', 'senior']
+  const grades = ['elementary1', 'elementary2', 'elementary3', 'elementary4', 'elementary5', 'elementary6', 'junior', 'senior']
 
   for (const grade of grades) {
     const questions = loadQuestions(grade)
@@ -474,7 +425,7 @@ function validateFirstCharacterDuplication(): ValidationResult {
   console.log('\n=== 4. 読みの最初の文字重複チェック ===')
 
   const allResults: ValidationResult[] = []
-  const grades = ['elementary', 'elementary1', 'elementary2', 'elementary3', 'elementary4', 'elementary5', 'elementary6', 'junior', 'senior']
+  const grades = ['elementary1', 'elementary2', 'elementary3', 'elementary4', 'elementary5', 'elementary6', 'junior', 'senior']
 
   for (const grade of grades) {
     const questions = loadQuestions(grade)
@@ -535,6 +486,226 @@ function validateFirstCharacterDuplication(): ValidationResult {
   }
 }
 
+// 5. 問題文の長さチェック（9文字以上）
+function validateQuestionLength(): ValidationResult {
+  console.log('\n=== 5. 問題文の長さチェック（9文字以上） ===')
+
+  const grades = ['elementary1', 'elementary2', 'elementary3', 'elementary4', 'elementary5', 'elementary6', 'junior', 'senior']
+
+  const allResults: { passed: boolean; message: string }[] = []
+
+  for (const grade of grades) {
+    const questions = loadQuestions(grade)
+    const violations: string[] = []
+    let hasViolation = false
+
+    for (const question of questions) {
+      // 問題文全体の長さをチェック（[漢字|読み]の部分も含む）
+      if (question.sentence.length < 9) {
+        hasViolation = true
+        violations.push(`問題"${question.sentence}"の長さが${question.sentence.length}文字`)
+      }
+    }
+
+    if (hasViolation) {
+      allResults.push({
+        passed: false,
+        message: `❌ ${grade}: ${violations.length}個の問題が9文字未満`,
+      })
+      console.log(`${grade}: 9文字未満の問題:`)
+      violations.slice(0, 5).forEach((v) => console.log(`  - ${v}`))
+      if (violations.length > 5) {
+        console.log(`  ... 他${violations.length - 5}個`)
+      }
+    } else {
+      allResults.push({
+        passed: true,
+        message: `✅ ${grade}: 全ての問題が9文字以上`,
+      })
+    }
+  }
+
+  const allPassed = allResults.every((r) => r.passed)
+  const summary = allResults.map((r) => r.message).join('\n')
+
+  return {
+    passed: allPassed,
+    message: summary,
+  }
+}
+
+// 6. 同じ漢字の重複チェック
+function validateKanjiDuplication(): ValidationResult {
+  console.log('\n=== 6. 同じ漢字の重複チェック ===')
+
+  const grades = ['elementary1', 'elementary2', 'elementary3', 'elementary4', 'elementary5', 'elementary6', 'junior', 'senior']
+
+  const allResults: { passed: boolean; message: string }[] = []
+
+  for (const grade of grades) {
+    const questions = loadQuestions(grade)
+    const violations: string[] = []
+    let hasViolation = false
+
+    for (const question of questions) {
+      const parsed = parseQuestion(question.sentence)
+      const kanjiInBlanks = new Set<string>()
+
+      // 穴埋め部分の漢字を収集
+      for (const input of parsed.inputs) {
+        if (input.kanji) {
+          kanjiInBlanks.add(input.kanji)
+        }
+      }
+
+      // 元の文章から[漢字|読み]部分を除去したテキストを取得
+      const textOnly = question.sentence.replace(/\[[^\]]+\]/g, '')
+
+      // 問題文の他の部分に同じ漢字が含まれているかチェック
+      for (const char of textOnly) {
+        if (kanjiInBlanks.has(char)) {
+          hasViolation = true
+          violations.push(`問題"${question.sentence.substring(0, 50)}..."で「${char}」が重複`)
+          break
+        }
+      }
+    }
+
+    if (hasViolation) {
+      allResults.push({
+        passed: false,
+        message: `❌ ${grade}: ${violations.length}個の問題で漢字が重複`,
+      })
+      console.log(`${grade}: 漢字が重複している問題:`)
+      violations.slice(0, 5).forEach((v) => console.log(`  - ${v}`))
+      if (violations.length > 5) {
+        console.log(`  ... 他${violations.length - 5}個`)
+      }
+    } else {
+      allResults.push({
+        passed: true,
+        message: `✅ ${grade}: 漢字の重複なし`,
+      })
+    }
+  }
+
+  const allPassed = allResults.every((r) => r.passed)
+  const summary = allResults.map((r) => r.message).join('\n')
+
+  return {
+    passed: allPassed,
+    message: summary,
+  }
+}
+
+// 7. IDとsentenceの重複チェック
+function validateDuplication(): ValidationResult {
+  console.log('\n=== 7. IDとsentenceの重複チェック ===')
+
+  const grades = ['elementary1', 'elementary2', 'elementary3', 'elementary4', 'elementary5', 'elementary6', 'junior', 'senior']
+
+  const allResults: { passed: boolean; message: string }[] = []
+  const globalIdMap = new Map<string, string[]>() // ID -> [grade1, grade2, ...]
+  const globalSentenceMap = new Map<string, string[]>() // sentence -> [grade1, grade2, ...]
+  const idDuplicates = new Map<string, string[]>() // duplicate ID -> grades
+  const sentenceDuplicates = new Map<string, string[]>() // duplicate sentence -> grades
+
+  // すべてのファイルから問題を収集
+  for (const grade of grades) {
+    const questions = loadQuestions(grade)
+
+    for (const question of questions) {
+      // IDの収集
+      if (question.id) {
+        if (!globalIdMap.has(question.id)) {
+          globalIdMap.set(question.id, [])
+        }
+        globalIdMap.get(question.id)?.push(grade)
+      }
+
+      // sentenceの収集
+      if (!globalSentenceMap.has(question.sentence)) {
+        globalSentenceMap.set(question.sentence, [])
+      }
+      globalSentenceMap.get(question.sentence)?.push(grade)
+    }
+  }
+
+  // 重複を検出
+  for (const [id, gradeList] of globalIdMap.entries()) {
+    if (gradeList.length > 1) {
+      idDuplicates.set(id, gradeList)
+    }
+  }
+
+  for (const [sentence, gradeList] of globalSentenceMap.entries()) {
+    if (gradeList.length > 1) {
+      sentenceDuplicates.set(sentence, gradeList)
+    }
+  }
+
+  // 結果を集計
+  if (idDuplicates.size > 0 || sentenceDuplicates.size > 0) {
+    const messages: string[] = []
+    if (idDuplicates.size > 0) {
+      messages.push(`ID重複: ${idDuplicates.size}個`)
+    }
+    if (sentenceDuplicates.size > 0) {
+      messages.push(`文章重複: ${sentenceDuplicates.size}個`)
+    }
+    allResults.push({
+      passed: false,
+      message: `❌ 重複あり: ${messages.join(', ')}`,
+    })
+  } else {
+    allResults.push({
+      passed: true,
+      message: '✅ IDと文章の重複なし',
+    })
+  }
+
+  // 詳細な重複情報を表示
+  if (idDuplicates.size > 0) {
+    console.log('\n重複しているID:')
+    let count = 0
+    for (const [id, grades] of idDuplicates.entries()) {
+      if (count < 10) {
+        console.log(`  - ${id} (出現ファイル: ${grades.join(', ')})`)
+        count++
+      } else {
+        break
+      }
+    }
+    if (idDuplicates.size > 10) {
+      console.log(`  ... 他${idDuplicates.size - 10}個`)
+    }
+  }
+
+  if (sentenceDuplicates.size > 0) {
+    console.log('\n重複している文章:')
+    let count = 0
+    for (const [sentence, grades] of sentenceDuplicates.entries()) {
+      if (count < 5) {
+        console.log(`  - ${sentence.substring(0, 50)}... (出現ファイル: ${grades.join(', ')})`)
+        count++
+      } else {
+        break
+      }
+    }
+    if (sentenceDuplicates.size > 5) {
+      console.log(`  ... 他${sentenceDuplicates.size - 5}個`)
+    }
+  }
+
+  const allPassed = allResults.every((r) => r.passed)
+  const summary = allResults.map((r) => r.message).join('\n')
+
+  return {
+    passed: allPassed,
+    message: summary,
+  }
+}
+
 // メイン処理
 function main() {
   console.log('🔍 漢字学習システム要件検証ツール（修正版）')
@@ -553,6 +724,15 @@ function main() {
 
   // 4. 読みの最初の文字重複チェック
   results.push(validateFirstCharacterDuplication())
+
+  // 5. 問題文の長さチェック（9文字以上）
+  results.push(validateQuestionLength())
+
+  // 6. 同じ漢字の重複チェック
+  results.push(validateKanjiDuplication())
+
+  // 7. IDとsentenceの重複チェック
+  results.push(validateDuplication())
 
   // 最終結果
   console.log(`\n${'='.repeat(50)}`)
