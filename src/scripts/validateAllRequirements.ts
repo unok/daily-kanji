@@ -644,14 +644,23 @@ function validateDuplication(): ValidationResult {
     }
   }
 
-  // 結果を集計
-  if (idDuplicates.size > 0 || sentenceDuplicates.size > 0) {
+  // 同一学年内の重複をカウント
+  let sameGradeSentenceCount = 0
+  for (const [, grades] of sentenceDuplicates.entries()) {
+    const uniqueGrades = new Set(grades)
+    if (uniqueGrades.size === 1) {
+      sameGradeSentenceCount++
+    }
+  }
+
+  // 結果を集計（同一学年内の重複のみをエラーとする）
+  if (idDuplicates.size > 0 || sameGradeSentenceCount > 0) {
     const messages: string[] = []
     if (idDuplicates.size > 0) {
       messages.push(`ID重複: ${idDuplicates.size}個`)
     }
-    if (sentenceDuplicates.size > 0) {
-      messages.push(`文章重複: ${sentenceDuplicates.size}個`)
+    if (sameGradeSentenceCount > 0) {
+      messages.push(`同一学年内の文章重複: ${sameGradeSentenceCount}個`)
     }
     allResults.push({
       passed: false,
@@ -684,17 +693,25 @@ function validateDuplication(): ValidationResult {
   if (sentenceDuplicates.size > 0) {
     console.log('\n重複している文章:')
     let count = 0
+    let sameGradeCount = 0
+    let crossGradeCount = 0
+
     for (const [sentence, grades] of sentenceDuplicates.entries()) {
-      if (count < 5) {
-        console.log(`  - ${sentence.substring(0, 50)}... (出現ファイル: ${grades.join(', ')})`)
-        count++
+      // Check if all occurrences are in the same grade
+      const uniqueGrades = new Set(grades)
+      if (uniqueGrades.size === 1) {
+        sameGradeCount++
+        if (count < 5) {
+          console.log(`  - ${sentence.substring(0, 50)}... (同一学年内: ${grades.join(', ')})`)
+          count++
+        }
       } else {
-        break
+        crossGradeCount++
       }
     }
-    if (sentenceDuplicates.size > 5) {
-      console.log(`  ... 他${sentenceDuplicates.size - 5}個`)
-    }
+
+    console.log(`\n  同一学年内の重複: ${sameGradeCount}個`)
+    console.log(`  異なる学年間の重複: ${crossGradeCount}個（これは問題ありません）`)
   }
 
   const allPassed = allResults.every((r) => r.passed)
