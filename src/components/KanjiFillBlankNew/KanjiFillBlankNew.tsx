@@ -46,6 +46,8 @@ export function KanjiFillBlankNew({ difficulty = 'elementary', onSessionComplete
       }>
     }>
   >([])
+  // 認識精度の閾値（定数）
+  const SIMILARITY_THRESHOLD = 0.5
 
   // 難易度変更時の処理
   useEffect(() => {
@@ -100,7 +102,7 @@ export function KanjiFillBlankNew({ difficulty = 'elementary', onSessionComplete
               fontResults: debugResult.results,
             })
 
-            const isCorrect = debugResult.bestScore >= 0.45
+            const isCorrect = debugResult.bestScore >= SIMILARITY_THRESHOLD
             return {
               isCorrect,
               input: canvasImages[index] ? `類似度: ${(debugResult.bestScore * 100).toFixed(1)}%` : '未入力',
@@ -108,7 +110,7 @@ export function KanjiFillBlankNew({ difficulty = 'elementary', onSessionComplete
             }
           }
           const similarity = await recognizeKanjiScore(canvasImages[index], input.kanji)
-          const isCorrect = similarity >= 0.45
+          const isCorrect = similarity >= SIMILARITY_THRESHOLD
 
           return {
             isCorrect,
