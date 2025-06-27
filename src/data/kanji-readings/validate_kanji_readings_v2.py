@@ -157,16 +157,17 @@ def main():
     print(f"  - 「よみ」プレースホルダー: {yomi_count}個")
     print(f"  - 実際の読み問題: {non_yomi_count}個")
     
-    if non_yomi_count == 0 and yomi_count > 0:
-        print("\n✅ 実際の読み問題はありません！")
-        print(f"⚠️  「よみ」プレースホルダーが{yomi_count}個残っています（後で対応予定）")
-        return 0  # Success - only yomi placeholders remain
-    elif len(all_mismatches) == 0:
+    if len(all_mismatches) == 0:
         print("\n✅ すべての読みが正しく設定されています！")
         return 0  # Success - no issues
     
+    # Any mismatches (including よみ) should be treated as errors
+    if yomi_count > 0:
+        print(f"\n❌ 「よみ」プレースホルダーが{yomi_count}個残っています！")
+    if non_yomi_count > 0:
+        print(f"❌ {non_yomi_count}個の読み問題が見つかりました！")
+    
     if all_mismatches and non_yomi_count > 0:
-        print(f"\n❌ {non_yomi_count}個の読み問題が見つかりました！")
         print("\nMismatch details:")
         print("-" * 80)
         
@@ -224,6 +225,10 @@ def main():
                         break
         
         return 1  # Failure - real reading issues found
+    
+    # If we have any mismatches (including よみ), it's a failure
+    if len(all_mismatches) > 0:
+        return 1  # Failure - mismatches found
     
     # Save detailed report
     with open('validation_report_v2.json', 'w', encoding='utf-8') as f:
