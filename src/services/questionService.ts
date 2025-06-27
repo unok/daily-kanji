@@ -99,6 +99,7 @@ import questionsSeniorPart11 from '../data/questions/questions-senior-part11.jso
 import questionsSeniorPart12 from '../data/questions/questions-senior-part12.json'
 import questionsSeniorPart13 from '../data/questions/questions-senior-part13.json'
 import questionsSeniorPart14 from '../data/questions/questions-senior-part14.json'
+import questionsSeniorAdditional from '../data/questions/questions-senior-additional.json'
 import type { QuestionData } from '../types/question'
 import { parseQuestion } from '../utils/questionParser'
 
@@ -185,7 +186,8 @@ const questionSets: Record<string, QuestionSet> = {
     questionsSeniorPart11,
     questionsSeniorPart12,
     questionsSeniorPart13,
-    questionsSeniorPart14
+    questionsSeniorPart14,
+    questionsSeniorAdditional
   ),
   elementary1: mergeQuestionSets(
     'elementary1',
