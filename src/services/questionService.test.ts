@@ -219,14 +219,29 @@ describe('中学校の漢字問題の検証', () => {
 
     const fiveOrMoreRate = fiveOrMoreUsed / totalKanji
 
+    // 5回未満の漢字を収集
+    const insufficientKanji: Array<{ kanji: string; count: number }> = []
+    for (const [kanji, count] of kanjiCount) {
+      if (count < 5) {
+        insufficientKanji.push({ kanji, count })
+      }
+    }
+
+    // 5回未満の漢字がある場合は詳細を出力
+    if (insufficientKanji.length > 0) {
+      console.error('\n中学校漢字で5回未満の使用:')
+      console.error(`総数: ${insufficientKanji.length}個`)
+      console.error('\n詳細（使用回数順）:')
+      const sorted = insufficientKanji.sort((a, b) => a.count - b.count)
+      for (const { kanji, count } of sorted) {
+        console.error(`  ${kanji}: ${count}回`)
+      }
+    }
+
     // 全ての漢字が5回以上使用されていることを確認
+    expect(insufficientKanji.length).toBe(0)
     expect(fiveOrMoreRate).toBe(1.0) // 100%
     expect(totalKanji).toBeGreaterThan(400) // 最低400種類の漢字
-
-    // 各漢字が最低5回使用されていることを個別確認
-    for (const [, count] of kanjiCount) {
-      expect(count).toBeGreaterThanOrEqual(5)
-    }
   })
 })
 
@@ -298,14 +313,29 @@ describe('高校の漢字問題の検証', () => {
 
     const fiveOrMoreRate = fiveOrMoreUsed / totalKanji
 
+    // 5回未満の漢字を収集
+    const insufficientKanji: Array<{ kanji: string; count: number }> = []
+    for (const [kanji, count] of kanjiCount) {
+      if (count < 5) {
+        insufficientKanji.push({ kanji, count })
+      }
+    }
+
+    // 5回未満の漢字がある場合は詳細を出力
+    if (insufficientKanji.length > 0) {
+      console.error('\n高校漢字で5回未満の使用:')
+      console.error(`総数: ${insufficientKanji.length}個`)
+      console.error('\n詳細（使用回数順）:')
+      const sorted = insufficientKanji.sort((a, b) => a.count - b.count)
+      for (const { kanji, count } of sorted) {
+        console.error(`  ${kanji}: ${count}回`)
+      }
+    }
+
     // 全ての漢字が5回以上使用されていることを確認
+    expect(insufficientKanji.length).toBe(0)
     expect(fiveOrMoreRate).toBe(1.0) // 100%
     expect(totalKanji).toBeGreaterThan(400) // 最低400種類の漢字
-
-    // 各漢字が最低5回使用されていることを個別確認
-    for (const [, count] of kanjiCount) {
-      expect(count).toBeGreaterThanOrEqual(5)
-    }
   })
 })
 
