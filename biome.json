@@ -11,7 +11,11 @@
         "src/scripts/addMissingKanjiQuestions.ts",
         "src/scripts/simplifyMissingKanji.ts",
         "src/scripts/addGradeQuestions.ts",
-        "src/scripts/analyzeSpecificGrade.ts"
+        "src/scripts/analyzeSpecificGrade.ts",
+        "src/scripts/validateGradeKanji.ts",
+        "src/scripts/validateTargetKanji.ts",
+        "src/scripts/validateComprehensiveGradeKanji.ts",
+        "scripts/generate-senior-additional-questions.ts"
       ],
       "linter": {
         "rules": {

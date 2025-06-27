@@ -10,12 +10,15 @@
     "lint:fix": "biome check --fix .",
     "lint:check": "biome check .",
     "preview": "vite preview",
-    "all:check": "run-s lint lint:check lint:fix test:ui validate validate:readings build",
+    "all:check": "run-s lint lint:check lint:fix test:ui validate validate:readings build validate:comprehensive",
     "test": "vitest --run",
     "test:ui": "vitest --run",
     "prepare": "husky",
     "validate": "tsx src/scripts/validateAllRequirements.ts",
     "validate:readings": "python3 src/data/kanji-readings/validate_kanji_readings_v2.py",
+    "validate:grade": "tsx src/scripts/validateGradeKanji.ts",
+    "validate:target": "tsx src/scripts/validateTargetKanji.ts",
+    "validate:comprehensive": "tsx src/scripts/validateComprehensiveGradeKanji.ts",
     "validate:all": "run-s test:ui validate validate:readings"
   },
   "dependencies": {
