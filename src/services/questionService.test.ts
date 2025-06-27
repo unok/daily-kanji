@@ -300,22 +300,32 @@ describe('高校の漢字問題の検証', () => {
       }
     }
 
-    // 拡張後の要件：全ての漢字が5回以上使用されている
+    // 実際の高校漢字リストのみを対象とする
+    const actualHighSchoolKanji = new Set(ACTUAL_SENIOR_KANJI)
+
+    // 高校漢字のみの使用頻度をチェック
+    const seniorKanjiCount = new Map<string, number>()
+    for (const kanji of actualHighSchoolKanji) {
+      const count = kanjiCount.get(kanji) || 0
+      seniorKanjiCount.set(kanji, count)
+    }
+
+    // 拡張後の要件：全ての高校漢字が5回以上使用されている
     const frequencyDistribution = new Map<number, number>()
-    for (const [, count] of kanjiCount) {
+    for (const [, count] of seniorKanjiCount) {
       frequencyDistribution.set(count, (frequencyDistribution.get(count) || 0) + 1)
     }
 
-    const totalKanji = kanjiCount.size
+    const totalKanji = seniorKanjiCount.size
     const fiveOrMoreUsed = Array.from(frequencyDistribution.entries())
       .filter(([count]) => count >= 5)
       .reduce((sum, [_, freq]) => sum + freq, 0)
 
     const fiveOrMoreRate = fiveOrMoreUsed / totalKanji
 
-    // 5回未満の漢字を収集
+    // 5回未満の高校漢字を収集
     const insufficientKanji: Array<{ kanji: string; count: number }> = []
-    for (const [kanji, count] of kanjiCount) {
+    for (const [kanji, count] of seniorKanjiCount) {
       if (count < 5) {
         insufficientKanji.push({ kanji, count })
       }
@@ -332,7 +342,7 @@ describe('高校の漢字問題の検証', () => {
       }
     }
 
-    // 全ての漢字が5回以上使用されていることを確認
+    // 全ての高校漢字が5回以上使用されていることを確認
     expect(insufficientKanji.length).toBe(0)
     expect(fiveOrMoreRate).toBe(1.0) // 100%
     expect(totalKanji).toBeGreaterThan(400) // 最低400種類の漢字

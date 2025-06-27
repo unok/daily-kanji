@@ -1,0 +1,323 @@
+🔍 漢字読み方検証ツール
+================================================================================
+📚 1387個の漢字読みを読み込みました
+📚 775個の複合語読みを読み込みました
+
+検証開始...
+================================================================================
+Checking src/data/questions/questions-elementary1-part1.json...
+  All readings valid
+Checking src/data/questions/questions-elementary1-part2.json...
+  All readings valid
+Checking src/data/questions/questions-elementary1-part3.json...
+  All readings valid
+Checking src/data/questions/questions-elementary1-part4.json...
+  All readings valid
+Checking src/data/questions/questions-elementary1-part5.json...
+  All readings valid
+Checking src/data/questions/questions-elementary1-part6.json...
+  All readings valid
+Checking src/data/questions/questions-elementary1-part7.json...
+  All readings valid
+Checking src/data/questions/questions-elementary2-part1.json...
+  All readings valid
+Checking src/data/questions/questions-elementary2-part10.json...
+  All readings valid
+Checking src/data/questions/questions-elementary2-part2.json...
+  All readings valid
+Checking src/data/questions/questions-elementary2-part3.json...
+  All readings valid
+Checking src/data/questions/questions-elementary2-part4.json...
+  All readings valid
+Checking src/data/questions/questions-elementary2-part5.json...
+  All readings valid
+Checking src/data/questions/questions-elementary2-part6.json...
+  All readings valid
+Checking src/data/questions/questions-elementary2-part7.json...
+  All readings valid
+Checking src/data/questions/questions-elementary2-part8.json...
+  All readings valid
+Checking src/data/questions/questions-elementary2-part9.json...
+  All readings valid
+Checking src/data/questions/questions-elementary3-part1.json...
+  All readings valid
+Checking src/data/questions/questions-elementary3-part10.json...
+  All readings valid
+Checking src/data/questions/questions-elementary3-part2.json...
+  All readings valid
+Checking src/data/questions/questions-elementary3-part3.json...
+  All readings valid
+Checking src/data/questions/questions-elementary3-part4.json...
+  All readings valid
+Checking src/data/questions/questions-elementary3-part5.json...
+  All readings valid
+Checking src/data/questions/questions-elementary3-part6.json...
+  All readings valid
+Checking src/data/questions/questions-elementary3-part7.json...
+  All readings valid
+Checking src/data/questions/questions-elementary3-part8.json...
+  All readings valid
+Checking src/data/questions/questions-elementary3-part9.json...
+  All readings valid
+Checking src/data/questions/questions-elementary4-part1.json...
+  All readings valid
+Checking src/data/questions/questions-elementary4-part10.json...
+  All readings valid
+Checking src/data/questions/questions-elementary4-part11.json...
+  All readings valid
+Checking src/data/questions/questions-elementary4-part12.json...
+  All readings valid
+Checking src/data/questions/questions-elementary4-part13.json...
+  All readings valid
+Checking src/data/questions/questions-elementary4-part2.json...
+  All readings valid
+Checking src/data/questions/questions-elementary4-part3.json...
+  All readings valid
+Checking src/data/questions/questions-elementary4-part4.json...
+  All readings valid
+Checking src/data/questions/questions-elementary4-part5.json...
+  All readings valid
+Checking src/data/questions/questions-elementary4-part6.json...
+  All readings valid
+Checking src/data/questions/questions-elementary4-part7.json...
+  All readings valid
+Checking src/data/questions/questions-elementary4-part8.json...
+  All readings valid
+Checking src/data/questions/questions-elementary4-part9.json...
+  All readings valid
+Checking src/data/questions/questions-elementary5-part1.json...
+  All readings valid
+Checking src/data/questions/questions-elementary5-part10.json...
+  All readings valid
+Checking src/data/questions/questions-elementary5-part2.json...
+  All readings valid
+Checking src/data/questions/questions-elementary5-part3.json...
+  All readings valid
+Checking src/data/questions/questions-elementary5-part4.json...
+  All readings valid
+Checking src/data/questions/questions-elementary5-part5.json...
+  All readings valid
+Checking src/data/questions/questions-elementary5-part6.json...
+  All readings valid
+Checking src/data/questions/questions-elementary5-part7.json...
+  All readings valid
+Checking src/data/questions/questions-elementary5-part8.json...
+  All readings valid
+Checking src/data/questions/questions-elementary5-part9.json...
+  All readings valid
+Checking src/data/questions/questions-elementary6-part1.json...
+  All readings valid
+Checking src/data/questions/questions-elementary6-part10.json...
+  All readings valid
+Checking src/data/questions/questions-elementary6-part2.json...
+  All readings valid
+Checking src/data/questions/questions-elementary6-part3.json...
+  All readings valid
+Checking src/data/questions/questions-elementary6-part4.json...
+  All readings valid
+Checking src/data/questions/questions-elementary6-part5.json...
+  All readings valid
+Checking src/data/questions/questions-elementary6-part6.json...
+  All readings valid
+Checking src/data/questions/questions-elementary6-part7.json...
+  All readings valid
+Checking src/data/questions/questions-elementary6-part8.json...
+  All readings valid
+Checking src/data/questions/questions-elementary6-part9.json...
+  All readings valid
+Checking src/data/questions/questions-junior-part1.json...
+  All readings valid
+Checking src/data/questions/questions-junior-part10.json...
+  All readings valid
+Checking src/data/questions/questions-junior-part11.json...
+  All readings valid
+Checking src/data/questions/questions-junior-part12.json...
+  All readings valid
+Checking src/data/questions/questions-junior-part13.json...
+  All readings valid
+Checking src/data/questions/questions-junior-part14.json...
+  All readings valid
+Checking src/data/questions/questions-junior-part15.json...
+  All readings valid
+Checking src/data/questions/questions-junior-part16.json...
+  All readings valid
+Checking src/data/questions/questions-junior-part17.json...
+  All readings valid
+Checking src/data/questions/questions-junior-part18.json...
+  All readings valid
+Checking src/data/questions/questions-junior-part19.json...
+  All readings valid
+Checking src/data/questions/questions-junior-part2.json...
+  All readings valid
+Checking src/data/questions/questions-junior-part3.json...
+  All readings valid
+Checking src/data/questions/questions-junior-part4.json...
+  All readings valid
+Checking src/data/questions/questions-junior-part5.json...
+  All readings valid
+Checking src/data/questions/questions-junior-part6.json...
+  All readings valid
+Checking src/data/questions/questions-junior-part7.json...
+  All readings valid
+Checking src/data/questions/questions-junior-part8.json...
+  All readings valid
+Checking src/data/questions/questions-junior-part9.json...
+  All readings valid
+Checking src/data/questions/questions-senior-additional.json...
+  Found 434 mismatches
+Checking src/data/questions/questions-senior-part1.json...
+  All readings valid
+Checking src/data/questions/questions-senior-part10.json...
+  All readings valid
+Checking src/data/questions/questions-senior-part11.json...
+  All readings valid
+Checking src/data/questions/questions-senior-part12.json...
+  All readings valid
+Checking src/data/questions/questions-senior-part13.json...
+  All readings valid
+Checking src/data/questions/questions-senior-part14.json...
+  All readings valid
+Checking src/data/questions/questions-senior-part2.json...
+  All readings valid
+Checking src/data/questions/questions-senior-part3.json...
+  All readings valid
+Checking src/data/questions/questions-senior-part4.json...
+  All readings valid
+Checking src/data/questions/questions-senior-part5.json...
+  All readings valid
+Checking src/data/questions/questions-senior-part6.json...
+  All readings valid
+Checking src/data/questions/questions-senior-part7.json...
+  All readings valid
+Checking src/data/questions/questions-senior-part8.json...
+  All readings valid
+Checking src/data/questions/questions-senior-part9.json...
+  All readings valid
+================================================================================
+
+📊 検証結果サマリー
+================================================================================
+総不一致数: 434個
+  - 「よみ」プレースホルダー: 0個
+  - 実際の読み問題: 434個
+❌ 434個の読み問題が見つかりました！
+
+Mismatch details:
+--------------------------------------------------------------------------------
+
+Single kanji mismatches (excluding よみ):
+
+漢字: 与
+  No readings found in dictionary!
+  Mismatches (1 total):
+    - Reading: あた (in src/data/questions/questions-senior-additional.json id:sen-add-651)
+
+漢字: 伸
+  No readings found in dictionary!
+  Mismatches (1 total):
+    - Reading: の (in src/data/questions/questions-senior-additional.json id:sen-add-345)
+
+漢字: 典
+  Valid readings: てん
+  Mismatches (1 total):
+    - Reading: ほうてん (in src/data/questions/questions-senior-additional.json id:sen-add-006)
+
+漢字: 凱
+  No readings found in dictionary!
+  Mismatches (1 total):
+    - Reading: がい (in src/data/questions/questions-senior-additional.json id:sen-add-730)
+
+漢字: 到
+  No readings found in dictionary!
+  Mismatches (8 total):
+    - Reading: とう (in src/data/questions/questions-senior-additional.json id:sen-add-1705)
+    - Reading: とう (in src/data/questions/questions-senior-additional.json id:sen-add-1706)
+    - Reading: とう (in src/data/questions/questions-senior-additional.json id:sen-add-1707)
+
+漢字: 剣
+  No readings found in dictionary!
+  Mismatches (8 total):
+    - Reading: けん (in src/data/questions/questions-senior-additional.json id:sen-add-1657)
+    - Reading: けん (in src/data/questions/questions-senior-additional.json id:sen-add-1658)
+    - Reading: けん (in src/data/questions/questions-senior-additional.json id:sen-add-1659)
+
+漢字: 午
+  Valid readings: ご
+  Mismatches (1 total):
+    - Reading: うま (in src/data/questions/questions-senior-additional.json id:sen-add-963)
+
+漢字: 古
+  Valid readings: こ, ふる
+  Mismatches (1 total):
+    - Reading: たいこ (in src/data/questions/questions-senior-additional.json id:sen-add-002)
+
+漢字: 含
+  No readings found in dictionary!
+  Mismatches (1 total):
+    - Reading: ふく (in src/data/questions/questions-senior-additional.json id:sen-add-454)
+
+漢字: 唆
+  No readings found in dictionary!
+  Mismatches (2 total):
+    - Reading: そそのか (in src/data/questions/questions-senior-additional.json id:sen-add-945)
+    - Reading: さ (in src/data/questions/questions-senior-additional.json id:sen-add-947)
+
+... (more mismatches not shown)
+
+
+Compound word mismatches (excluding よみ):
+
+複合語: 一括
+  No compound reading registered!
+  Mismatches (1 total):
+    - Reading: いっかつ (in src/data/questions/questions-senior-additional.json id:sen-add-147)
+
+複合語: 一泊
+  No compound reading registered!
+  Mismatches (1 total):
+    - Reading: いっぱく (in src/data/questions/questions-senior-additional.json id:sen-add-997)
+
+複合語: 一般
+  No compound reading registered!
+  Mismatches (1 total):
+    - Reading: いっぱん (in src/data/questions/questions-senior-additional.json id:sen-add-151)
+
+複合語: 丁々
+  No compound reading registered!
+  Mismatches (1 total):
+    - Reading: ちょうちょう (in src/data/questions/questions-senior-additional.json id:sen-add-098)
+
+複合語: 万端
+  No compound reading registered!
+  Mismatches (1 total):
+    - Reading: ばんたん (in src/data/questions/questions-senior-additional.json id:sen-add-116)
+
+複合語: 不肖
+  No compound reading registered!
+  Mismatches (1 total):
+    - Reading: ふしょう (in src/data/questions/questions-senior-additional.json id:sen-add-1373)
+
+複合語: 与党
+  No compound reading registered!
+  Mismatches (2 total):
+    - Reading: よとう (in src/data/questions/questions-senior-additional.json id:sen-add-648)
+    - Reading: よとう (in src/data/questions/questions-senior-additional.json id:sen-add-1098)
+
+複合語: 中枢
+  No compound reading registered!
+  Mismatches (3 total):
+    - Reading: ちゅうすう (in src/data/questions/questions-senior-additional.json id:sen-add-306)
+    - Reading: ちゅうすう (in src/data/questions/questions-senior-additional.json id:sen-add-607)
+    - Reading: ちゅうすう (in src/data/questions/questions-senior-additional.json id:sen-add-976)
+
+複合語: 中継
+  No compound reading registered!
+  Mismatches (1 total):
+    - Reading: ちゅうけい (in src/data/questions/questions-senior-additional.json id:sen-add-274)
+
+複合語: 乞丐
+  No compound reading registered!
+  Mismatches (1 total):
+    - Reading: こつがい (in src/data/questions/questions-senior-additional.json id:sen-add-1496)
+
+... (more mismatches not shown)

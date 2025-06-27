@@ -49,6 +49,16 @@ function loadQuestions(grade: string) {
       }
     })
 
+    // 追加ファイルもチェック
+    const additionalFile = `questions-${grade}-additional.json`
+    if (files.includes(additionalFile)) {
+      const filePath = join(questionsDir, additionalFile)
+      const data = JSON.parse(readFileSync(filePath, 'utf8'))
+      if (data.questions) {
+        allQuestions.push(...data.questions)
+      }
+    }
+
     return allQuestions
   } catch (error) {
     console.error(`Error loading questions for grade ${grade}:`, error)

@@ -1,4 +1,5 @@
 // Elementary 1 parts
+// Elementary 1 parts
 import questionsElementary1Part1 from '../data/questions/questions-elementary1-part1.json'
 import questionsElementary1Part2 from '../data/questions/questions-elementary1-part2.json'
 import questionsElementary1Part3 from '../data/questions/questions-elementary1-part3.json'
@@ -84,6 +85,7 @@ import questionsJuniorPart16 from '../data/questions/questions-junior-part16.jso
 import questionsJuniorPart17 from '../data/questions/questions-junior-part17.json'
 import questionsJuniorPart18 from '../data/questions/questions-junior-part18.json'
 import questionsJuniorPart19 from '../data/questions/questions-junior-part19.json'
+import questionsSeniorAdditional from '../data/questions/questions-senior-additional.json'
 // Senior parts
 import questionsSeniorPart1 from '../data/questions/questions-senior-part1.json'
 import questionsSeniorPart2 from '../data/questions/questions-senior-part2.json'
@@ -99,7 +101,6 @@ import questionsSeniorPart11 from '../data/questions/questions-senior-part11.jso
 import questionsSeniorPart12 from '../data/questions/questions-senior-part12.json'
 import questionsSeniorPart13 from '../data/questions/questions-senior-part13.json'
 import questionsSeniorPart14 from '../data/questions/questions-senior-part14.json'
-import questionsSeniorAdditional from '../data/questions/questions-senior-additional.json'
 import type { QuestionData } from '../types/question'
 import { parseQuestion } from '../utils/questionParser'
 
