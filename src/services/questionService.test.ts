@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest'
 
 import { getAllElementaryKanji } from '../data/kanji-lists/education-kanji'
-import { ACTUAL_JUNIOR_KANJI, ACTUAL_SENIOR_KANJI } from '../data/kanji-lists/jouyou-kanji'
+import { MIDDLE_SCHOOL_KANJI } from '../data/kanji-lists/jouyou-kanji'
 import { type DifficultyLevel, getQuestionsByDifficulty } from './questionService'
 
 describe('小学校の漢字問題の検証', () => {
@@ -175,7 +175,7 @@ describe('中学校の漢字問題の検証', () => {
     }
 
     // 実際の問題データで使用されている中学校漢字リスト
-    const actualMiddleSchoolKanji = new Set(ACTUAL_JUNIOR_KANJI)
+    const actualMiddleSchoolKanji = new Set(MIDDLE_SCHOOL_KANJI)
 
     // カバレッジ率を計算（実際のデータなので100%に近いはず）
     let coveredCount = 0
@@ -245,113 +245,9 @@ describe('中学校の漢字問題の検証', () => {
   })
 })
 
-describe('高校の漢字問題の検証', () => {
-  it('高校の問題を取得できる', () => {
-    const seniorQuestions = getQuestionsByDifficulty('senior')
-    expect(seniorQuestions.length).toBeGreaterThan(0)
-    expect(seniorQuestions.length).toBeGreaterThanOrEqual(400) // 最低400問
-  })
-
-  it('高校で習う漢字がカバーされている', () => {
-    const questions = getQuestionsByDifficulty('senior')
-    const kanjiSet = new Set<string>()
-
-    for (const question of questions) {
-      // 答えの漢字を抽出
-      for (const input of question.inputs) {
-        if (input.kanji) {
-          const kanjiInAnswer = input.kanji.match(/[\u4E00-\u9FAF]/g) || []
-          for (const k of kanjiInAnswer) {
-            kanjiSet.add(k)
-          }
-        }
-      }
-    }
-
-    // 実際の問題データで使用されている高校漢字リスト
-    const actualHighSchoolKanji = new Set(ACTUAL_SENIOR_KANJI)
-
-    // カバレッジ率を計算（実際のデータなので100%に近いはず）
-    let coveredCount = 0
-    for (const kanji of actualHighSchoolKanji) {
-      if (kanjiSet.has(kanji)) {
-        coveredCount++
-      }
-    }
-
-    const coverageRate = coveredCount / actualHighSchoolKanji.size
-
-    // 実際のデータから作られたリストなので95%以上を要求
-    expect(coverageRate).toBeGreaterThanOrEqual(0.95)
-  })
-
-  it('高校の漢字が5回以上適切に使用されている', () => {
-    const questions = getQuestionsByDifficulty('senior')
-    const kanjiCount = new Map<string, number>()
-
-    for (const question of questions) {
-      for (const input of question.inputs) {
-        if (input.kanji) {
-          const kanjiInAnswer = input.kanji.match(/[\u4E00-\u9FAF]/g) || []
-          for (const k of kanjiInAnswer) {
-            kanjiCount.set(k, (kanjiCount.get(k) || 0) + 1)
-          }
-        }
-      }
-    }
-
-    // 実際の高校漢字リストのみを対象とする
-    const actualHighSchoolKanji = new Set(ACTUAL_SENIOR_KANJI)
-
-    // 高校漢字のみの使用頻度をチェック
-    const seniorKanjiCount = new Map<string, number>()
-    for (const kanji of actualHighSchoolKanji) {
-      const count = kanjiCount.get(kanji) || 0
-      seniorKanjiCount.set(kanji, count)
-    }
-
-    // 拡張後の要件：全ての高校漢字が5回以上使用されている
-    const frequencyDistribution = new Map<number, number>()
-    for (const [, count] of seniorKanjiCount) {
-      frequencyDistribution.set(count, (frequencyDistribution.get(count) || 0) + 1)
-    }
-
-    const totalKanji = seniorKanjiCount.size
-    const fiveOrMoreUsed = Array.from(frequencyDistribution.entries())
-      .filter(([count]) => count >= 5)
-      .reduce((sum, [_, freq]) => sum + freq, 0)
-
-    const fiveOrMoreRate = fiveOrMoreUsed / totalKanji
-
-    // 5回未満の高校漢字を収集
-    const insufficientKanji: Array<{ kanji: string; count: number }> = []
-    for (const [kanji, count] of seniorKanjiCount) {
-      if (count < 5) {
-        insufficientKanji.push({ kanji, count })
-      }
-    }
-
-    // 5回未満の漢字がある場合は詳細を出力
-    if (insufficientKanji.length > 0) {
-      console.error('\n高校漢字で5回未満の使用:')
-      console.error(`総数: ${insufficientKanji.length}個`)
-      console.error('\n詳細（使用回数順）:')
-      const sorted = insufficientKanji.sort((a, b) => a.count - b.count)
-      for (const { kanji, count } of sorted) {
-        console.error(`  ${kanji}: ${count}回`)
-      }
-    }
-
-    // 全ての高校漢字が5回以上使用されていることを確認
-    expect(insufficientKanji.length).toBe(0)
-    expect(fiveOrMoreRate).toBe(1.0) // 100%
-    expect(totalKanji).toBeGreaterThan(400) // 最低400種類の漢字
-  })
-})
-
 describe('全体統計の確認', () => {
   it('各難易度レベルの統計を表示', () => {
-    const levels: DifficultyLevel[] = ['elementary1', 'elementary2', 'elementary3', 'elementary4', 'elementary5', 'elementary6', 'junior', 'senior']
+    const levels: DifficultyLevel[] = ['elementary1', 'elementary2', 'elementary3', 'elementary4', 'elementary5', 'elementary6', 'junior']
 
     const stats: Record<string, { 問題数: number; カバー漢字数: number }> = {}
 
@@ -381,6 +277,5 @@ describe('全体統計の確認', () => {
     // 基本的な数値要件を確認
     expect(stats.elementary1.問題数).toBeGreaterThan(500)
     expect(stats.junior.問題数).toBeGreaterThan(400)
-    expect(stats.senior.問題数).toBeGreaterThan(400)
   })
 })

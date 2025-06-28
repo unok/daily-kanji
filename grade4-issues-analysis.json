@@ -1,0 +1,674 @@
+{
+  "summary": {
+    "totalIssues": 42,
+    "filesAffected": 6,
+    "kanjiCount": 34
+  },
+  "issuesByKanji": {
+    "球": [
+      {
+        "file": "questions-elementary4-part13.json",
+        "questionId": "e4-013-002",
+        "sentence": "[友達|ともだち]と一緒に公園で[球|きゅう]を投げました。",
+        "targetKanji": ["球"],
+        "wrongKanji": ["球"]
+      }
+    ],
+    "科": [
+      {
+        "file": "questions-elementary4-part13.json",
+        "questionId": "e4-013-003",
+        "sentence": "[科|か]学の実験で植物の[成長|せいちょう]を観察しました。",
+        "targetKanji": ["科"],
+        "wrongKanji": ["科"]
+      }
+    ],
+    "難": [
+      {
+        "file": "questions-elementary4-part2.json",
+        "questionId": "e4-224",
+        "sentence": "[難|なん]しい問題を解きました。",
+        "targetKanji": ["難"],
+        "wrongKanji": ["難"]
+      }
+    ],
+    "犯": [
+      {
+        "file": "questions-elementary4-part3.json",
+        "questionId": "e4-321",
+        "sentence": "防[犯|はん]訓練をしました。",
+        "targetKanji": ["犯"],
+        "wrongKanji": ["犯"]
+      }
+    ],
+    "浮": [
+      {
+        "file": "questions-elementary4-part3.json",
+        "questionId": "e4-402",
+        "sentence": "[浮|う]かんで流れていきます。",
+        "targetKanji": ["浮"],
+        "wrongKanji": ["浮"]
+      }
+    ],
+    "汽": [
+      {
+        "file": "questions-elementary4-part3.json",
+        "questionId": "e4-403",
+        "sentence": "[汽|き]車に乗りました。",
+        "targetKanji": ["汽"],
+        "wrongKanji": ["汽"]
+      }
+    ],
+    "雪": [
+      {
+        "file": "questions-elementary4-part3.json",
+        "questionId": "e4-405",
+        "sentence": "白い[雪|ゆき]が舞っています。",
+        "targetKanji": ["雪"],
+        "wrongKanji": ["雪"]
+      }
+    ],
+    "運": [
+      {
+        "file": "questions-elementary4-part3.json",
+        "questionId": "e4-408",
+        "sentence": "[運|うん]動会がありました。",
+        "targetKanji": ["運"],
+        "wrongKanji": ["運"]
+      }
+    ],
+    "快": [
+      {
+        "file": "questions-elementary4-part3.json",
+        "questionId": "e4-410",
+        "sentence": "[快|かい]適な空間でした。",
+        "targetKanji": ["快"],
+        "wrongKanji": ["快"]
+      }
+    ],
+    "霧": [
+      {
+        "file": "questions-elementary4-part3.json",
+        "questionId": "e4-411",
+        "sentence": "[霧|きり]がかかっています。",
+        "targetKanji": ["霧"],
+        "wrongKanji": ["霧"]
+      }
+    ],
+    "池": [
+      {
+        "file": "questions-elementary4-part3.json",
+        "questionId": "e4-412",
+        "sentence": "[池|いけ]を見に行きました。",
+        "targetKanji": ["池"],
+        "wrongKanji": ["池"]
+      }
+    ],
+    "晴": [
+      {
+        "file": "questions-elementary4-part3.json",
+        "questionId": "e4-413",
+        "sentence": "心が[晴|は]れやかです。",
+        "targetKanji": ["晴"],
+        "wrongKanji": ["晴"]
+      }
+    ],
+    "曇": [
+      {
+        "file": "questions-elementary4-part3.json",
+        "questionId": "e4-414",
+        "sentence": "[曇|くも]り空でした。",
+        "targetKanji": ["曇"],
+        "wrongKanji": ["曇"]
+      },
+      {
+        "file": "questions-elementary4-part3.json",
+        "questionId": "e4-429",
+        "sentence": "一点の[曇|くも]りもない青空でした。",
+        "targetKanji": ["曇"],
+        "wrongKanji": ["曇"]
+      }
+    ],
+    "間": [
+      {
+        "file": "questions-elementary4-part3.json",
+        "questionId": "e4-416",
+        "sentence": "木々の[間|あいだ]から光が見えました。",
+        "targetKanji": ["間"],
+        "wrongKanji": ["間"]
+      }
+    ],
+    "上": [
+      {
+        "file": "questions-elementary4-part3.json",
+        "questionId": "e4-417",
+        "sentence": "空の[上|うえ]に飛行機があります。",
+        "targetKanji": ["上"],
+        "wrongKanji": ["上"]
+      }
+    ],
+    "薬": [
+      {
+        "file": "questions-elementary4-part3.json",
+        "questionId": "e4-418",
+        "sentence": "[薬|くすり]屋さんに行きました。",
+        "targetKanji": ["薬"],
+        "wrongKanji": ["薬"]
+      }
+    ],
+    "暗": [
+      {
+        "file": "questions-elementary4-part3.json",
+        "questionId": "e4-420",
+        "sentence": "空が[暗|くら]くなってきました。",
+        "targetKanji": ["暗"],
+        "wrongKanji": ["暗"]
+      }
+    ],
+    "流": [
+      {
+        "file": "questions-elementary4-part3.json",
+        "questionId": "e4-423",
+        "sentence": "風に[流|なが]れています。",
+        "targetKanji": ["流"],
+        "wrongKanji": ["流"]
+      }
+    ],
+    "線": [
+      {
+        "file": "questions-elementary4-part3.json",
+        "questionId": "e4-427",
+        "sentence": "[線|せん]路を歩きました。",
+        "targetKanji": ["線"],
+        "wrongKanji": ["線"]
+      }
+    ],
+    "祭": [
+      {
+        "file": "questions-elementary4-part3.json",
+        "questionId": "e4-428",
+        "sentence": "お[祭|まつ]りの日に洗濯しました。",
+        "targetKanji": ["祭"],
+        "wrongKanji": ["祭"]
+      }
+    ],
+    "服": [
+      {
+        "file": "questions-elementary4-part4.json",
+        "questionId": "e4-470",
+        "sentence": "[服|ふく]が痛いです。",
+        "targetKanji": ["服"],
+        "wrongKanji": ["服"]
+      },
+      {
+        "file": "questions-elementary4-part4.json",
+        "questionId": "e4-525",
+        "sentence": "[服|ふく]を決めました。",
+        "targetKanji": ["服"],
+        "wrongKanji": ["服"]
+      }
+    ],
+    "黒": [
+      {
+        "file": "questions-elementary4-part4.json",
+        "questionId": "e4-483",
+        "sentence": "[黒|くろ]い墨で字を書きました。",
+        "targetKanji": ["黒"],
+        "wrongKanji": ["黒"]
+      },
+      {
+        "file": "questions-elementary4-part4.json",
+        "questionId": "e4-538",
+        "sentence": "[黒|くろ]い墨絵を描きました。",
+        "targetKanji": ["黒"],
+        "wrongKanji": ["黒"]
+      }
+    ],
+    "名": [
+      {
+        "file": "questions-elementary4-part4.json",
+        "questionId": "e4-490",
+        "sentence": "[名|めい]前を書きました。",
+        "targetKanji": ["名"],
+        "wrongKanji": ["名"]
+      },
+      {
+        "file": "questions-elementary4-part4.json",
+        "questionId": "e4-545",
+        "sentence": "[名|な]前を呼びました。",
+        "targetKanji": ["名"],
+        "wrongKanji": ["名"]
+      }
+    ],
+    "面": [
+      {
+        "file": "questions-elementary4-part4.json",
+        "questionId": "e4-491",
+        "sentence": "[面|めん]白い話です。",
+        "targetKanji": ["面"],
+        "wrongKanji": ["面"]
+      },
+      {
+        "file": "questions-elementary4-part4.json",
+        "questionId": "e4-546",
+        "sentence": "[面|つら]が痛いです。",
+        "targetKanji": ["面"],
+        "wrongKanji": ["面"]
+      }
+    ],
+    "毛": [
+      {
+        "file": "questions-elementary4-part4.json",
+        "questionId": "e4-492",
+        "sentence": "[毛|け]が抜けました。",
+        "targetKanji": ["毛"],
+        "wrongKanji": ["毛"]
+      },
+      {
+        "file": "questions-elementary4-part4.json",
+        "questionId": "e4-547",
+        "sentence": "[毛|け]布を被りました。",
+        "targetKanji": ["毛"],
+        "wrongKanji": ["毛"]
+      }
+    ],
+    "門": [
+      {
+        "file": "questions-elementary4-part4.json",
+        "questionId": "e4-493",
+        "sentence": "[門|もん]を開けました。",
+        "targetKanji": ["門"],
+        "wrongKanji": ["門"]
+      },
+      {
+        "file": "questions-elementary4-part4.json",
+        "questionId": "e4-548",
+        "sentence": "[門|かど]松を立てました。",
+        "targetKanji": ["門"],
+        "wrongKanji": ["門"]
+      }
+    ],
+    "夜": [
+      {
+        "file": "questions-elementary4-part4.json",
+        "questionId": "e4-494",
+        "sentence": "[夜|よる]更けまで勉強しました。",
+        "targetKanji": ["夜"],
+        "wrongKanji": ["夜"]
+      },
+      {
+        "file": "questions-elementary4-part4.json",
+        "questionId": "e4-549",
+        "sentence": "[夜|よ]明けが近いです。",
+        "targetKanji": ["夜"],
+        "wrongKanji": ["夜"]
+      }
+    ],
+    "野": [
+      {
+        "file": "questions-elementary4-part4.json",
+        "questionId": "e4-495",
+        "sentence": "[野|の]原で遊びました。",
+        "targetKanji": ["野"],
+        "wrongKanji": ["野"]
+      },
+      {
+        "file": "questions-elementary4-part4.json",
+        "questionId": "e4-550",
+        "sentence": "[野|や]菜を育てました。",
+        "targetKanji": ["野"],
+        "wrongKanji": ["野"]
+      }
+    ],
+    "紙": [
+      {
+        "file": "questions-elementary4-part6.json",
+        "questionId": "e4-815",
+        "sentence": "手[紙|がみ]を[信|しん]ずる。",
+        "targetKanji": ["紙"],
+        "wrongKanji": ["紙"]
+      }
+    ],
+    "子": [
+      {
+        "file": "questions-elementary4-part6.json",
+        "questionId": "e4-821",
+        "sentence": "天気の様[子|し]を[候|うかが]う。",
+        "targetKanji": ["子"],
+        "wrongKanji": ["子"]
+      }
+    ],
+    "務": [
+      {
+        "file": "questions-elementary4-part7.json",
+        "questionId": "e4-1022",
+        "sentence": "彼は市役所で働く公[務員|むいん]です。",
+        "targetKanji": ["務", "員"],
+        "wrongKanji": ["務", "員"]
+      }
+    ],
+    "員": [
+      {
+        "file": "questions-elementary4-part7.json",
+        "questionId": "e4-1022",
+        "sentence": "彼は市役所で働く公[務員|むいん]です。",
+        "targetKanji": ["務", "員"],
+        "wrongKanji": ["務", "員"]
+      }
+    ],
+    "重": [
+      {
+        "file": "questions-elementary4-part7.json",
+        "questionId": "e4-1040",
+        "sentence": "この美術品は貴[重|ちょう]で[希|まれ]な作品です。",
+        "targetKanji": ["重"],
+        "wrongKanji": ["重"]
+      }
+    ],
+    "弟": [
+      {
+        "file": "questions-elementary4-part7.json",
+        "questionId": "e4-1072",
+        "sentence": "先生の門[弟|で]として修行しました。",
+        "targetKanji": ["弟"],
+        "wrongKanji": ["弟"]
+      }
+    ]
+  },
+  "allIssues": [
+    {
+      "file": "questions-elementary4-part13.json",
+      "questionId": "e4-013-002",
+      "sentence": "[友達|ともだち]と一緒に公園で[球|きゅう]を投げました。",
+      "targetKanji": ["球"],
+      "wrongKanji": ["球"]
+    },
+    {
+      "file": "questions-elementary4-part13.json",
+      "questionId": "e4-013-003",
+      "sentence": "[科|か]学の実験で植物の[成長|せいちょう]を観察しました。",
+      "targetKanji": ["科"],
+      "wrongKanji": ["科"]
+    },
+    {
+      "file": "questions-elementary4-part2.json",
+      "questionId": "e4-224",
+      "sentence": "[難|なん]しい問題を解きました。",
+      "targetKanji": ["難"],
+      "wrongKanji": ["難"]
+    },
+    {
+      "file": "questions-elementary4-part3.json",
+      "questionId": "e4-321",
+      "sentence": "防[犯|はん]訓練をしました。",
+      "targetKanji": ["犯"],
+      "wrongKanji": ["犯"]
+    },
+    {
+      "file": "questions-elementary4-part3.json",
+      "questionId": "e4-402",
+      "sentence": "[浮|う]かんで流れていきます。",
+      "targetKanji": ["浮"],
+      "wrongKanji": ["浮"]
+    },
+    {
+      "file": "questions-elementary4-part3.json",
+      "questionId": "e4-403",
+      "sentence": "[汽|き]車に乗りました。",
+      "targetKanji": ["汽"],
+      "wrongKanji": ["汽"]
+    },
+    {
+      "file": "questions-elementary4-part3.json",
+      "questionId": "e4-405",
+      "sentence": "白い[雪|ゆき]が舞っています。",
+      "targetKanji": ["雪"],
+      "wrongKanji": ["雪"]
+    },
+    {
+      "file": "questions-elementary4-part3.json",
+      "questionId": "e4-408",
+      "sentence": "[運|うん]動会がありました。",
+      "targetKanji": ["運"],
+      "wrongKanji": ["運"]
+    },
+    {
+      "file": "questions-elementary4-part3.json",
+      "questionId": "e4-410",
+      "sentence": "[快|かい]適な空間でした。",
+      "targetKanji": ["快"],
+      "wrongKanji": ["快"]
+    },
+    {
+      "file": "questions-elementary4-part3.json",
+      "questionId": "e4-411",
+      "sentence": "[霧|きり]がかかっています。",
+      "targetKanji": ["霧"],
+      "wrongKanji": ["霧"]
+    },
+    {
+      "file": "questions-elementary4-part3.json",
+      "questionId": "e4-412",
+      "sentence": "[池|いけ]を見に行きました。",
+      "targetKanji": ["池"],
+      "wrongKanji": ["池"]
+    },
+    {
+      "file": "questions-elementary4-part3.json",
+      "questionId": "e4-413",
+      "sentence": "心が[晴|は]れやかです。",
+      "targetKanji": ["晴"],
+      "wrongKanji": ["晴"]
+    },
+    {
+      "file": "questions-elementary4-part3.json",
+      "questionId": "e4-414",
+      "sentence": "[曇|くも]り空でした。",
+      "targetKanji": ["曇"],
+      "wrongKanji": ["曇"]
+    },
+    {
+      "file": "questions-elementary4-part3.json",
+      "questionId": "e4-416",
+      "sentence": "木々の[間|あいだ]から光が見えました。",
+      "targetKanji": ["間"],
+      "wrongKanji": ["間"]
+    },
+    {
+      "file": "questions-elementary4-part3.json",
+      "questionId": "e4-417",
+      "sentence": "空の[上|うえ]に飛行機があります。",
+      "targetKanji": ["上"],
+      "wrongKanji": ["上"]
+    },
+    {
+      "file": "questions-elementary4-part3.json",
+      "questionId": "e4-418",
+      "sentence": "[薬|くすり]屋さんに行きました。",
+      "targetKanji": ["薬"],
+      "wrongKanji": ["薬"]
+    },
+    {
+      "file": "questions-elementary4-part3.json",
+      "questionId": "e4-420",
+      "sentence": "空が[暗|くら]くなってきました。",
+      "targetKanji": ["暗"],
+      "wrongKanji": ["暗"]
+    },
+    {
+      "file": "questions-elementary4-part3.json",
+      "questionId": "e4-423",
+      "sentence": "風に[流|なが]れています。",
+      "targetKanji": ["流"],
+      "wrongKanji": ["流"]
+    },
+    {
+      "file": "questions-elementary4-part3.json",
+      "questionId": "e4-427",
+      "sentence": "[線|せん]路を歩きました。",
+      "targetKanji": ["線"],
+      "wrongKanji": ["線"]
+    },
+    {
+      "file": "questions-elementary4-part3.json",
+      "questionId": "e4-428",
+      "sentence": "お[祭|まつ]りの日に洗濯しました。",
+      "targetKanji": ["祭"],
+      "wrongKanji": ["祭"]
+    },
+    {
+      "file": "questions-elementary4-part3.json",
+      "questionId": "e4-429",
+      "sentence": "一点の[曇|くも]りもない青空でした。",
+      "targetKanji": ["曇"],
+      "wrongKanji": ["曇"]
+    },
+    {
+      "file": "questions-elementary4-part4.json",
+      "questionId": "e4-470",
+      "sentence": "[服|ふく]が痛いです。",
+      "targetKanji": ["服"],
+      "wrongKanji": ["服"]
+    },
+    {
+      "file": "questions-elementary4-part4.json",
+      "questionId": "e4-483",
+      "sentence": "[黒|くろ]い墨で字を書きました。",
+      "targetKanji": ["黒"],
+      "wrongKanji": ["黒"]
+    },
+    {
+      "file": "questions-elementary4-part4.json",
+      "questionId": "e4-490",
+      "sentence": "[名|めい]前を書きました。",
+      "targetKanji": ["名"],
+      "wrongKanji": ["名"]
+    },
+    {
+      "file": "questions-elementary4-part4.json",
+      "questionId": "e4-491",
+      "sentence": "[面|めん]白い話です。",
+      "targetKanji": ["面"],
+      "wrongKanji": ["面"]
+    },
+    {
+      "file": "questions-elementary4-part4.json",
+      "questionId": "e4-492",
+      "sentence": "[毛|け]が抜けました。",
+      "targetKanji": ["毛"],
+      "wrongKanji": ["毛"]
+    },
+    {
+      "file": "questions-elementary4-part4.json",
+      "questionId": "e4-493",
+      "sentence": "[門|もん]を開けました。",
+      "targetKanji": ["門"],
+      "wrongKanji": ["門"]
+    },
+    {
+      "file": "questions-elementary4-part4.json",
+      "questionId": "e4-494",
+      "sentence": "[夜|よる]更けまで勉強しました。",
+      "targetKanji": ["夜"],
+      "wrongKanji": ["夜"]
+    },
+    {
+      "file": "questions-elementary4-part4.json",
+      "questionId": "e4-495",
+      "sentence": "[野|の]原で遊びました。",
+      "targetKanji": ["野"],
+      "wrongKanji": ["野"]
+    },
+    {
+      "file": "questions-elementary4-part4.json",
+      "questionId": "e4-525",
+      "sentence": "[服|ふく]を決めました。",
+      "targetKanji": ["服"],
+      "wrongKanji": ["服"]
+    },
+    {
+      "file": "questions-elementary4-part4.json",
+      "questionId": "e4-538",
+      "sentence": "[黒|くろ]い墨絵を描きました。",
+      "targetKanji": ["黒"],
+      "wrongKanji": ["黒"]
+    },
+    {
+      "file": "questions-elementary4-part4.json",
+      "questionId": "e4-545",
+      "sentence": "[名|な]前を呼びました。",
+      "targetKanji": ["名"],
+      "wrongKanji": ["名"]
+    },
+    {
+      "file": "questions-elementary4-part4.json",
+      "questionId": "e4-546",
+      "sentence": "[面|つら]が痛いです。",
+      "targetKanji": ["面"],
+      "wrongKanji": ["面"]
+    },
+    {
+      "file": "questions-elementary4-part4.json",
+      "questionId": "e4-547",
+      "sentence": "[毛|け]布を被りました。",
+      "targetKanji": ["毛"],
+      "wrongKanji": ["毛"]
+    },
+    {
+      "file": "questions-elementary4-part4.json",
+      "questionId": "e4-548",
+      "sentence": "[門|かど]松を立てました。",
+      "targetKanji": ["門"],
+      "wrongKanji": ["門"]
+    },
+    {
+      "file": "questions-elementary4-part4.json",
+      "questionId": "e4-549",
+      "sentence": "[夜|よ]明けが近いです。",
+      "targetKanji": ["夜"],
+      "wrongKanji": ["夜"]
+    },
+    {
+      "file": "questions-elementary4-part4.json",
+      "questionId": "e4-550",
+      "sentence": "[野|や]菜を育てました。",
+      "targetKanji": ["野"],
+      "wrongKanji": ["野"]
+    },
+    {
+      "file": "questions-elementary4-part6.json",
+      "questionId": "e4-815",
+      "sentence": "手[紙|がみ]を[信|しん]ずる。",
+      "targetKanji": ["紙"],
+      "wrongKanji": ["紙"]
+    },
+    {
+      "file": "questions-elementary4-part6.json",
+      "questionId": "e4-821",
+      "sentence": "天気の様[子|し]を[候|うかが]う。",
+      "targetKanji": ["子"],
+      "wrongKanji": ["子"]
+    },
+    {
+      "file": "questions-elementary4-part7.json",
+      "questionId": "e4-1022",
+      "sentence": "彼は市役所で働く公[務員|むいん]です。",
+      "targetKanji": ["務", "員"],
+      "wrongKanji": ["務", "員"]
+    },
+    {
+      "file": "questions-elementary4-part7.json",
+      "questionId": "e4-1040",
+      "sentence": "この美術品は貴[重|ちょう]で[希|まれ]な作品です。",
+      "targetKanji": ["重"],
+      "wrongKanji": ["重"]
+    },
+    {
+      "file": "questions-elementary4-part7.json",
+      "questionId": "e4-1072",
+      "sentence": "先生の門[弟|で]として修行しました。",
+      "targetKanji": ["弟"],
+      "wrongKanji": ["弟"]
+    }
+  ]
+}

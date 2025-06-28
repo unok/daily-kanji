@@ -85,26 +85,10 @@ import questionsJuniorPart16 from '../data/questions/questions-junior-part16.jso
 import questionsJuniorPart17 from '../data/questions/questions-junior-part17.json'
 import questionsJuniorPart18 from '../data/questions/questions-junior-part18.json'
 import questionsJuniorPart19 from '../data/questions/questions-junior-part19.json'
-import questionsSeniorAdditional from '../data/questions/questions-senior-additional.json'
-// Senior parts
-import questionsSeniorPart1 from '../data/questions/questions-senior-part1.json'
-import questionsSeniorPart2 from '../data/questions/questions-senior-part2.json'
-import questionsSeniorPart3 from '../data/questions/questions-senior-part3.json'
-import questionsSeniorPart4 from '../data/questions/questions-senior-part4.json'
-import questionsSeniorPart5 from '../data/questions/questions-senior-part5.json'
-import questionsSeniorPart6 from '../data/questions/questions-senior-part6.json'
-import questionsSeniorPart7 from '../data/questions/questions-senior-part7.json'
-import questionsSeniorPart8 from '../data/questions/questions-senior-part8.json'
-import questionsSeniorPart9 from '../data/questions/questions-senior-part9.json'
-import questionsSeniorPart10 from '../data/questions/questions-senior-part10.json'
-import questionsSeniorPart11 from '../data/questions/questions-senior-part11.json'
-import questionsSeniorPart12 from '../data/questions/questions-senior-part12.json'
-import questionsSeniorPart13 from '../data/questions/questions-senior-part13.json'
-import questionsSeniorPart14 from '../data/questions/questions-senior-part14.json'
 import type { QuestionData } from '../types/question'
 import { parseQuestion } from '../utils/questionParser'
 
-export type DifficultyLevel = 'elementary' | 'junior' | 'senior' | 'elementary1' | 'elementary2' | 'elementary3' | 'elementary4' | 'elementary5' | 'elementary6'
+export type DifficultyLevel = 'elementary' | 'junior' | 'elementary1' | 'elementary2' | 'elementary3' | 'elementary4' | 'elementary5' | 'elementary6'
 
 interface QuestionSet {
   level: DifficultyLevel
@@ -169,26 +153,6 @@ const questionSets: Record<string, QuestionSet> = {
     questionsJuniorPart17,
     questionsJuniorPart18,
     questionsJuniorPart19
-  ),
-  senior: mergeQuestionSets(
-    'senior',
-    '高校卒業レベル',
-    '高校で習う漢字を使った問題です',
-    questionsSeniorPart1,
-    questionsSeniorPart2,
-    questionsSeniorPart3,
-    questionsSeniorPart4,
-    questionsSeniorPart5,
-    questionsSeniorPart6,
-    questionsSeniorPart7,
-    questionsSeniorPart8,
-    questionsSeniorPart9,
-    questionsSeniorPart10,
-    questionsSeniorPart11,
-    questionsSeniorPart12,
-    questionsSeniorPart13,
-    questionsSeniorPart14,
-    questionsSeniorAdditional
   ),
   elementary1: mergeQuestionSets(
     'elementary1',

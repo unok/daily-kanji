@@ -10,7 +10,7 @@ interface MainMenuProps {
 export function MainMenu({ onStart }: MainMenuProps) {
   const [hoveredDifficulty, setHoveredDifficulty] = useState<DifficultyLevel | null>(null)
 
-  const difficulties: DifficultyLevel[] = ['elementary', 'junior', 'senior']
+  const difficulties: DifficultyLevel[] = ['elementary', 'junior']
 
   const getDifficultyColor = (difficulty: DifficultyLevel) => {
     switch (difficulty) {
@@ -18,8 +18,6 @@ export function MainMenu({ onStart }: MainMenuProps) {
         return 'bg-green-500 hover:bg-green-600'
       case 'junior':
         return 'bg-blue-500 hover:bg-blue-600'
-      case 'senior':
-        return 'bg-purple-500 hover:bg-purple-600'
     }
   }
 
@@ -29,8 +27,6 @@ export function MainMenu({ onStart }: MainMenuProps) {
         return 'text-green-600'
       case 'junior':
         return 'text-blue-600'
-      case 'senior':
-        return 'text-purple-600'
     }
   }
 

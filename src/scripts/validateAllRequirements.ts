@@ -5,7 +5,7 @@ import { join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
 import { getKanjiByGrade } from '../data/kanji-lists/education-kanji'
-import { ACTUAL_JUNIOR_KANJI, ACTUAL_SENIOR_KANJI } from '../data/kanji-lists/jouyou-kanji'
+import { MIDDLE_SCHOOL_KANJI } from '../data/kanji-lists/jouyou-kanji'
 import { parseQuestion } from '../utils/questionParser'
 
 const __filename = fileURLToPath(import.meta.url)
@@ -15,6 +15,9 @@ interface ValidationResult {
   passed: boolean
   message: string
 }
+
+// 検証対象の学年
+const grades = ['elementary1', 'elementary2', 'elementary3', 'elementary4', 'elementary5', 'elementary6', 'junior']
 
 // 各学年の問題ファイルを読み込む（分割されたパートファイルに対応）
 function loadQuestions(grade: string) {
@@ -112,7 +115,7 @@ function validateKanjiCoverage(): ValidationResult {
 
   // 中学校の検証
   const juniorQuestions = loadQuestions('junior')
-  const juniorTargetKanji = ACTUAL_JUNIOR_KANJI
+  const juniorTargetKanji = MIDDLE_SCHOOL_KANJI
   const juniorUsedKanji = new Set<string>()
 
   for (const question of juniorQuestions) {
@@ -143,42 +146,6 @@ function validateKanjiCoverage(): ValidationResult {
     allResults.push({
       passed: true,
       message: `✅ 中学校: 全${juniorTargetKanji.length}個の漢字を網羅`,
-    })
-  }
-
-  // 高校の検証
-  const seniorQuestions = loadQuestions('senior')
-  const seniorTargetKanji = ACTUAL_SENIOR_KANJI
-  const seniorUsedKanji = new Set<string>()
-
-  for (const question of seniorQuestions) {
-    const parsed = parseQuestion(question.sentence)
-    for (const input of parsed.inputs) {
-      if (input.kanji) {
-        const kanjiInAnswer = input.kanji.match(/[\u4E00-\u9FAF]/g) || []
-        for (const k of kanjiInAnswer) {
-          seniorUsedKanji.add(k)
-        }
-      }
-    }
-  }
-
-  const seniorMissingKanji: string[] = []
-  for (const kanji of seniorTargetKanji) {
-    if (!seniorUsedKanji.has(kanji)) {
-      seniorMissingKanji.push(kanji)
-    }
-  }
-
-  if (seniorMissingKanji.length > 0) {
-    allResults.push({
-      passed: false,
-      message: `❌ 高校: ${seniorMissingKanji.length}個の漢字が不足`,
-    })
-  } else {
-    allResults.push({
-      passed: true,
-      message: `✅ 高校: 全${seniorTargetKanji.length}個の漢字を網羅`,
     })
   }
 
@@ -245,7 +212,7 @@ function validateKanjiFrequency(): ValidationResult {
 
   // 中学校の検証
   const juniorQuestions = loadQuestions('junior')
-  const juniorTargetKanji = ACTUAL_JUNIOR_KANJI
+  const juniorTargetKanji = MIDDLE_SCHOOL_KANJI
   const juniorKanjiCount = new Map<string, number>()
 
   for (const kanji of juniorTargetKanji) {
@@ -289,48 +256,6 @@ function validateKanjiFrequency(): ValidationResult {
     })
   }
 
-  // 高校の検証
-  const seniorQuestions = loadQuestions('senior')
-  const seniorTargetKanji = ACTUAL_SENIOR_KANJI
-  const seniorKanjiCount = new Map<string, number>()
-
-  for (const kanji of seniorTargetKanji) {
-    seniorKanjiCount.set(kanji, 0)
-  }
-
-  for (const question of seniorQuestions) {
-    const parsed = parseQuestion(question.sentence)
-    for (const input of parsed.inputs) {
-      if (input.kanji) {
-        const kanjiInAnswer = input.kanji.match(/[\u4E00-\u9FAF]/g) || []
-        for (const k of kanjiInAnswer) {
-          if (seniorKanjiCount.has(k)) {
-            seniorKanjiCount.set(k, (seniorKanjiCount.get(k) || 0) + 1)
-          }
-        }
-      }
-    }
-  }
-
-  const seniorUnderrepresented: string[] = []
-  for (const [kanji, count] of seniorKanjiCount.entries()) {
-    if (count < 5) {
-      seniorUnderrepresented.push(`${kanji}(${count}回)`)
-    }
-  }
-
-  if (seniorUnderrepresented.length > 0) {
-    allResults.push({
-      passed: false,
-      message: `❌ senior: ${seniorUnderrepresented.length}個の漢字が5回未満`,
-    })
-  } else {
-    allResults.push({
-      passed: true,
-      message: '✅ senior: 全ての漢字が5回以上出現',
-    })
-  }
-
   const allPassed = allResults.every((r) => r.passed)
   const summary = allResults.map((r) => r.message).join('\n')
 
@@ -345,7 +270,6 @@ function validateTwoSetLimitAndConsecutive(): ValidationResult {
   console.log('\n=== 3. 2セット制限・連続防止・入力欄数チェック ===')
 
   const allResults: ValidationResult[] = []
-  const grades = ['elementary1', 'elementary2', 'elementary3', 'elementary4', 'elementary5', 'elementary6', 'junior', 'senior']
 
   for (const grade of grades) {
     const questions = loadQuestions(grade)
@@ -435,7 +359,6 @@ function validateFirstCharacterDuplication(): ValidationResult {
   console.log('\n=== 4. 読みの最初の文字重複チェック ===')
 
   const allResults: ValidationResult[] = []
-  const grades = ['elementary1', 'elementary2', 'elementary3', 'elementary4', 'elementary5', 'elementary6', 'junior', 'senior']
 
   for (const grade of grades) {
     const questions = loadQuestions(grade)
@@ -500,8 +423,6 @@ function validateFirstCharacterDuplication(): ValidationResult {
 function validateQuestionLength(): ValidationResult {
   console.log('\n=== 5. 問題文の長さチェック（9文字以上） ===')
 
-  const grades = ['elementary1', 'elementary2', 'elementary3', 'elementary4', 'elementary5', 'elementary6', 'junior', 'senior']
-
   const allResults: { passed: boolean; message: string }[] = []
 
   for (const grade of grades) {
@@ -547,8 +468,6 @@ function validateQuestionLength(): ValidationResult {
 // 6. 同じ漢字の重複チェック
 function validateKanjiDuplication(): ValidationResult {
   console.log('\n=== 6. 同じ漢字の重複チェック ===')
-
-  const grades = ['elementary1', 'elementary2', 'elementary3', 'elementary4', 'elementary5', 'elementary6', 'junior', 'senior']
 
   const allResults: { passed: boolean; message: string }[] = []
 
@@ -608,11 +527,58 @@ function validateKanjiDuplication(): ValidationResult {
   }
 }
 
-// 7. IDとsentenceの重複チェック
-function validateDuplication(): ValidationResult {
-  console.log('\n=== 7. IDとsentenceの重複チェック ===')
+// 7. 入力漢字の存在チェック
+function validateInputKanjiExists(): ValidationResult {
+  console.log('\n=== 7. 入力漢字の存在チェック ===')
 
-  const grades = ['elementary1', 'elementary2', 'elementary3', 'elementary4', 'elementary5', 'elementary6', 'junior', 'senior']
+  const allResults: { passed: boolean; message: string }[] = []
+
+  for (const grade of grades) {
+    const questions = loadQuestions(grade)
+    const violations: string[] = []
+    let hasViolation = false
+
+    for (const question of questions) {
+      // 問題文から[漢字|読み]パターンを探す
+      const pattern = /\[[^\]]+\]/g
+      const matches = question.sentence.match(pattern)
+
+      if (!matches || matches.length === 0) {
+        hasViolation = true
+        violations.push(`問題"${question.sentence}"に入力漢字がありません`)
+      }
+    }
+
+    if (hasViolation) {
+      allResults.push({
+        passed: false,
+        message: `❌ ${grade}: ${violations.length}個の問題に入力漢字なし`,
+      })
+      console.log(`${grade}: 入力漢字がない問題:`)
+      violations.slice(0, 5).forEach((v) => console.log(`  - ${v}`))
+      if (violations.length > 5) {
+        console.log(`  ... 他${violations.length - 5}個`)
+      }
+    } else {
+      allResults.push({
+        passed: true,
+        message: `✅ ${grade}: 全ての問題に入力漢字あり`,
+      })
+    }
+  }
+
+  const allPassed = allResults.every((r) => r.passed)
+  const summary = allResults.map((r) => r.message).join('\n')
+
+  return {
+    passed: allPassed,
+    message: summary,
+  }
+}
+
+// 8. IDとsentenceの重複チェック
+function validateDuplication(): ValidationResult {
+  console.log('\n=== 8. IDとsentenceの重複チェック ===')
 
   const allResults: { passed: boolean; message: string }[] = []
   const globalIdMap = new Map<string, string[]>() // ID -> [grade1, grade2, ...]
@@ -758,7 +724,10 @@ function main() {
   // 6. 同じ漢字の重複チェック
   results.push(validateKanjiDuplication())
 
-  // 7. IDとsentenceの重複チェック
+  // 7. 入力漢字の存在チェック
+  results.push(validateInputKanjiExists())
+
+  // 8. IDとsentenceの重複チェック
   results.push(validateDuplication())
 
   // 最終結果

@@ -4,7 +4,7 @@ import * as fs from 'node:fs'
 import * as path from 'node:path'
 
 import { EDUCATION_KANJI } from '../data/kanji-lists/education-kanji'
-import { ACTUAL_JUNIOR_KANJI, ACTUAL_SENIOR_KANJI } from '../data/kanji-lists/jouyou-kanji'
+import { MIDDLE_SCHOOL_KANJI } from '../data/kanji-lists/jouyou-kanji'
 
 console.log('🔍 学習対象漢字検証ツール')
 console.log('================================================================================')
@@ -33,10 +33,7 @@ function getKanjiForGrade(grade: number): Set<string> {
     gradeKanji.forEach((k) => kanjiSet.add(k))
   } else if (grade === 7) {
     // 中学校の場合：中学校の漢字のみ
-    ACTUAL_JUNIOR_KANJI.forEach((k) => kanjiSet.add(k))
-  } else if (grade === 8) {
-    // 高校の場合：高校の漢字のみ
-    ACTUAL_SENIOR_KANJI.forEach((k) => kanjiSet.add(k))
+    MIDDLE_SCHOOL_KANJI.forEach((k) => kanjiSet.add(k))
   }
 
   return kanjiSet
@@ -51,7 +48,6 @@ const gradePatterns = [
   { grade: 5, pattern: /questions-elementary5-part\d+\.json$/ },
   { grade: 6, pattern: /questions-elementary6-part\d+\.json$/ },
   { grade: 7, pattern: /questions-junior-part\d+\.json$/ },
-  { grade: 8, pattern: /questions-senior-part\d+\.json$/ },
 ]
 
 let hasError = false
@@ -116,55 +112,6 @@ for (const { grade, pattern } of gradePatterns) {
     for (const issue of gradeIssues) {
       console.log(`  - ${issue.file} (${issue.question}): 他学年の漢字 ${issue.kanji.join(', ')}`)
       issues.push(`${gradeName} ${issue.file} (${issue.question}): 他学年の漢字 ${issue.kanji.join(', ')}`)
-    }
-  }
-}
-
-// 追加ファイルのチェック（questions-senior-additional.json）
-const additionalFile = path.join(questionsDir, 'questions-senior-additional.json')
-if (fs.existsSync(additionalFile)) {
-  console.log('\n=== 高校追加問題の検証 ===')
-
-  const targetKanji = getKanjiForGrade(8) // 高校レベル
-  const content = fs.readFileSync(additionalFile, 'utf8')
-  const data: QuestionsFile = JSON.parse(content)
-
-  let issueCount = 0
-  const fileIssues: Array<{ question: string; kanji: string[] }> = []
-
-  for (const question of data.questions) {
-    const targetKanjiMatches = question.sentence.match(/\[([^|]+)\|[^\]]+\]/g) || []
-    const kanjiInTargets: string[] = []
-
-    for (const match of targetKanjiMatches) {
-      const kanjiPart = match.match(/\[([^|]+)\|/)?.[1]
-      if (kanjiPart) {
-        const kanjiInTarget = kanjiPart.match(kanjiRegex) || []
-        kanjiInTargets.push(...kanjiInTarget)
-      }
-    }
-
-    const uniqueKanji = [...new Set(kanjiInTargets)]
-    const wrongGradeKanji = uniqueKanji.filter((k) => !targetKanji.has(k))
-
-    if (wrongGradeKanji.length > 0) {
-      issueCount++
-      fileIssues.push({
-        question: question.id,
-        kanji: wrongGradeKanji,
-      })
-    }
-  }
-
-  if (issueCount === 0) {
-    console.log('✅ 高校追加問題: 全ての学習対象漢字が適切に配置されています')
-  } else {
-    console.log(`❌ 高校追加問題: ${issueCount}個の問題に他学年の漢字が学習対象として含まれています`)
-    hasError = true
-
-    for (const issue of fileIssues) {
-      console.log(`  - ${issue.question}: 他学年の漢字 ${issue.kanji.join(', ')}`)
-      issues.push(`高校追加問題 (${issue.question}): 他学年の漢字 ${issue.kanji.join(', ')}`)
     }
   }
 }

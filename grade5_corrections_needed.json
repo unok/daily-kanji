@@ -1,0 +1,835 @@
+{
+  "summary": {
+    "total": 63,
+    "needsCorrection": 63,
+    "compoundRuleOk": 0,
+    "byGrade": {
+      "4年": 29,
+      "6年": 18,
+      "中学": 11,
+      "3年": 3,
+      "2年": 2
+    }
+  },
+  "corrections": [
+    {
+      "id": "e5-043",
+      "file": "questions-elementary5-part1.json",
+      "sentence": "大きな[富|とみ]を築きました。",
+      "targetKanji": ["富"],
+      "wrongGradeKanji": [
+        {
+          "kanji": "富",
+          "grade": "4年"
+        }
+      ],
+      "needsCorrection": true
+    },
+    {
+      "id": "e5-056",
+      "file": "questions-elementary5-part1.json",
+      "sentence": "[徳|とく]を積みました。",
+      "targetKanji": ["徳"],
+      "wrongGradeKanji": [
+        {
+          "kanji": "徳",
+          "grade": "4年"
+        }
+      ],
+      "needsCorrection": true
+    },
+    {
+      "id": "e5-129",
+      "file": "questions-elementary5-part1.json",
+      "sentence": "[群|ぐん]衆が集まりました。",
+      "targetKanji": ["群"],
+      "wrongGradeKanji": [
+        {
+          "kanji": "群",
+          "grade": "4年"
+        }
+      ],
+      "needsCorrection": true
+    },
+    {
+      "id": "e5-138",
+      "file": "questions-elementary5-part1.json",
+      "sentence": "[衆|しゅう]議院に選ばれました。",
+      "targetKanji": ["衆"],
+      "wrongGradeKanji": [
+        {
+          "kanji": "衆",
+          "grade": "6年"
+        }
+      ],
+      "needsCorrection": true
+    },
+    {
+      "id": "e5-143",
+      "file": "questions-elementary5-part1.json",
+      "sentence": "不足を[補|おぎな]いました。",
+      "targetKanji": ["補"],
+      "wrongGradeKanji": [
+        {
+          "kanji": "補",
+          "grade": "6年"
+        }
+      ],
+      "needsCorrection": true
+    },
+    {
+      "id": "e5-145",
+      "file": "questions-elementary5-part1.json",
+      "sentence": "[視|し]力を測りました。",
+      "targetKanji": ["視"],
+      "wrongGradeKanji": [
+        {
+          "kanji": "視",
+          "grade": "6年"
+        }
+      ],
+      "needsCorrection": true
+    },
+    {
+      "id": "e5-160",
+      "file": "questions-elementary5-part2.json",
+      "sentence": "商品を[販|はん]売しました。",
+      "targetKanji": ["販"],
+      "wrongGradeKanji": [
+        {
+          "kanji": "販",
+          "grade": "中学"
+        }
+      ],
+      "needsCorrection": true
+    },
+    {
+      "id": "e5-163",
+      "file": "questions-elementary5-part2.json",
+      "sentence": "[賀|が]状を送りました。",
+      "targetKanji": ["賀"],
+      "wrongGradeKanji": [
+        {
+          "kanji": "賀",
+          "grade": "4年"
+        }
+      ],
+      "needsCorrection": true
+    },
+    {
+      "id": "e5-164",
+      "file": "questions-elementary5-part2.json",
+      "sentence": "必要な物を[購|こう]入しました。",
+      "targetKanji": ["購"],
+      "wrongGradeKanji": [
+        {
+          "kanji": "購",
+          "grade": "中学"
+        }
+      ],
+      "needsCorrection": true
+    },
+    {
+      "id": "e5-167",
+      "file": "questions-elementary5-part2.json",
+      "sentence": "[迅|じん]速に対応しました。",
+      "targetKanji": ["迅"],
+      "wrongGradeKanji": [
+        {
+          "kanji": "迅",
+          "grade": "中学"
+        }
+      ],
+      "needsCorrection": true
+    },
+    {
+      "id": "e5-180",
+      "file": "questions-elementary5-part2.json",
+      "sentence": "道に[障|しょう]害物がありました。",
+      "targetKanji": ["障"],
+      "wrongGradeKanji": [
+        {
+          "kanji": "障",
+          "grade": "6年"
+        }
+      ],
+      "needsCorrection": true
+    },
+    {
+      "id": "e5-182",
+      "file": "questions-elementary5-part2.json",
+      "sentence": "[難|なん]題に挑戦しました。",
+      "targetKanji": ["難"],
+      "wrongGradeKanji": [
+        {
+          "kanji": "難",
+          "grade": "6年"
+        }
+      ],
+      "needsCorrection": true
+    },
+    {
+      "id": "e5-184",
+      "file": "questions-elementary5-part2.json",
+      "sentence": "[予|よ]算を立てました。",
+      "targetKanji": ["予"],
+      "wrongGradeKanji": [
+        {
+          "kanji": "予",
+          "grade": "3年"
+        }
+      ],
+      "needsCorrection": true
+    },
+    {
+      "id": "e5-216",
+      "file": "questions-elementary5-part2.json",
+      "sentence": "[群|むれ]をなしについて論じました。",
+      "targetKanji": ["群"],
+      "wrongGradeKanji": [
+        {
+          "kanji": "群",
+          "grade": "4年"
+        }
+      ],
+      "needsCorrection": true
+    },
+    {
+      "id": "e5-225",
+      "file": "questions-elementary5-part2.json",
+      "sentence": "大勢の[衆|しゅう]人の前で話しました。",
+      "targetKanji": ["衆"],
+      "wrongGradeKanji": [
+        {
+          "kanji": "衆",
+          "grade": "6年"
+        }
+      ],
+      "needsCorrection": true
+    },
+    {
+      "id": "e5-230",
+      "file": "questions-elementary5-part2.json",
+      "sentence": "不足分を[補|ほ]充しました。",
+      "targetKanji": ["補"],
+      "wrongGradeKanji": [
+        {
+          "kanji": "補",
+          "grade": "6年"
+        }
+      ],
+      "needsCorrection": true
+    },
+    {
+      "id": "e5-232",
+      "file": "questions-elementary5-part2.json",
+      "sentence": "注意深く[視|し]察しました。",
+      "targetKanji": ["視"],
+      "wrongGradeKanji": [
+        {
+          "kanji": "視",
+          "grade": "6年"
+        }
+      ],
+      "needsCorrection": true
+    },
+    {
+      "id": "e5-244",
+      "file": "questions-elementary5-part2.json",
+      "sentence": "商[販|はん]で買いました。",
+      "targetKanji": ["販"],
+      "wrongGradeKanji": [
+        {
+          "kanji": "販",
+          "grade": "中学"
+        }
+      ],
+      "needsCorrection": true
+    },
+    {
+      "id": "e5-247",
+      "file": "questions-elementary5-part2.json",
+      "sentence": "年[賀|が]状を書きました。",
+      "targetKanji": ["賀"],
+      "wrongGradeKanji": [
+        {
+          "kanji": "賀",
+          "grade": "4年"
+        }
+      ],
+      "needsCorrection": true
+    },
+    {
+      "id": "e5-248",
+      "file": "questions-elementary5-part2.json",
+      "sentence": "物品を[購|こう]入しました。",
+      "targetKanji": ["購"],
+      "wrongGradeKanji": [
+        {
+          "kanji": "購",
+          "grade": "中学"
+        }
+      ],
+      "needsCorrection": true
+    },
+    {
+      "id": "e5-251",
+      "file": "questions-elementary5-part2.json",
+      "sentence": "[迅|じん]速に逃げました。",
+      "targetKanji": ["迅"],
+      "wrongGradeKanji": [
+        {
+          "kanji": "迅",
+          "grade": "中学"
+        }
+      ],
+      "needsCorrection": true
+    },
+    {
+      "id": "e5-264",
+      "file": "questions-elementary5-part2.json",
+      "sentence": "通行に[障|しょう]害がありました。",
+      "targetKanji": ["障"],
+      "wrongGradeKanji": [
+        {
+          "kanji": "障",
+          "grade": "6年"
+        }
+      ],
+      "needsCorrection": true
+    },
+    {
+      "id": "e5-266",
+      "file": "questions-elementary5-part2.json",
+      "sentence": "[難|むずか]しい問題でした。",
+      "targetKanji": ["難"],
+      "wrongGradeKanji": [
+        {
+          "kanji": "難",
+          "grade": "6年"
+        }
+      ],
+      "needsCorrection": true
+    },
+    {
+      "id": "e5-300",
+      "file": "questions-elementary5-part2.json",
+      "sentence": "[群|ぐん]を抜いていました。",
+      "targetKanji": ["群"],
+      "wrongGradeKanji": [
+        {
+          "kanji": "群",
+          "grade": "4年"
+        }
+      ],
+      "needsCorrection": true
+    },
+    {
+      "id": "e5-304",
+      "file": "questions-elementary5-part2.json",
+      "sentence": "度胸を[試|ため]されました。",
+      "targetKanji": ["試"],
+      "wrongGradeKanji": [
+        {
+          "kanji": "試",
+          "grade": "4年"
+        }
+      ],
+      "needsCorrection": true
+    },
+    {
+      "id": "e5-309",
+      "file": "questions-elementary5-part2.json",
+      "sentence": "公[衆|しゅう]の前で話しました。",
+      "targetKanji": ["衆"],
+      "wrongGradeKanji": [
+        {
+          "kanji": "衆",
+          "grade": "6年"
+        }
+      ],
+      "needsCorrection": true
+    },
+    {
+      "id": "e5-314",
+      "file": "questions-elementary5-part3.json",
+      "sentence": "不足分を[補|ほ]充しました。",
+      "targetKanji": ["補"],
+      "wrongGradeKanji": [
+        {
+          "kanji": "補",
+          "grade": "6年"
+        }
+      ],
+      "needsCorrection": true
+    },
+    {
+      "id": "e5-316",
+      "file": "questions-elementary5-part3.json",
+      "sentence": "[視|し]界が広がりました。",
+      "targetKanji": ["視"],
+      "wrongGradeKanji": [
+        {
+          "kanji": "視",
+          "grade": "6年"
+        }
+      ],
+      "needsCorrection": true
+    },
+    {
+      "id": "e5-328",
+      "file": "questions-elementary5-part3.json",
+      "sentence": "商品の[販|はん]路を広げました。",
+      "targetKanji": ["販"],
+      "wrongGradeKanji": [
+        {
+          "kanji": "販",
+          "grade": "中学"
+        }
+      ],
+      "needsCorrection": true
+    },
+    {
+      "id": "e5-331",
+      "file": "questions-elementary5-part3.json",
+      "sentence": "[賀|が]正を迎えました。",
+      "targetKanji": ["賀"],
+      "wrongGradeKanji": [
+        {
+          "kanji": "賀",
+          "grade": "4年"
+        }
+      ],
+      "needsCorrection": true
+    },
+    {
+      "id": "e5-332",
+      "file": "questions-elementary5-part3.json",
+      "sentence": "雑誌を[購|こう]読しました。",
+      "targetKanji": ["購"],
+      "wrongGradeKanji": [
+        {
+          "kanji": "購",
+          "grade": "中学"
+        }
+      ],
+      "needsCorrection": true
+    },
+    {
+      "id": "e5-335",
+      "file": "questions-elementary5-part3.json",
+      "sentence": "[迅|じん]雷が落ちました。",
+      "targetKanji": ["迅"],
+      "wrongGradeKanji": [
+        {
+          "kanji": "迅",
+          "grade": "中学"
+        }
+      ],
+      "needsCorrection": true
+    },
+    {
+      "id": "e5-348",
+      "file": "questions-elementary5-part3.json",
+      "sentence": "窓に[障|しょう]子を立てました。",
+      "targetKanji": ["障"],
+      "wrongGradeKanji": [
+        {
+          "kanji": "障",
+          "grade": "6年"
+        }
+      ],
+      "needsCorrection": true
+    },
+    {
+      "id": "e5-350",
+      "file": "questions-elementary5-part3.json",
+      "sentence": "[難|なん]問に答えました。",
+      "targetKanji": ["難"],
+      "wrongGradeKanji": [
+        {
+          "kanji": "難",
+          "grade": "6年"
+        }
+      ],
+      "needsCorrection": true
+    },
+    {
+      "id": "e5-384",
+      "file": "questions-elementary5-part3.json",
+      "sentence": "[群|ぐん]がる人々がいました。",
+      "targetKanji": ["群"],
+      "wrongGradeKanji": [
+        {
+          "kanji": "群",
+          "grade": "4年"
+        }
+      ],
+      "needsCorrection": true
+    },
+    {
+      "id": "e5-393",
+      "file": "questions-elementary5-part3.json",
+      "sentence": "参議院と[衆|しゅう]議院があります。",
+      "targetKanji": ["衆"],
+      "wrongGradeKanji": [
+        {
+          "kanji": "衆",
+          "grade": "6年"
+        }
+      ],
+      "needsCorrection": true
+    },
+    {
+      "id": "e5-398",
+      "file": "questions-elementary5-part3.json",
+      "sentence": "互いに[補|おぎな]い合いました。",
+      "targetKanji": ["補"],
+      "wrongGradeKanji": [
+        {
+          "kanji": "補",
+          "grade": "6年"
+        }
+      ],
+      "needsCorrection": true
+    },
+    {
+      "id": "e5-400",
+      "file": "questions-elementary5-part3.json",
+      "sentence": "[視|し]線を合わせました。",
+      "targetKanji": ["視"],
+      "wrongGradeKanji": [
+        {
+          "kanji": "視",
+          "grade": "6年"
+        }
+      ],
+      "needsCorrection": true
+    },
+    {
+      "id": "e5-634",
+      "file": "questions-elementary5-part5.json",
+      "sentence": "[賀|が]正の挨拶をしました。",
+      "targetKanji": ["賀"],
+      "wrongGradeKanji": [
+        {
+          "kanji": "賀",
+          "grade": "4年"
+        }
+      ],
+      "needsCorrection": true
+    },
+    {
+      "id": "e5-635",
+      "file": "questions-elementary5-part5.json",
+      "sentence": "祝[賀|が]会を開きました。",
+      "targetKanji": ["賀"],
+      "wrongGradeKanji": [
+        {
+          "kanji": "賀",
+          "grade": "4年"
+        }
+      ],
+      "needsCorrection": true
+    },
+    {
+      "id": "e5-719",
+      "file": "questions-elementary5-part5.json",
+      "sentence": "修学[旅|りょ]行について説明しました。",
+      "targetKanji": ["旅"],
+      "wrongGradeKanji": [
+        {
+          "kanji": "旅",
+          "grade": "3年"
+        }
+      ],
+      "needsCorrection": true
+    },
+    {
+      "id": "e5-808",
+      "file": "questions-elementary5-part6.json",
+      "sentence": "[新|しん]聞報道で知りました。",
+      "targetKanji": ["新"],
+      "wrongGradeKanji": [
+        {
+          "kanji": "新",
+          "grade": "2年"
+        }
+      ],
+      "needsCorrection": true
+    },
+    {
+      "id": "e5-841",
+      "file": "questions-elementary5-part6.json",
+      "sentence": "[富|とみ]について詳しく学びました。",
+      "targetKanji": ["富"],
+      "wrongGradeKanji": [
+        {
+          "kanji": "富",
+          "grade": "4年"
+        }
+      ],
+      "needsCorrection": true
+    },
+    {
+      "id": "e5-842",
+      "file": "questions-elementary5-part6.json",
+      "sentence": "[富|ふ]むについて詳しく学びました。",
+      "targetKanji": ["富"],
+      "wrongGradeKanji": [
+        {
+          "kanji": "富",
+          "grade": "4年"
+        }
+      ],
+      "needsCorrection": true
+    },
+    {
+      "id": "e5-843",
+      "file": "questions-elementary5-part6.json",
+      "sentence": "[富|ふ]裕について詳しく学びました。",
+      "targetKanji": ["富"],
+      "wrongGradeKanji": [
+        {
+          "kanji": "富",
+          "grade": "4年"
+        }
+      ],
+      "needsCorrection": true
+    },
+    {
+      "id": "e5-844",
+      "file": "questions-elementary5-part6.json",
+      "sentence": "[富|ふ]士山について詳しく学びました。",
+      "targetKanji": ["富"],
+      "wrongGradeKanji": [
+        {
+          "kanji": "富",
+          "grade": "4年"
+        }
+      ],
+      "needsCorrection": true
+    },
+    {
+      "id": "e5-893",
+      "file": "questions-elementary5-part6.json",
+      "sentence": "[徳|とく]について詳しく学びました。",
+      "targetKanji": ["徳"],
+      "wrongGradeKanji": [
+        {
+          "kanji": "徳",
+          "grade": "4年"
+        }
+      ],
+      "needsCorrection": true
+    },
+    {
+      "id": "e5-894",
+      "file": "questions-elementary5-part6.json",
+      "sentence": "道[徳|とく]について詳しく学びました。",
+      "targetKanji": ["徳"],
+      "wrongGradeKanji": [
+        {
+          "kanji": "徳",
+          "grade": "4年"
+        }
+      ],
+      "needsCorrection": true
+    },
+    {
+      "id": "e5-895",
+      "file": "questions-elementary5-part6.json",
+      "sentence": "人[徳|とく]について詳しく学びました。",
+      "targetKanji": ["徳"],
+      "wrongGradeKanji": [
+        {
+          "kanji": "徳",
+          "grade": "4年"
+        }
+      ],
+      "needsCorrection": true
+    },
+    {
+      "id": "e5-896",
+      "file": "questions-elementary5-part6.json",
+      "sentence": "美[徳|とく]について詳しく学びました。",
+      "targetKanji": ["徳"],
+      "wrongGradeKanji": [
+        {
+          "kanji": "徳",
+          "grade": "4年"
+        }
+      ],
+      "needsCorrection": true
+    },
+    {
+      "id": "e5-911",
+      "file": "questions-elementary5-part6.json",
+      "sentence": "恩[恵|めぐ]みを受けました。",
+      "targetKanji": ["恵"],
+      "wrongGradeKanji": [
+        {
+          "kanji": "恵",
+          "grade": "中学"
+        }
+      ],
+      "needsCorrection": true
+    },
+    {
+      "id": "e5-979",
+      "file": "questions-elementary5-part7.json",
+      "sentence": "昔からの旧[友|とも]と[再|さい]会しました。",
+      "targetKanji": ["友"],
+      "wrongGradeKanji": [
+        {
+          "kanji": "友",
+          "grade": "2年"
+        }
+      ],
+      "needsCorrection": true
+    },
+    {
+      "id": "e5-996",
+      "file": "questions-elementary5-part7.json",
+      "sentence": "枝[葉|よう]について詳しく学びました。",
+      "targetKanji": ["葉"],
+      "wrongGradeKanji": [
+        {
+          "kanji": "葉",
+          "grade": "3年"
+        }
+      ],
+      "needsCorrection": true
+    },
+    {
+      "id": "e5-1008",
+      "file": "questions-elementary5-part7.json",
+      "sentence": "健康[診|しん]断について説明しました。",
+      "targetKanji": ["診"],
+      "wrongGradeKanji": [
+        {
+          "kanji": "診",
+          "grade": "中学"
+        }
+      ],
+      "needsCorrection": true
+    },
+    {
+      "id": "e5-1095",
+      "file": "questions-elementary5-part7.json",
+      "sentence": "[群|ぐん]について詳しく学びました。",
+      "targetKanji": ["群"],
+      "wrongGradeKanji": [
+        {
+          "kanji": "群",
+          "grade": "4年"
+        }
+      ],
+      "needsCorrection": true
+    },
+    {
+      "id": "e5-1215",
+      "file": "questions-elementary5-part8.json",
+      "sentence": "[富|とみ]を使いますについて説明しました。",
+      "targetKanji": ["富"],
+      "wrongGradeKanji": [
+        {
+          "kanji": "富",
+          "grade": "4年"
+        }
+      ],
+      "needsCorrection": true
+    },
+    {
+      "id": "e5-1216",
+      "file": "questions-elementary5-part8.json",
+      "sentence": "[富|とみ]を使いますについて説明しましたよ。",
+      "targetKanji": ["富"],
+      "wrongGradeKanji": [
+        {
+          "kanji": "富",
+          "grade": "4年"
+        }
+      ],
+      "needsCorrection": true
+    },
+    {
+      "id": "e5-1266",
+      "file": "questions-elementary5-part8.json",
+      "sentence": "五月に[祝|しゅく]日があります。",
+      "targetKanji": ["祝"],
+      "wrongGradeKanji": [
+        {
+          "kanji": "祝",
+          "grade": "4年"
+        }
+      ],
+      "needsCorrection": true
+    },
+    {
+      "id": "e5-1267",
+      "file": "questions-elementary5-part8.json",
+      "sentence": "五番目に[順|じゅん]番が来ました。",
+      "targetKanji": ["順"],
+      "wrongGradeKanji": [
+        {
+          "kanji": "順",
+          "grade": "4年"
+        }
+      ],
+      "needsCorrection": true
+    },
+    {
+      "id": "e5-1280",
+      "file": "questions-elementary5-part9.json",
+      "sentence": "堂々と[然|ぜん]として立ちました。",
+      "targetKanji": ["然"],
+      "wrongGradeKanji": [
+        {
+          "kanji": "然",
+          "grade": "4年"
+        }
+      ],
+      "needsCorrection": true
+    },
+    {
+      "id": "e5-1281",
+      "file": "questions-elementary5-part9.json",
+      "sentence": "努力を[然|しか]るべく続けました。",
+      "targetKanji": ["然"],
+      "wrongGradeKanji": [
+        {
+          "kanji": "然",
+          "grade": "4年"
+        }
+      ],
+      "needsCorrection": true
+    },
+    {
+      "id": "e5-1283",
+      "file": "questions-elementary5-part9.json",
+      "sentence": "[然|しか]らば行くことにしました。",
+      "targetKanji": ["然"],
+      "wrongGradeKanji": [
+        {
+          "kanji": "然",
+          "grade": "4年"
+        }
+      ],
+      "needsCorrection": true
+    },
+    {
+      "id": "e5-1284",
+      "file": "questions-elementary5-part9.json",
+      "sentence": "星が燦[然|ぜん]と光りました。",
+      "targetKanji": ["然"],
+      "wrongGradeKanji": [
+        {
+          "kanji": "然",
+          "grade": "4年"
+        }
+      ],
+      "needsCorrection": true
+    }
+  ]
+}
