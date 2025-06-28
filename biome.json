@@ -6,42 +6,11 @@
   },
   "overrides": [
     {
-      "includes": [
-        "src/scripts/validateAllRequirements.ts",
-        "src/scripts/addMissingKanjiQuestions.ts",
-        "src/scripts/simplifyMissingKanji.ts",
-        "src/scripts/addGradeQuestions.ts",
-        "src/scripts/analyzeSpecificGrade.ts",
-        "src/scripts/validateGradeKanji.ts",
-        "src/scripts/validateTargetKanji.ts",
-        "src/scripts/validateComprehensiveGradeKanji.ts",
-        "src/scripts/validateKanjiReadings.ts",
-        "src/scripts/validateAllKanji.ts",
-        "src/scripts/fixGrade4TargetKanji.ts",
-        "src/scripts/fixGrade5TargetKanji.ts",
-        "src/scripts/fixGrade6TargetKanji.ts",
-        "src/scripts/fixJuniorElementaryOnlyCompounds.ts",
-        "src/scripts/fixRemainingGrade5.ts",
-        "src/scripts/createJuniorHighFrequencyFix.ts",
-        "src/scripts/analyzeGrade5TargetKanji.ts",
-        "scripts/generate-senior-additional-questions.ts"
-      ],
+      "includes": ["src/scripts/*.ts", "scripts/*.ts"],
       "linter": {
         "rules": {
           "suspicious": {
-            "noConsole": "off",
-            "noAssignInExpressions": "off"
-          },
-          "complexity": {
-            "noForEach": "off",
-            "useLiteralKeys": "off"
-          },
-          "style": {
-            "noNonNullAssertion": "off",
-            "useTemplate": "off"
-          },
-          "correctness": {
-            "noUnusedVariables": "off"
+            "noConsole": "off"
           }
         }
       }
