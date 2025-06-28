@@ -29,15 +29,21 @@ function getKanjiUpToGrade(grade: number): Set<string> {
     // 小学校の場合
     for (let g = 1; g <= grade; g++) {
       const gradeKanji = EDUCATION_KANJI[g as keyof typeof EDUCATION_KANJI] || []
-      gradeKanji.forEach((k) => kanjiSet.add(k))
+      for (const k of gradeKanji) {
+        kanjiSet.add(k)
+      }
     }
   } else if (grade === 7) {
     // 中学校の場合（小学校全部＋中学校）
     for (let g = 1; g <= 6; g++) {
       const gradeKanji = EDUCATION_KANJI[g as keyof typeof EDUCATION_KANJI] || []
-      gradeKanji.forEach((k) => kanjiSet.add(k))
+      for (const k of gradeKanji) {
+        kanjiSet.add(k)
+      }
     }
-    MIDDLE_SCHOOL_KANJI.forEach((k) => kanjiSet.add(k))
+    for (const k of MIDDLE_SCHOOL_KANJI) {
+      kanjiSet.add(k)
+    }
   }
 
   return kanjiSet
@@ -129,7 +135,9 @@ if (!hasError) {
 } else {
   console.log(`⚠️  ${issues.length}個の問題に未習漢字が含まれています`)
   console.log('\n詳細:')
-  issues.forEach((issue) => console.log(`  - ${issue}`))
+  for (const issue of issues) {
+    console.log(`  - ${issue}`)
+  }
   console.log('\n※ これは警告です。学習対象の漢字は適切な学年に配置されていますが、')
   console.log('  文章中に他学年の漢字が含まれる場合があります。')
   // process.exit(1) // エラーではなく警告として扱う

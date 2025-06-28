@@ -30,10 +30,14 @@ function getKanjiForGrade(grade: number): Set<string> {
   if (grade <= 6) {
     // 小学校の場合：その学年の漢字のみ
     const gradeKanji = EDUCATION_KANJI[grade as keyof typeof EDUCATION_KANJI] || []
-    gradeKanji.forEach((k) => kanjiSet.add(k))
+    for (const k of gradeKanji) {
+      kanjiSet.add(k)
+    }
   } else if (grade === 7) {
     // 中学校の場合：中学校の漢字のみ
-    MIDDLE_SCHOOL_KANJI.forEach((k) => kanjiSet.add(k))
+    for (const k of MIDDLE_SCHOOL_KANJI) {
+      kanjiSet.add(k)
+    }
   }
 
   return kanjiSet

@@ -10,7 +10,9 @@ import { MIDDLE_SCHOOL_KANJI } from '../data/kanji-lists/jouyou-kanji'
 const elementaryKanjiSet = new Set<string>()
 for (let grade = 1; grade <= 6; grade++) {
   const gradeKanji = EDUCATION_KANJI[grade as keyof typeof EDUCATION_KANJI] || []
-  gradeKanji.forEach((k) => elementaryKanjiSet.add(k))
+  for (const k of gradeKanji) {
+    elementaryKanjiSet.add(k)
+  }
 }
 
 // 中学校の漢字セット
@@ -136,7 +138,7 @@ for (const file of files) {
   }
 
   if (modified) {
-    fs.writeFileSync(filePath, JSON.stringify(data, null, 2) + '\n')
+    fs.writeFileSync(filePath, `${JSON.stringify(data, null, 2)}\n`)
     fileUpdates.set(file, fileFixed)
     totalFixed += fileFixed
   }

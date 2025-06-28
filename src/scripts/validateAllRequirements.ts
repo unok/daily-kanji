@@ -44,13 +44,13 @@ function loadQuestions(grade: string) {
     }
 
     // パートファイルを順番に読み込む
-    matchingFiles.sort().forEach((file) => {
+    for (const file of matchingFiles.sort()) {
       const filePath = join(questionsDir, file)
       const data = JSON.parse(readFileSync(filePath, 'utf8'))
       if (data.questions) {
         allQuestions.push(...data.questions)
       }
-    })
+    }
 
     // 追加ファイルもチェック
     const additionalFile = `questions-${grade}-additional.json`
@@ -242,9 +242,9 @@ function validateKanjiFrequency(): ValidationResult {
 
   if (juniorUnderrepresented.length > 0) {
     console.log('\n中学校の使用回数が5回未満の漢字:')
-    juniorUnderrepresented.forEach((item) => {
+    for (const item of juniorUnderrepresented) {
       console.log(`  ${item}`)
-    })
+    }
     allResults.push({
       passed: false,
       message: `❌ junior: ${juniorUnderrepresented.length}個の漢字が5回未満`,
@@ -285,13 +285,15 @@ function validateTwoSetLimitAndConsecutive(): ValidationResult {
         const pattern = /\[([^|]+)\|([^\]]+)\]/g
         const matches: Array<{ kanji: string; reading: string; index: number; fullMatch: string }> = []
         let match: RegExpExecArray | null
-        while ((match = pattern.exec(question.sentence)) !== null) {
+        match = pattern.exec(question.sentence)
+        while (match !== null) {
           matches.push({
             kanji: match[1],
             reading: match[2],
             index: match.index,
             fullMatch: match[0],
           })
+          match = pattern.exec(question.sentence)
         }
 
         // 1. 入力欄の総数チェック（2つまで）
@@ -371,11 +373,13 @@ function validateFirstCharacterDuplication(): ValidationResult {
       const readings: string[] = []
       let match: RegExpExecArray | null
 
-      while ((match = pattern.exec(question.sentence)) !== null) {
+      match = pattern.exec(question.sentence)
+      while (match !== null) {
         const reading = match[2]
         if (reading && reading.length > 0) {
           readings.push(reading)
         }
+        match = pattern.exec(question.sentence)
       }
 
       // 読みの最初の文字でグループ化
@@ -444,7 +448,9 @@ function validateQuestionLength(): ValidationResult {
         message: `❌ ${grade}: ${violations.length}個の問題が9文字未満`,
       })
       console.log(`${grade}: 9文字未満の問題:`)
-      violations.slice(0, 5).forEach((v) => console.log(`  - ${v}`))
+      for (const v of violations.slice(0, 5)) {
+        console.log(`  - ${v}`)
+      }
       if (violations.length > 5) {
         console.log(`  ... 他${violations.length - 5}個`)
       }
@@ -506,7 +512,9 @@ function validateKanjiDuplication(): ValidationResult {
         message: `❌ ${grade}: ${violations.length}個の問題で漢字が重複`,
       })
       console.log(`${grade}: 漢字が重複している問題:`)
-      violations.slice(0, 5).forEach((v) => console.log(`  - ${v}`))
+      for (const v of violations.slice(0, 5)) {
+        console.log(`  - ${v}`)
+      }
       if (violations.length > 5) {
         console.log(`  ... 他${violations.length - 5}個`)
       }
@@ -555,7 +563,9 @@ function validateInputKanjiExists(): ValidationResult {
         message: `❌ ${grade}: ${violations.length}個の問題に入力漢字なし`,
       })
       console.log(`${grade}: 入力漢字がない問題:`)
-      violations.slice(0, 5).forEach((v) => console.log(`  - ${v}`))
+      for (const v of violations.slice(0, 5)) {
+        console.log(`  - ${v}`)
+      }
       if (violations.length > 5) {
         console.log(`  ... 他${violations.length - 5}個`)
       }

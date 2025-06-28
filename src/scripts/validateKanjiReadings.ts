@@ -34,8 +34,10 @@ function extractKanjiReadingPairs(sentence: string): Array<[string, string]> {
   const pattern = /\[([^|]+)\|([^\]]+)\]/g
   const matches: Array<[string, string]> = []
   let match: RegExpExecArray | null
-  while ((match = pattern.exec(sentence)) !== null) {
+  match = pattern.exec(sentence)
+  while (match !== null) {
     matches.push([match[1], match[2]])
+    match = pattern.exec(sentence)
   }
   return matches
 }

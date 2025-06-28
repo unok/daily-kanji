@@ -59,7 +59,7 @@ for (const [id, sentence] of Object.entries(corrections)) {
   if (!correctionsByFile.has(fileName)) {
     correctionsByFile.set(fileName, [])
   }
-  correctionsByFile.get(fileName)!.push({ id, sentence })
+  correctionsByFile.get(fileName)?.push({ id, sentence })
 }
 
 // 各ファイルを処理
@@ -80,7 +80,7 @@ for (const [fileName, fileCorrections] of correctionsByFile) {
   }
 
   if (updateCount > 0) {
-    fs.writeFileSync(filePath, JSON.stringify(data, null, 2) + '\n')
+    fs.writeFileSync(filePath, `${JSON.stringify(data, null, 2)}\n`)
     fileUpdates.set(fileName, updateCount)
   }
 }

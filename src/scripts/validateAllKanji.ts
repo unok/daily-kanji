@@ -41,10 +41,14 @@ function getKanjiForGrade(grade: number): Set<string> {
   if (grade <= 6) {
     // 小学校の場合：その学年の漢字のみ
     const gradeKanji = EDUCATION_KANJI[grade as keyof typeof EDUCATION_KANJI] || []
-    gradeKanji.forEach((k) => kanjiSet.add(k))
+    for (const k of gradeKanji) {
+      kanjiSet.add(k)
+    }
   } else if (grade === 7) {
     // 中学校の場合：中学校の漢字のみ
-    MIDDLE_SCHOOL_KANJI.forEach((k) => kanjiSet.add(k))
+    for (const k of MIDDLE_SCHOOL_KANJI) {
+      kanjiSet.add(k)
+    }
   }
 
   return kanjiSet
@@ -58,15 +62,21 @@ function getKanjiUpToGrade(grade: number): Set<string> {
     // 小学校の場合
     for (let g = 1; g <= grade; g++) {
       const gradeKanji = EDUCATION_KANJI[g as keyof typeof EDUCATION_KANJI] || []
-      gradeKanji.forEach((k) => kanjiSet.add(k))
+      for (const k of gradeKanji) {
+        kanjiSet.add(k)
+      }
     }
   } else if (grade === 7) {
     // 中学校の場合（小学校全部＋中学校）
     for (let g = 1; g <= 6; g++) {
       const gradeKanji = EDUCATION_KANJI[g as keyof typeof EDUCATION_KANJI] || []
-      gradeKanji.forEach((k) => kanjiSet.add(k))
+      for (const k of gradeKanji) {
+        kanjiSet.add(k)
+      }
     }
-    MIDDLE_SCHOOL_KANJI.forEach((k) => kanjiSet.add(k))
+    for (const k of MIDDLE_SCHOOL_KANJI) {
+      kanjiSet.add(k)
+    }
   }
 
   return kanjiSet
@@ -279,7 +289,9 @@ function validateKanjiListIntegrity(): ValidationResult {
 
   if (duplicates.length > 0) {
     console.log(`\n⚠️  重複している漢字: ${duplicates.length}個`)
-    duplicates.slice(0, 10).forEach((d) => console.log(`  - ${d}`))
+    for (const d of duplicates.slice(0, 10)) {
+      console.log(`  - ${d}`)
+    }
     if (duplicates.length > 10) {
       console.log(`  ... 他${duplicates.length - 10}個`)
     }
@@ -335,9 +347,9 @@ function main() {
   const results: { [key: string]: ValidationResult } = {}
 
   // 各種検証を実行
-  results['学年別漢字'] = validateGradeKanji()
-  results['入力漢字存在'] = validateInputKanjiExists()
-  results['漢字リスト整合性'] = validateKanjiListIntegrity()
+  results.学年別漢字 = validateGradeKanji()
+  results.入力漢字存在 = validateInputKanjiExists()
+  results.漢字リスト整合性 = validateKanjiListIntegrity()
 
   // サマリー表示
   showSummary(results)
