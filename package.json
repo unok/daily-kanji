@@ -14,7 +14,7 @@
     "test": "vitest --run",
     "test:ui": "vitest --run",
     "prepare": "husky",
-    "validate": "tsx src/scripts/validateAllRequirements.ts",
+    "validate": "tsx src/scripts/validateAllRequirementsDetailed.ts",
     "validate:readings": "tsx src/scripts/validateKanjiReadings.ts",
     "validate:grade": "tsx src/scripts/validateGradeKanji.ts",
     "validate:target": "tsx src/scripts/validateTargetKanji.ts",

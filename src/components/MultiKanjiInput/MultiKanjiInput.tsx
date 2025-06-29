@@ -12,9 +12,11 @@ interface MultiKanjiInputProps {
   inputs: KanjiInput[]
   onSubmit: (answers: string[]) => void
   disabled?: boolean
+  results?: Array<{ isCorrect: boolean }>
+  showResults?: boolean
 }
 
-export function MultiKanjiInput({ inputs, onSubmit, disabled = false }: MultiKanjiInputProps) {
+export function MultiKanjiInput({ inputs, onSubmit, disabled = false, results, showResults = false }: MultiKanjiInputProps) {
   const canvasRefs = useRef<(HTMLCanvasElement | null)[]>([])
   const [canvasStates, setCanvasStates] = useState<CanvasState[]>([])
   const [focusedIndex, setFocusedIndex] = useState<number | null>(null)
@@ -211,9 +213,23 @@ export function MultiKanjiInput({ inputs, onSubmit, disabled = false }: MultiKan
                           }}
                           width={400}
                           height={400}
-                          className={`border-4 ${focusedIndex === index ? 'border-blue-500' : 'border-gray-400'} rounded-lg bg-white cursor-crosshair ${
+                          className={`border-4 ${
+                            showResults && results?.[index]
+                              ? results[index].isCorrect
+                                ? 'border-green-500 bg-green-50'
+                                : 'border-red-500 bg-red-50'
+                              : focusedIndex === index
+                              ? 'border-blue-500'
+                              : 'border-gray-400'
+                          } rounded-lg ${
+                            showResults && results?.[index]
+                              ? results[index].isCorrect
+                                ? 'bg-green-50'
+                                : 'bg-red-50'
+                              : 'bg-white'
+                          } cursor-crosshair ${
                             disabled ? 'opacity-50' : ''
-                          } max-w-full`}
+                          } max-w-full transition-all duration-300`}
                           style={{ touchAction: 'none', maxWidth: '90vw', maxHeight: '90vw' }}
                           tabIndex={disabled ? -1 : 0}
                           onMouseDown={handleMouseDown(index)}
@@ -230,6 +246,25 @@ export function MultiKanjiInput({ inputs, onSubmit, disabled = false }: MultiKan
                           <line x1="200" y1="0" x2="200" y2="400" stroke="#e0e0e0" strokeWidth="2" strokeDasharray="5, 5" />
                           <line x1="0" y1="200" x2="400" y2="200" stroke="#e0e0e0" strokeWidth="2" strokeDasharray="5, 5" />
                         </svg>
+                        {showResults && results?.[index] && (
+                          <div 
+                            className={`absolute top-2 right-2 rounded-full p-2 ${
+                              results[index].isCorrect ? 'bg-green-500' : 'bg-red-500'
+                            } transition-all duration-300 transform`}
+                            style={{
+                              animation: 'popIn 0.5s ease-out'
+                            }}>
+                            {results[index].isCorrect ? (
+                              <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+                              </svg>
+                            ) : (
+                              <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M6 18L18 6M6 6l12 12" />
+                              </svg>
+                            )}
+                          </div>
+                        )}
                       </div>
                       <button
                         type="button"

@@ -8,3 +8,18 @@
 #kanji-candidates button:hover {
   @apply transform scale-110;
 }
+
+/* MultiKanjiInput 成功・失敗インジケーターのアニメーション */
+@keyframes popIn {
+  0% {
+    transform: scale(0) rotate(-180deg);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.2) rotate(10deg);
+  }
+  100% {
+    transform: scale(1) rotate(0deg);
+    opacity: 1;
+  }
+}

@@ -258,7 +258,7 @@ export function KanjiFillBlankNew({ difficulty = 'elementary', onSessionComplete
         {/* 入力エリア */}
         <div className="mb-6">
           <div className="text-center mb-4 text-gray-600">下の枠に漢字を書いてください</div>
-          <MultiKanjiInput inputs={currentQuestion.inputs} onSubmit={checkAnswers} disabled={showResult} />
+          <MultiKanjiInput inputs={currentQuestion.inputs} onSubmit={checkAnswers} disabled={showResult} results={results} showResults={showResult} />
         </div>
 
         {/* 操作ボタン */}
