@@ -4,7 +4,7 @@ import * as fs from 'node:fs'
 import * as path from 'node:path'
 
 import { EDUCATION_KANJI } from '../data/kanji-lists/education-kanji'
-import { ACTUAL_JUNIOR_KANJI, ACTUAL_SENIOR_KANJI } from '../data/kanji-lists/jouyou-kanji'
+import { ACTUAL_JUNIOR_KANJI } from '../data/kanji-lists/jouyou-kanji'
 
 interface Question {
   id: string
@@ -50,9 +50,6 @@ function getKanjiUpToGrade(grade: number): Set<string> {
       }
     }
     for (const k of ACTUAL_JUNIOR_KANJI) {
-      kanjiSet.add(k)
-    }
-    for (const k of ACTUAL_SENIOR_KANJI) {
       kanjiSet.add(k)
     }
   }
