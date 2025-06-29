@@ -219,17 +219,11 @@ export function MultiKanjiInput({ inputs, onSubmit, disabled = false, results, s
                                 ? 'border-green-500 bg-green-50'
                                 : 'border-red-500 bg-red-50'
                               : focusedIndex === index
-                              ? 'border-blue-500'
-                              : 'border-gray-400'
+                                ? 'border-blue-500'
+                                : 'border-gray-400'
                           } rounded-lg ${
-                            showResults && results?.[index]
-                              ? results[index].isCorrect
-                                ? 'bg-green-50'
-                                : 'bg-red-50'
-                              : 'bg-white'
-                          } cursor-crosshair ${
-                            disabled ? 'opacity-50' : ''
-                          } max-w-full transition-all duration-300`}
+                            showResults && results?.[index] ? (results[index].isCorrect ? 'bg-green-50' : 'bg-red-50') : 'bg-white'
+                          } cursor-crosshair ${disabled ? 'opacity-50' : ''} max-w-full transition-all duration-300`}
                           style={{ touchAction: 'none', maxWidth: '90vw', maxHeight: '90vw' }}
                           tabIndex={disabled ? -1 : 0}
                           onMouseDown={handleMouseDown(index)}
@@ -247,13 +241,14 @@ export function MultiKanjiInput({ inputs, onSubmit, disabled = false, results, s
                           <line x1="0" y1="200" x2="400" y2="200" stroke="#e0e0e0" strokeWidth="2" strokeDasharray="5, 5" />
                         </svg>
                         {showResults && results?.[index] && (
-                          <div 
+                          <div
                             className={`absolute top-2 right-2 rounded-full p-2 ${
                               results[index].isCorrect ? 'bg-green-500' : 'bg-red-500'
                             } transition-all duration-300 transform`}
                             style={{
-                              animation: 'popIn 0.5s ease-out'
-                            }}>
+                              animation: 'popIn 0.5s ease-out',
+                            }}
+                          >
                             {results[index].isCorrect ? (
                               <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />

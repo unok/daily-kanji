@@ -52,7 +52,7 @@ const main = () => {
 
   console.log('=== 短文の詳細分析 ===')
   console.log(`総短文数: ${shortSentences.length}`)
-  
+
   console.log('\n文字数別の分布:')
   for (let i = 1; i <= 8; i++) {
     const count = lengthGroups.get(i) || 0
@@ -63,10 +63,10 @@ const main = () => {
 
   // パターン別分析のサンプル表示
   console.log('\n=== パターン別分析 ===')
-  
+
   // 各文字数ごとにサンプルを表示
   for (let len = 4; len <= 8; len++) {
-    const samples = shortSentences.filter(s => s.length === len).slice(0, 15)
+    const samples = shortSentences.filter((s) => s.length === len).slice(0, 15)
     if (samples.length > 0) {
       console.log(`\n【${len}文字の例】`)
       for (const sample of samples) {
@@ -79,7 +79,7 @@ const main = () => {
   // 動詞パターンの分析
   console.log('\n=== 動詞パターンの分析 ===')
   const verbPatterns = new Map<string, ShortSentence[]>()
-  
+
   for (const sentence of shortSentences.slice(0, 100)) {
     const clean = sentence.cleanSentence
     if (clean.includes('ました')) {
