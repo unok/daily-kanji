@@ -28,14 +28,9 @@ function main() {
     console.log('=====================================')
     for (let i = 0; i < Math.min(result.duplicateKanjiErrors.length, 20); i++) {
       const err = result.duplicateKanjiErrors[i]
-      console.log(`\n${i + 1}. ${err.questionId || err.id}: "${err.sentence}"`)
-      if (err.duplicates) {
-        console.log(`   重複漢字: ${err.duplicates.join(', ')}`)
-      } else if (err.duplicate) {
-        console.log(`   重複漢字: ${err.duplicate}`)
-      } else if (err.kanjiChar) {
-        console.log(`   重複漢字: ${err.kanjiChar}`)
-      }
+      console.log(`\n${i + 1}. ${err.questionId}: "${err.sentence}"`)
+      console.log(`   重複漢字: ${err.kanjiChar}`)
+      console.log(`   学年: ${err.grade}`)
     }
     if (result.duplicateKanjiErrors.length > 20) {
       console.log(`\n... 他 ${result.duplicateKanjiErrors.length - 20} 件`)

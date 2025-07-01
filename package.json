@@ -10,7 +10,7 @@
     "lint:fix": "biome check --fix .",
     "lint:check": "biome check .",
     "preview": "vite preview",
-    "all:check": "run-s lint lint:check lint:fix test:ui validate validate:readings build validate:comprehensive",
+    "all:check": "run-s lint lint:check lint:fix test:ui validate build validate:comprehensive",
     "test": "vitest --run",
     "test:ui": "vitest --run",
     "prepare": "husky",

@@ -1,4 +1,4 @@
-import { readdirSync, readFileSync } from 'node:fs'
+import { readdirSync, readFileSync, writeFileSync } from 'node:fs'
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
@@ -291,7 +291,8 @@ function validateQuestion(
 
   // 8. 入力項目の文字種チェック（漢字のみ）
   for (const inputText of inputs) {
-    const nonKanji = inputText.match(/[^\u4E00-\u9FAF]/g)
+    // 通常の漢字範囲 + CJK拡張Bの𠮟を含む範囲
+    const nonKanji = inputText.match(/[^\u4E00-\u9FAF\u{20000}-\u{2A6DF}]/gu)
     if (nonKanji) {
       errors.push(`入力項目に漢字以外が含まれています: "${inputText}" (${nonKanji.join('')})`)
     }
@@ -366,27 +367,30 @@ function validateQuestion(
   return errors
 }
 
-// 読み仮名を生成
-function _generateReading(sentence: string, kanjiReadings: KanjiReading): string {
-  let reading = ''
+// メイン処理
+function main() {
+  // コマンドライン引数の解析
+  const args = process.argv.slice(2)
+  let listIdsMode: string | null = null
 
-  for (const char of sentence) {
-    if (kanjiReadings[char]) {
-      reading += kanjiReadings[char][0]
-    } else if (char.match(/[\u3040-\u309F]/)) {
-      reading += char
-    } else if (char.match(/[\u30A0-\u30FF]/)) {
-      reading += char
-    } else if (char === '、' || char === '。' || char === '？' || char === '！') {
-      reading += char
+  for (let i = 0; i < args.length; i++) {
+    if (args[i] === '--list-ids' && i + 1 < args.length) {
+      listIdsMode = args[i + 1]
+      break
     }
   }
 
-  return reading
-}
-
-// メイン処理
-function main() {
+  // 利用可能なエラータイプを表示
+  if (listIdsMode && !['higher-grade', 'inappropriate-grade', 'grammar-nanode', 'consecutive-input', 'all'].includes(listIdsMode)) {
+    console.error('エラー: 無効なエラータイプです。')
+    console.error('利用可能なエラータイプ:')
+    console.error('  higher-grade      - より高学年の漢字が使われているエラー')
+    console.error('  inappropriate-grade - 入力漢字の学年が不適切なエラー')
+    console.error('  grammar-nanode    - 「なのです」が不自然なエラー')
+    console.error('  consecutive-input - 入力項目が連続しているエラー')
+    console.error('  all              - すべてのエラー')
+    process.exit(1)
+  }
   // 漢字読みデータを読み込む
   const kanjiReadingsPath = join(__dirname, '../data/kanji-readings/kanji-readings.json')
   const kanjiReadings: KanjiReading = JSON.parse(readFileSync(kanjiReadingsPath, 'utf-8'))
@@ -410,7 +414,18 @@ function main() {
   let totalErrors = 0
   const questionFiles = getQuestionFiles()
 
-  console.log(`\n検証対象ファイル数: ${questionFiles.length}`)
+  // IDリスト収集モード用
+  const errorIdsByType: { [key: string]: string[] } = {
+    'higher-grade': [],
+    'inappropriate-grade': [],
+    'grammar-nanode': [],
+    'consecutive-input': [],
+    all: [],
+  }
+
+  if (!listIdsMode) {
+    console.log(`\n検証対象ファイル数: ${questionFiles.length}`)
+  }
 
   for (const fileName of questionFiles) {
     const filePath = join(__dirname, `../data/questions/${fileName}`)
@@ -431,6 +446,30 @@ function main() {
           errors: questionErrors,
         })
         totalErrors += questionErrors.length
+
+        // IDリスト収集モードの場合、エラータイプ別にIDを収集
+        if (listIdsMode) {
+          const hasHigherGrade = questionErrors.some((err) => err.includes('より高学年の漢字が使われています'))
+          const hasInappropriateGrade = questionErrors.some((err) => err.includes('入力漢字の学年が不適切'))
+          const hasGrammarNanode = questionErrors.some((err) => err.includes('「なのです」が不自然'))
+          const hasConsecutiveInput = questionErrors.some((err) => err.includes('入力項目が連続しています'))
+
+          if (hasHigherGrade && (listIdsMode === 'higher-grade' || listIdsMode === 'all')) {
+            errorIdsByType['higher-grade'].push(question.id)
+          }
+          if (hasInappropriateGrade && (listIdsMode === 'inappropriate-grade' || listIdsMode === 'all')) {
+            errorIdsByType['inappropriate-grade'].push(question.id)
+          }
+          if (hasGrammarNanode && (listIdsMode === 'grammar-nanode' || listIdsMode === 'all')) {
+            errorIdsByType['grammar-nanode'].push(question.id)
+          }
+          if (hasConsecutiveInput && (listIdsMode === 'consecutive-input' || listIdsMode === 'all')) {
+            errorIdsByType['consecutive-input'].push(question.id)
+          }
+          if (listIdsMode === 'all') {
+            errorIdsByType.all.push(question.id)
+          }
+        }
       }
 
       // 漢字使用頻度を更新
@@ -463,6 +502,26 @@ function main() {
     if (errors.length > 0) {
       allResults.push({ file: fileName, errors })
     }
+  }
+
+  // IDリスト収集モードの場合、ファイルに出力して終了
+  if (listIdsMode) {
+    const outputFile = `error-ids-${listIdsMode}-${Date.now()}.txt`
+    const ids =
+      listIdsMode === 'all'
+        ? [...new Set(errorIdsByType.all)] // 重複削除
+        : errorIdsByType[listIdsMode]
+
+    writeFileSync(outputFile, `${ids.join('\n')}\n`)
+    console.log(`\n✅ ${ids.length}個のIDを ${outputFile} に出力しました。`)
+    console.log('\nエラータイプ別集計:')
+    if (listIdsMode === 'all' || listIdsMode === 'higher-grade') {
+      console.log(`  より高学年の漢字: ${errorIdsByType['higher-grade'].length}個`)
+    }
+    if (listIdsMode === 'all' || listIdsMode === 'inappropriate-grade') {
+      console.log(`  入力漢字の学年不適切: ${errorIdsByType['inappropriate-grade'].length}個`)
+    }
+    return
   }
 
   // 結果を表示
