@@ -1,5 +1,5 @@
-import { readFileSync } from 'fs'
-import { join } from 'path'
+import { readdirSync, readFileSync } from 'node:fs'
+import { join } from 'node:path'
 
 interface Question {
   id: string
@@ -15,7 +15,12 @@ function analyzeDuplicateSentences() {
   const questionsDir = join(process.cwd(), 'src/data/questions')
   const sentenceMap = new Map<string, Array<{ file: string; id: string }>>()
 
-  // ファイル一覧を取得
+  // ファイル一覧を動的に取得
+  const files = readdirSync(questionsDir)
+    .filter((file) => file.startsWith('questions-') && file.endsWith('.json'))
+    .sort()
+
+  /* 旧ハードコード配列（削除）
   const files = [
     'questions-elementary1-part1.json',
     'questions-elementary1-part2.json',
@@ -79,6 +84,7 @@ function analyzeDuplicateSentences() {
     'questions-junior3-part2.json',
     'questions-junior3-part3.json',
   ]
+  */
 
   // 各ファイルを処理
   for (const fileName of files) {
@@ -94,7 +100,7 @@ function analyzeDuplicateSentences() {
           sentenceMap.set(sentence, [])
         }
 
-        sentenceMap.get(sentence)!.push({
+        sentenceMap.get(sentence)?.push({
           file: fileName,
           id: question.id,
         })
@@ -116,13 +122,13 @@ function analyzeDuplicateSentences() {
   console.log()
 
   // 重複回数の多い順に表示
-  duplicates.slice(0, 20).forEach(([sentence, occurrences], index) => {
+  for (const [index, [sentence, occurrences]] of duplicates.slice(0, 20).entries()) {
     console.log(`${index + 1}. 「${sentence}」 (${occurrences.length}回重複)`)
-    occurrences.forEach(({ file, id }) => {
+    for (const { file, id } of occurrences) {
       console.log(`   - ${file}: ${id}`)
-    })
+    }
     console.log()
-  })
+  }
 
   if (duplicates.length > 20) {
     console.log(`... 他 ${duplicates.length - 20} 件の重複文章`)

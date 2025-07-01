@@ -12,7 +12,7 @@ function main() {
     for (let i = 0; i < Math.min(result.duplicateSentences.length, 50); i++) {
       const dup = result.duplicateSentences[i]
       console.log(`\n${i + 1}. "${dup.sentence}"`)
-      console.log(`   出現箇所:`)
+      console.log('   出現箇所:')
       for (const id of dup.ids) {
         console.log(`   - ${id}`)
       }

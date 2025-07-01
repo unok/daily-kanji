@@ -85,15 +85,15 @@ const main = () => {
     if (clean.includes('ました')) {
       const key = 'ました形'
       if (!verbPatterns.has(key)) verbPatterns.set(key, [])
-      verbPatterns.get(key)!.push(sentence)
+      verbPatterns.get(key)?.push(sentence)
     } else if (clean.includes('です')) {
       const key = 'です形'
       if (!verbPatterns.has(key)) verbPatterns.set(key, [])
-      verbPatterns.get(key)!.push(sentence)
+      verbPatterns.get(key)?.push(sentence)
     } else if (clean.includes('でした')) {
       const key = 'でした形'
       if (!verbPatterns.has(key)) verbPatterns.set(key, [])
-      verbPatterns.get(key)!.push(sentence)
+      verbPatterns.get(key)?.push(sentence)
     }
   }
 

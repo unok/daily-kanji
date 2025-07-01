@@ -1,6 +1,6 @@
-import { readFileSync } from 'fs'
-import { dirname, join } from 'path'
-import { fileURLToPath } from 'url'
+import { readdirSync, readFileSync } from 'node:fs'
+import { dirname, join } from 'node:path'
+import { fileURLToPath } from 'node:url'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
@@ -41,28 +41,12 @@ interface KanjiUsage {
   locations: string[]
 }
 
-// 問題ファイルのリスト
-const questionFiles = [
-  'questions-elementary1-part1.json',
-  'questions-elementary1-part2.json',
-  'questions-elementary2-part1.json',
-  'questions-elementary2-part2.json',
-  'questions-elementary3-part1.json',
-  'questions-elementary3-part2.json',
-  'questions-elementary4-part1.json',
-  'questions-elementary4-part2.json',
-  'questions-elementary5-part1.json',
-  'questions-elementary5-part2.json',
-  'questions-elementary6-part1.json',
-  'questions-elementary6-part2.json',
-  'questions-junior-part1.json',
-  'questions-junior-part2.json',
-  'questions-junior-part3.json',
-  'questions-junior-part4.json',
-  'questions-junior-part5.json',
-  'questions-junior-part6.json',
-  'questions-junior-part7.json',
-]
+// 問題ファイルのリストを動的に取得
+function getQuestionFiles(): string[] {
+  const questionsDir = join(__dirname, '../data/questions')
+  const files = readdirSync(questionsDir)
+  return files.filter((file) => file.startsWith('questions-') && file.endsWith('.json')).sort() // ファイル名順にソート
+}
 
 // 各学年の漢字リストを取得
 function getGradeKanjiList(): Map<number, Set<string>> {
@@ -132,7 +116,8 @@ function getKanjiGrade(kanji: string, gradeKanjiMap: Map<number, Set<string>>): 
 
 // 文章から漢字を抽出
 function extractKanji(text: string): string[] {
-  return text.match(/[\u4E00-\u9FAF]/g) || []
+  // 通常の漢字範囲 + CJK拡張Bの𠮟を含む範囲
+  return text.match(/[\u4E00-\u9FAF\u{20000}-\u{2A6DF}]/gu) || []
 }
 
 // 文章を入力付き形式から通常形式に変換
@@ -148,9 +133,11 @@ function parseSentence(sentence: string): { plainSentence: string; inputs: strin
   // 逆順で置換（インデックスがずれないように）
   for (let i = allMatches.length - 1; i >= 0; i--) {
     const match = allMatches[i]
-    const [fullMatch, kanji, yomi] = match
+    const [fullMatch, kanji, _yomi] = match
     inputs.unshift(kanji)
-    plainSentence = plainSentence.substring(0, match.index!) + '[]' + plainSentence.substring(match.index! + fullMatch.length)
+    if (match.index !== undefined) {
+      plainSentence = `${plainSentence.substring(0, match.index)}[]${plainSentence.substring(match.index + fullMatch.length)}`
+    }
   }
 
   // 読みを生成（[漢字|よみ]から読みを抽出）
@@ -158,7 +145,7 @@ function parseSentence(sentence: string): { plainSentence: string; inputs: strin
   while (tempSentence.includes('[')) {
     const match = tempSentence.match(/\[([^|\]]+)\|([^\]]+)\]/)
     if (!match) break
-    const [fullMatch, kanji, yomi] = match
+    const [fullMatch, _kanji, yomi] = match
     tempSentence = tempSentence.replace(fullMatch, yomi)
   }
   reading = tempSentence
@@ -169,7 +156,7 @@ function parseSentence(sentence: string): { plainSentence: string; inputs: strin
 // 問題単位の検証
 function validateQuestion(
   question: Question,
-  index: number,
+  _index: number,
   fileName: string,
   kanjiReadings: KanjiReading,
   compoundReadings: CompoundReading,
@@ -180,7 +167,7 @@ function validateQuestion(
   const { sentence } = question
 
   // 文章をパース
-  const { plainSentence, inputs, reading } = parseSentence(sentence)
+  const { plainSentence, inputs } = parseSentence(sentence)
 
   // 入力部分の抽出（読みチェック用）
   const inputMatches = [...sentence.matchAll(/\[([^|]+)\|[^\]]+\]/g)]
@@ -212,7 +199,9 @@ function validateQuestion(
     const inputMatches = Array.from(sentence.matchAll(/\[([^|\]]+)\|([^\]]+)\]/g))
     for (let i = inputMatches.length - 1; i >= 0; i--) {
       const match = inputMatches[i]
-      nonInputText = nonInputText.substring(0, match.index!) + '◯' + nonInputText.substring(match.index! + match[0].length)
+      if (match.index !== undefined) {
+        nonInputText = `${nonInputText.substring(0, match.index)}◯${nonInputText.substring(match.index + match[0].length)}`
+      }
     }
 
     // プレースホルダー以外の部分から漢字を抽出
@@ -378,7 +367,7 @@ function validateQuestion(
 }
 
 // 読み仮名を生成
-function generateReading(sentence: string, kanjiReadings: KanjiReading): string {
+function _generateReading(sentence: string, kanjiReadings: KanjiReading): string {
   let reading = ''
 
   for (const char of sentence) {
@@ -419,10 +408,14 @@ function main() {
   // 各ファイルを検証
   const allResults: ValidationResult[] = []
   let totalErrors = 0
+  const questionFiles = getQuestionFiles()
+
+  console.log(`\n検証対象ファイル数: ${questionFiles.length}`)
 
   for (const fileName of questionFiles) {
     const filePath = join(__dirname, `../data/questions/${fileName}`)
     const fileData = JSON.parse(readFileSync(filePath, 'utf-8'))
+
     const questions: Question[] = fileData.questions || fileData
 
     const errors: ProblemError[] = []
@@ -441,15 +434,28 @@ function main() {
       }
 
       // 漢字使用頻度を更新
-      const { plainSentence: pSentence } = parseSentence(question.sentence)
-      const kanjiInSentence = extractKanji(pSentence)
-      const uniqueKanji = new Set(kanjiInSentence)
+      // [漢字|読み]形式から漢字部分だけを抽出
+      const kanjiFromBrackets: string[] = []
+      const bracketMatches = question.sentence.matchAll(/\[([^|\]]+)\|[^\]]+\]/g)
+      for (const match of bracketMatches) {
+        const kanjiInBracket = extractKanji(match[1])
+        kanjiFromBrackets.push(...kanjiInBracket)
+      }
+
+      // 通常のテキストからも漢字を抽出
+      const sentenceWithoutBrackets = question.sentence.replace(/\[[^|\]]+\|[^\]]+\]/g, '')
+      const kanjiFromText = extractKanji(sentenceWithoutBrackets)
+
+      // 両方を結合して重複を排除
+      const uniqueKanji = new Set([...kanjiFromBrackets, ...kanjiFromText])
 
       for (const kanji of uniqueKanji) {
         if (kanjiUsageMap.has(kanji)) {
-          const usage = kanjiUsageMap.get(kanji)!
-          usage.count++
-          usage.locations.push(`${fileName} #${index}: ${question.sentence}`)
+          const usage = kanjiUsageMap.get(kanji)
+          if (usage) {
+            usage.count++
+            usage.locations.push(`${fileName} #${index}: ${question.sentence}`)
+          }
         }
       }
     })
@@ -490,6 +496,7 @@ function main() {
 
   // 0回使用の漢字
   const unusedKanji = sortedUsage.filter((u) => u.count === 0)
+
   if (unusedKanji.length > 0) {
     console.log(`\n❌ 全く使われていない漢字（${unusedKanji.length}字）:`)
     const unusedKanjiStr = unusedKanji.map((u) => u.kanji)
@@ -506,7 +513,7 @@ function main() {
       if (!lowFreqByCount.has(usage.count)) {
         lowFreqByCount.set(usage.count, [])
       }
-      lowFreqByCount.get(usage.count)!.push(usage.kanji)
+      lowFreqByCount.get(usage.count)?.push(usage.kanji)
     }
   }
 

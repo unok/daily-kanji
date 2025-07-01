@@ -16,17 +16,13 @@ interface QuestionsFile {
 
 // コマンドライン引数を取得
 const args = process.argv.slice(2)
-if (args.length !== 2) {
-  console.error('使用方法: npx tsx src/scripts/fixQuestionById.ts <ID> <新しい文章>')
-  console.error('例: npx tsx src/scripts/fixQuestionById.ts e5-159 "[貧|ひん]しい生活を送りました。"')
+if (args.length !== 1) {
+  console.error('使用方法: npx tsx src/scripts/deleteQuestionById.ts <ID>')
+  console.error('例: npx tsx src/scripts/deleteQuestionById.ts e5-159')
   process.exit(1)
 }
 
 const targetId = args[0]
-let newSentence = args[1]
-
-// シェルによって挿入された ' < /dev/null | ' を '|' に戻す
-newSentence = newSentence.replace(/ < \/dev\/null \| /g, '|')
 
 // questionsディレクトリのパス
 const questionsDir = path.join(__dirname, '..', 'data', 'questions')
@@ -47,21 +43,25 @@ for (const file of files) {
 
     if (questionIndex !== -1) {
       console.log(`\n✅ ID "${targetId}" を ${file} で発見しました`)
-      console.log('\n変更前:')
+      console.log('\n削除対象:')
       console.log(`  ID: ${data.questions[questionIndex].id}`)
       console.log(`  文章: ${data.questions[questionIndex].sentence}`)
 
-      // 文章を更新
-      data.questions[questionIndex].sentence = newSentence
+      // 削除前の問題数
+      const beforeCount = data.questions.length
 
-      console.log('\n変更後:')
-      console.log(`  ID: ${data.questions[questionIndex].id}`)
-      console.log(`  文章: ${data.questions[questionIndex].sentence}`)
+      // 問題を削除
+      data.questions.splice(questionIndex, 1)
+
+      // 削除後の問題数
+      const afterCount = data.questions.length
+
+      console.log(`\n問題数: ${beforeCount} → ${afterCount}`)
 
       // ファイルに書き戻す
       fs.writeFileSync(filePath, `${JSON.stringify(data, null, 2)}\n`, 'utf-8')
 
-      console.log(`\n✅ ${file} を更新しました`)
+      console.log(`\n✅ ${file} から問題を削除しました`)
       found = true
       break
     }
