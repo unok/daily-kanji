@@ -230,7 +230,7 @@ function validateQuestion(
   // 4. 読みデータの存在チェック
   for (const kanji of kanjiSet) {
     if (!kanjiReadings[kanji]) {
-      errors.push(`読みデータが存在しません: ${kanji}`)
+      errors.push(`読みデータが存在しません: ${kanji} (読みが正しい場合は src/data/kanji-readings/kanji-readings.json に追加してください)`)
     }
   }
 
@@ -245,7 +245,9 @@ function validateQuestion(
     if (kanjiPart.length > 1 && compoundReadings[kanjiPart]) {
       const validReadings = compoundReadings[kanjiPart]
       if (!validReadings.includes(readingPart)) {
-        readingErrors.push(`[${kanjiPart}|${readingPart}] - 正しい読み: ${validReadings.join('、')}`)
+        readingErrors.push(
+          `[${kanjiPart}|${readingPart}] - 正しい読み: ${validReadings.join('、')} (読みが正しい場合は src/data/kanji-readings/compound-readings.json に追加してください)`
+        )
       }
       continue
     }
@@ -254,7 +256,7 @@ function validateQuestion(
     if (kanjiPart.length === 1) {
       const kanji = kanjiPart
       if (!kanjiReadings[kanji]) {
-        readingErrors.push(`${kanji}の読みデータなし`)
+        readingErrors.push(`${kanji}の読みデータなし (読みが正しい場合は src/data/kanji-readings/kanji-readings.json に追加してください)`)
       } else {
         const validReadings = kanjiReadings[kanji]
         if (!validReadings.includes(readingPart)) {
@@ -267,7 +269,9 @@ function validateQuestion(
             }
           }
           if (!isValid) {
-            readingErrors.push(`[${kanjiPart}|${readingPart}] - 正しい読み: ${validReadings.join('、')}`)
+            readingErrors.push(
+              `[${kanjiPart}|${readingPart}] - 正しい読み: ${validReadings.join('、')} (読みが正しい場合は src/data/kanji-readings/kanji-readings.json に追加してください)`
+            )
           }
         }
       }
@@ -403,10 +407,21 @@ function main() {
   const gradeKanjiMap = getGradeKanjiList()
   const allKanjiSet = getAllKanjiSet(gradeKanjiMap)
 
-  // 漢字使用頻度を記録
+  // 漢字使用頻度を記録（全体用）
   const kanjiUsageMap = new Map<string, KanjiUsage>()
   for (const kanji of allKanjiSet) {
     kanjiUsageMap.set(kanji, { kanji, count: 0, locations: [] })
+  }
+
+  // 学年別の漢字使用頻度を記録
+  const gradeKanjiUsageMap = new Map<number, Map<string, KanjiUsage>>()
+  for (let grade = 1; grade <= 7; grade++) {
+    const gradeMap = new Map<string, KanjiUsage>()
+    const gradeKanjiSet = gradeKanjiMap.get(grade) || new Set()
+    for (const kanji of gradeKanjiSet) {
+      gradeMap.set(kanji, { kanji, count: 0, locations: [] })
+    }
+    gradeKanjiUsageMap.set(grade, gradeMap)
   }
 
   // 各ファイルを検証
@@ -488,12 +503,35 @@ function main() {
       // 両方を結合して重複を排除
       const uniqueKanji = new Set([...kanjiFromBrackets, ...kanjiFromText])
 
+      // ファイル名から学年を判定
+      let fileGrade = 7 // デフォルトは中学校
+      if (fileName.includes('elementary')) {
+        const gradeMatch = fileName.match(/elementary(\d+)/)
+        if (gradeMatch) {
+          fileGrade = Number.parseInt(gradeMatch[1])
+        }
+      }
+
       for (const kanji of uniqueKanji) {
+        // 全体の使用頻度を更新
         if (kanjiUsageMap.has(kanji)) {
           const usage = kanjiUsageMap.get(kanji)
           if (usage) {
             usage.count++
             usage.locations.push(`${fileName} #${index}: ${question.sentence}`)
+          }
+        }
+
+        // 学年別の使用頻度を更新
+        const kanjiGrade = getKanjiGrade(kanji, gradeKanjiMap)
+        if (kanjiGrade === fileGrade) {
+          const gradeMap = gradeKanjiUsageMap.get(kanjiGrade)
+          if (gradeMap && gradeMap.has(kanji)) {
+            const usage = gradeMap.get(kanji)
+            if (usage) {
+              usage.count++
+              usage.locations.push(`${fileName} #${index}: ${question.sentence}`)
+            }
           }
         }
       }
@@ -527,10 +565,30 @@ function main() {
   // 結果を表示
   console.log('=== 漢字学習システム 包括的検証結果 ===\n')
 
-  if (allResults.length === 0) {
+  // 学年別の低頻度漢字を収集
+  const gradeLowFreqKanji = new Map<number, string[]>()
+  let totalGradeLowFreqCount = 0
+
+  for (const [grade, gradeMap] of gradeKanjiUsageMap) {
+    const lowFreq: string[] = []
+    for (const usage of gradeMap.values()) {
+      if (usage.count < 5) {
+        lowFreq.push(usage.kanji)
+      }
+    }
+    if (lowFreq.length > 0) {
+      gradeLowFreqKanji.set(grade, lowFreq)
+      totalGradeLowFreqCount += lowFreq.length
+    }
+  }
+
+  const hasLowFreqError = totalGradeLowFreqCount > 0
+
+  if (allResults.length === 0 && !hasLowFreqError) {
     console.log('✅ すべての問題が検証をパスしました！\n')
   } else {
-    console.log(`❌ ${totalErrors}個のエラーが見つかりました\n`)
+    const totalErrorsWithFreq = totalErrors + totalGradeLowFreqCount
+    console.log(`❌ ${totalErrorsWithFreq}個のエラーが見つかりました\n`)
 
     for (const result of allResults) {
       console.log(`\n📁 ${result.file}`)
@@ -545,64 +603,75 @@ function main() {
         }
       }
     }
+
+    // 学年別低頻度エラーも表示
+    if (hasLowFreqError) {
+      console.log('\n📁 学年別漢字使用頻度エラー')
+      console.log('─'.repeat(60))
+      for (const [grade, lowFreq] of gradeLowFreqKanji) {
+        const gradeName = grade === 7 ? '中学校' : `小学${grade}年`
+        console.log(`\n${gradeName}: ${lowFreq.length}字の漢字が学年内で5回未満しか使用されていません`)
+        // 最初の10個を表示
+        const displayCount = Math.min(10, lowFreq.length)
+        console.log(`  対象漢字: ${lowFreq.slice(0, displayCount).join('、')}${lowFreq.length > 10 ? ` ... 他${lowFreq.length - 10}字` : ''}`)
+      }
+    }
   }
 
   // 全体統計を表示
-  console.log('\n\n=== 漢字使用頻度統計 ===\n')
+  console.log('\n\n=== 学年別漢字使用頻度統計 ===\n')
 
-  // 使用頻度でソート
-  const sortedUsage = Array.from(kanjiUsageMap.values()).sort((a, b) => a.count - b.count)
+  // 学年別の統計を表示
+  for (const [grade, gradeMap] of gradeKanjiUsageMap) {
+    const gradeName = grade === 7 ? '中学校' : `小学${grade}年`
+    const gradeKanjiSet = gradeKanjiMap.get(grade) || new Set()
+    const totalKanjiCount = gradeKanjiSet.size
 
-  // 0回使用の漢字
-  const unusedKanji = sortedUsage.filter((u) => u.count === 0)
+    console.log(`【${gradeName}】`)
 
-  if (unusedKanji.length > 0) {
-    console.log(`\n❌ 全く使われていない漢字（${unusedKanji.length}字）:`)
-    const unusedKanjiStr = unusedKanji.map((u) => u.kanji)
-    // 20文字ずつ表示
-    for (let i = 0; i < unusedKanjiStr.length; i += 20) {
-      console.log(unusedKanjiStr.slice(i, i + 20).join(''))
+    // 使用頻度でソート
+    const sortedUsage = Array.from(gradeMap.values()).sort((a, b) => a.count - b.count)
+
+    // 0回使用の漢字
+    const unusedKanji = sortedUsage.filter((u) => u.count === 0)
+    const lowFreqKanji = sortedUsage.filter((u) => u.count > 0 && u.count < 5)
+    const wellUsedKanji = sortedUsage.filter((u) => u.count >= 5)
+
+    if (unusedKanji.length > 0) {
+      console.log(`  未使用: ${unusedKanji.length}字`)
     }
-  }
 
-  // 5回未満の漢字を使用回数でグループ化
-  const lowFreqByCount = new Map<number, string[]>()
-  for (const usage of sortedUsage) {
-    if (usage.count > 0 && usage.count < 5) {
-      if (!lowFreqByCount.has(usage.count)) {
-        lowFreqByCount.set(usage.count, [])
-      }
-      lowFreqByCount.get(usage.count)?.push(usage.kanji)
-    }
-  }
+    if (lowFreqKanji.length > 0) {
+      console.log(`  5回未満: ${lowFreqKanji.length}字`)
 
-  const totalLowFreq = Array.from(lowFreqByCount.values()).reduce((sum, arr) => sum + arr.length, 0)
-  if (totalLowFreq > 0) {
-    console.log(`\n⚠️  5回未満しか使われていない漢字（${totalLowFreq}字）:\n`)
-
-    // 使用回数順（1回、2回、3回、4回）で表示
-    for (let count = 1; count <= 4; count++) {
-      const kanjiList = lowFreqByCount.get(count)
-      if (kanjiList && kanjiList.length > 0) {
-        const needed = 5 - count
-        console.log(`【${count}回使用（あと${needed}回必要）】${kanjiList.length}字`)
-        // 20文字ずつ表示
-        for (let i = 0; i < kanjiList.length; i += 20) {
-          console.log(kanjiList.slice(i, i + 20).join(''))
+      // 使用回数でグループ化
+      const byCount = new Map<number, string[]>()
+      for (const usage of lowFreqKanji) {
+        if (!byCount.has(usage.count)) {
+          byCount.set(usage.count, [])
         }
-        console.log('')
+        byCount.get(usage.count)?.push(usage.kanji)
+      }
+
+      // 使用回数順に表示（最大10文字まで）
+      for (let count = 1; count <= 4; count++) {
+        const kanjiList = byCount.get(count)
+        if (kanjiList && kanjiList.length > 0) {
+          const displayList = kanjiList.slice(0, 10)
+          const suffix = kanjiList.length > 10 ? ` ... 他${kanjiList.length - 10}字` : ''
+          console.log(`    ${count}回: ${displayList.join('')}${suffix}`)
+        }
       }
     }
+
+    console.log(`  5回以上: ${wellUsedKanji.length}字 (${((wellUsedKanji.length / totalKanjiCount) * 100).toFixed(1)}%)`)
+    console.log('')
   }
 
-  // サマリー
-  const wellUsedKanji = sortedUsage.filter((u) => u.count >= 5)
-  const underusedKanji = sortedUsage.filter((u) => u.count > 0 && u.count < 5)
-  console.log('\n\n=== サマリー ===')
-  console.log(`全漢字数: ${allKanjiSet.size}字`)
-  console.log(`5回以上使用: ${wellUsedKanji.length}字（${((wellUsedKanji.length / allKanjiSet.size) * 100).toFixed(1)}%）`)
-  console.log(`5回未満使用: ${underusedKanji.length}字（${((underusedKanji.length / allKanjiSet.size) * 100).toFixed(1)}%）`)
-  console.log(`未使用: ${unusedKanji.length}字（${((unusedKanji.length / allKanjiSet.size) * 100).toFixed(1)}%）`)
+  // 全体のサマリー
+  console.log('\n=== サマリー ===')
+  console.log(`検証ファイル数: ${questionFiles.length}`)
+  console.log(`学年別低頻度漢字エラー: ${totalGradeLowFreqCount}個`)
 }
 
 // 実行
