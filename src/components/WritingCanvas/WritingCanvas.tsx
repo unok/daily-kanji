@@ -18,7 +18,7 @@ export function WritingCanvas({ onImageCapture, canvasId = 'writing-canvas', onC
     const ctx = canvas.getContext('2d')
     if (!ctx) return
 
-    ctx.lineWidth = 5
+    ctx.lineWidth = 2.5
     ctx.strokeStyle = '#000000'
     ctx.lineCap = 'round'
     ctx.lineJoin = 'round'
@@ -51,26 +51,33 @@ export function WritingCanvas({ onImageCapture, canvasId = 'writing-canvas', onC
     }
   }, [canvasId, onCanvasReady])
 
-  const startDrawing = (x: number, y: number) => {
-    if (!(context && canvasRef.current)) return
+  const getCanvasCoordinates = (x: number, y: number) => {
+    if (!canvasRef.current) return { x: 0, y: 0 }
 
     const rect = canvasRef.current.getBoundingClientRect()
     const scaleX = canvasRef.current.width / rect.width
     const scaleY = canvasRef.current.height / rect.height
 
+    return {
+      x: (x - rect.left) * scaleX,
+      y: (y - rect.top) * scaleY,
+    }
+  }
+
+  const startDrawing = (x: number, y: number) => {
+    if (!(context && canvasRef.current)) return
+
+    const coords = getCanvasCoordinates(x, y)
     context.beginPath()
-    context.moveTo((x - rect.left) * scaleX, (y - rect.top) * scaleY)
+    context.moveTo(coords.x, coords.y)
     setIsDrawing(true)
   }
 
   const draw = (x: number, y: number) => {
     if (!(isDrawing && context && canvasRef.current)) return
 
-    const rect = canvasRef.current.getBoundingClientRect()
-    const scaleX = canvasRef.current.width / rect.width
-    const scaleY = canvasRef.current.height / rect.height
-
-    context.lineTo((x - rect.left) * scaleX, (y - rect.top) * scaleY)
+    const coords = getCanvasCoordinates(x, y)
+    context.lineTo(coords.x, coords.y)
     context.stroke()
   }
 

@@ -18,7 +18,7 @@
     "validate:readings": "tsx src/scripts/validateKanjiReadings.ts",
     "validate:grade": "tsx src/scripts/validateGradeKanji.ts",
     "validate:target": "tsx src/scripts/validateTargetKanji.ts",
-    "validate:comprehensive": "tsx src/scripts/validateComprehensiveGradeKanji.ts",
+    "validate:comprehensive": "tsx src/scripts/validateComprehensive.ts",
     "validate:all": "run-s test:ui validate validate:readings"
   },
   "dependencies": {

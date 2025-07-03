@@ -2,27 +2,10 @@ import { readdirSync, readFileSync, writeFileSync } from 'node:fs'
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
+import { extractKanji, getAllKanjiSet, getGradeKanjiList, getKanjiGrade, loadReadingData, type Question, validateQuestion } from './utils/validation.js'
+
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
-
-interface Question {
-  id: string
-  sentence: string
-  reading?: string
-  modifier?: string
-  options?: string[]
-  answer?: number
-  elementary?: number
-  junior?: number
-}
-
-interface KanjiReading {
-  [key: string]: string[]
-}
-
-interface CompoundReading {
-  [key: string]: string[]
-}
 
 interface ValidationResult {
   file: string
@@ -31,8 +14,15 @@ interface ValidationResult {
 
 interface ProblemError {
   questionIndex: number
+  id: string
   sentence: string
   errors: string[]
+}
+
+interface DuplicateSentence {
+  sentence: string
+  files: string[]
+  ids: string[]
 }
 
 interface KanjiUsage {
@@ -41,334 +31,25 @@ interface KanjiUsage {
   locations: string[]
 }
 
+interface ShortSentence {
+  file: string
+  id: string
+  sentence: string
+  length: number
+}
+
+interface DuplicateKanjiError {
+  file: string
+  id: string
+  sentence: string
+  kanjiChar: string
+}
+
 // 問題ファイルのリストを動的に取得
 function getQuestionFiles(): string[] {
   const questionsDir = join(__dirname, '../data/questions')
   const files = readdirSync(questionsDir)
   return files.filter((file) => file.startsWith('questions-') && file.endsWith('.json')).sort() // ファイル名順にソート
-}
-
-// 各学年の漢字リストを取得
-function getGradeKanjiList(): Map<number, Set<string>> {
-  const gradeKanjiMap = new Map<number, Set<string>>()
-
-  // education-kanji.tsからデータを読み込む
-  const educationKanjiPath = join(__dirname, '../data/kanji-lists/education-kanji.ts')
-  const educationKanjiContent = readFileSync(educationKanjiPath, 'utf-8')
-
-  // EDUCATION_KANJIオブジェクトを抽出
-  const educationKanjiMatch = educationKanjiContent.match(/export const EDUCATION_KANJI = ({[\s\S]*?})\s*\n\s*export/m)
-  if (!educationKanjiMatch) {
-    throw new Error('EDUCATION_KANJIが見つかりません')
-  }
-
-  // evalを使わずに安全にパース
-  const educationKanjiStr = educationKanjiMatch[1]
-
-  // 各学年のデータを抽出（1-6年）
-  for (let grade = 1; grade <= 6; grade++) {
-    const gradeRegex = new RegExp(`${grade}:\\s*\\[([\\s\\S]*?)\\](?:,|\\s*})`, 'm')
-    const gradeMatch = educationKanjiStr.match(gradeRegex)
-    if (gradeMatch) {
-      const kanjiArrayStr = gradeMatch[1]
-      const kanjiList = kanjiArrayStr.match(/'([^']+)'/g)?.map((k) => k.slice(1, -1)) || []
-      gradeKanjiMap.set(grade, new Set(kanjiList))
-    }
-  }
-
-  // jouyou-kanji.tsから中学校の漢字を読み込む
-  const jouyouKanjiPath = join(__dirname, '../data/kanji-lists/jouyou-kanji.ts')
-  const jouyouKanjiContent = readFileSync(jouyouKanjiPath, 'utf-8')
-
-  // MIDDLE_SCHOOL_KANJIを抽出
-  const juniorKanjiMatch = jouyouKanjiContent.match(/export const MIDDLE_SCHOOL_KANJI = \[([\s\S]*?)\]/m)
-  if (!juniorKanjiMatch) {
-    throw new Error('MIDDLE_SCHOOL_KANJIが見つかりません')
-  }
-
-  const juniorKanjiStr = juniorKanjiMatch[1]
-  const juniorKanjiList = juniorKanjiStr.match(/'([^']+)'/g)?.map((k) => k.slice(1, -1)) || []
-  gradeKanjiMap.set(7, new Set(juniorKanjiList))
-
-  return gradeKanjiMap
-}
-
-// 全学年の漢字リストを取得
-function getAllKanjiSet(gradeKanjiMap: Map<number, Set<string>>): Set<string> {
-  const allKanji = new Set<string>()
-  for (const kanjiSet of gradeKanjiMap.values()) {
-    for (const kanji of kanjiSet) {
-      allKanji.add(kanji)
-    }
-  }
-  return allKanji
-}
-
-// 漢字の学年を判定
-function getKanjiGrade(kanji: string, gradeKanjiMap: Map<number, Set<string>>): number {
-  for (const [grade, kanjiSet] of gradeKanjiMap) {
-    if (kanjiSet.has(kanji)) {
-      return grade
-    }
-  }
-  return 0 // 学習漢字でない
-}
-
-// 文章から漢字を抽出
-function extractKanji(text: string): string[] {
-  // 通常の漢字範囲 + CJK拡張Bの𠮟を含む範囲
-  return text.match(/[\u4E00-\u9FAF\u{20000}-\u{2A6DF}]/gu) || []
-}
-
-// 文章を入力付き形式から通常形式に変換
-function parseSentence(sentence: string): { plainSentence: string; inputs: string[]; reading: string } {
-  const inputs: string[] = []
-  let plainSentence = sentence
-  let reading = ''
-
-  // [漢字|よみ]形式をパース
-  const matches = sentence.matchAll(/\[([^|\]]+)\|([^\]]+)\]/g)
-  const allMatches = Array.from(matches)
-
-  // 逆順で置換（インデックスがずれないように）
-  for (let i = allMatches.length - 1; i >= 0; i--) {
-    const match = allMatches[i]
-    const [fullMatch, kanji, _yomi] = match
-    inputs.unshift(kanji)
-    if (match.index !== undefined) {
-      plainSentence = `${plainSentence.substring(0, match.index)}[]${plainSentence.substring(match.index + fullMatch.length)}`
-    }
-  }
-
-  // 読みを生成（[漢字|よみ]から読みを抽出）
-  let tempSentence = sentence
-  while (tempSentence.includes('[')) {
-    const match = tempSentence.match(/\[([^|\]]+)\|([^\]]+)\]/)
-    if (!match) break
-    const [fullMatch, _kanji, yomi] = match
-    tempSentence = tempSentence.replace(fullMatch, yomi)
-  }
-  reading = tempSentence
-
-  return { plainSentence, inputs, reading }
-}
-
-// 問題単位の検証
-function validateQuestion(
-  question: Question,
-  _index: number,
-  fileName: string,
-  kanjiReadings: KanjiReading,
-  compoundReadings: CompoundReading,
-  gradeKanjiMap: Map<number, Set<string>>,
-  allKanjiSet: Set<string>
-): string[] {
-  const errors: string[] = []
-  const { sentence } = question
-
-  // 文章をパース
-  const { plainSentence, inputs } = parseSentence(sentence)
-
-  // 入力部分の抽出（読みチェック用）
-  const inputMatches = [...sentence.matchAll(/\[([^|]+)\|[^\]]+\]/g)]
-
-  // 1. 文章の長さチェック（9文字以上）
-  if (plainSentence.length < 9) {
-    errors.push(`文章が短すぎます（${plainSentence.length}文字）: 9文字以上必要`)
-  }
-
-  // 2. 漢字重複チェック（入力項目の漢字が文章の他の部分に出現しているかチェック）
-  // まず文章全体の漢字を取得（他のチェックで使用するため）
-  const kanjiArray = extractKanji(plainSentence)
-  const kanjiSet = new Set(kanjiArray)
-
-  // 入力項目の漢字を収集
-  const inputKanjiSet = new Set<string>()
-  for (const inputText of inputs) {
-    const inputKanji = extractKanji(inputText)
-    for (const kanji of inputKanji) {
-      inputKanjiSet.add(kanji)
-    }
-  }
-
-  // 文章全体から入力項目の位置を特定し、それ以外の部分で入力項目の漢字が使われているかチェック
-  if (inputKanjiSet.size > 0) {
-    // 元の文章を使って入力項目以外の部分を取得
-    let nonInputText = sentence
-    // [漢字|よみ]形式を一時的なプレースホルダーに置換
-    const inputMatches = Array.from(sentence.matchAll(/\[([^|\]]+)\|([^\]]+)\]/g))
-    for (let i = inputMatches.length - 1; i >= 0; i--) {
-      const match = inputMatches[i]
-      if (match.index !== undefined) {
-        nonInputText = `${nonInputText.substring(0, match.index)}◯${nonInputText.substring(match.index + match[0].length)}`
-      }
-    }
-
-    // プレースホルダー以外の部分から漢字を抽出
-    const nonInputKanji = extractKanji(nonInputText.replace(/◯/g, ''))
-
-    // 入力項目の漢字が他の部分に出現しているかチェック
-    const duplicates: string[] = []
-    for (const inputKanji of inputKanjiSet) {
-      if (nonInputKanji.includes(inputKanji)) {
-        duplicates.push(inputKanji)
-      }
-    }
-
-    if (duplicates.length > 0) {
-      errors.push(`漢字が重複しています: ${duplicates.join(', ')}`)
-    }
-  }
-
-  // 3. 常用漢字チェック（文章全体）
-  for (const kanji of kanjiSet) {
-    if (!allKanjiSet.has(kanji)) {
-      errors.push(`常用漢字ではありません: ${kanji}`)
-    }
-  }
-
-  // 4. 読みデータの存在チェック
-  for (const kanji of kanjiSet) {
-    if (!kanjiReadings[kanji]) {
-      errors.push(`読みデータが存在しません: ${kanji} (読みが正しい場合は src/data/kanji-readings/kanji-readings.json に追加してください)`)
-    }
-  }
-
-  // 5. 読みの正確性チェック
-  const readingErrors: string[] = []
-
-  for (const match of inputMatches) {
-    const kanjiPart = match[1]
-    const readingPart = match[0].match(/\|([^\]]+)\]/)?.[1] || ''
-
-    // 複合語の読みをチェック
-    if (kanjiPart.length > 1 && compoundReadings[kanjiPart]) {
-      const validReadings = compoundReadings[kanjiPart]
-      if (!validReadings.includes(readingPart)) {
-        readingErrors.push(
-          `[${kanjiPart}|${readingPart}] - 正しい読み: ${validReadings.join('、')} (読みが正しい場合は src/data/kanji-readings/compound-readings.json に追加してください)`
-        )
-      }
-      continue
-    }
-
-    // 単漢字の読みをチェック
-    if (kanjiPart.length === 1) {
-      const kanji = kanjiPart
-      if (!kanjiReadings[kanji]) {
-        readingErrors.push(`${kanji}の読みデータなし (読みが正しい場合は src/data/kanji-readings/kanji-readings.json に追加してください)`)
-      } else {
-        const validReadings = kanjiReadings[kanji]
-        if (!validReadings.includes(readingPart)) {
-          // 送り仮名を含む場合も考慮
-          let isValid = false
-          for (const reading of validReadings) {
-            if (readingPart.startsWith(reading)) {
-              isValid = true
-              break
-            }
-          }
-          if (!isValid) {
-            readingErrors.push(
-              `[${kanjiPart}|${readingPart}] - 正しい読み: ${validReadings.join('、')} (読みが正しい場合は src/data/kanji-readings/kanji-readings.json に追加してください)`
-            )
-          }
-        }
-      }
-    }
-  }
-
-  if (readingErrors.length > 0) {
-    errors.push(`読み誤り: ${readingErrors.join('; ')}`)
-  }
-
-  // 6. 入力項目数チェック（2個以下）
-  const inputCount = inputs.length
-  if (inputCount > 2) {
-    errors.push(`入力項目が多すぎます（${inputCount}個）: 2個以下にしてください`)
-  }
-
-  // 7. 入力項目の連続性チェック
-  if (plainSentence.includes('[][]')) {
-    errors.push('入力項目が連続しています')
-  }
-
-  // 8. 入力項目の文字種チェック（漢字のみ）
-  for (const inputText of inputs) {
-    // 通常の漢字範囲 + CJK拡張Bの𠮟を含む範囲
-    const nonKanji = inputText.match(/[^\u4E00-\u9FAF\u{20000}-\u{2A6DF}]/gu)
-    if (nonKanji) {
-      errors.push(`入力項目に漢字以外が含まれています: "${inputText}" (${nonKanji.join('')})`)
-    }
-  }
-
-  // 9. 入力漢字の学年適合性チェック
-  // ファイル名から学年を推定
-  let targetGrade = 7 // デフォルトは中学校
-  if (fileName.includes('elementary')) {
-    const gradeMatch = fileName.match(/elementary(\d+)/)
-    if (gradeMatch) {
-      targetGrade = Number.parseInt(gradeMatch[1])
-    }
-  }
-
-  for (const inputText of inputs) {
-    const inputKanji = extractKanji(inputText)
-    for (const kanji of inputKanji) {
-      const kanjiGrade = getKanjiGrade(kanji, gradeKanjiMap)
-      if (kanjiGrade === 0) {
-        errors.push(`入力漢字が学習漢字ではありません: ${kanji}`)
-      } else if (kanjiGrade !== targetGrade) {
-        errors.push(`入力漢字の学年が不適切: ${kanji} (${kanjiGrade}年生) → ${targetGrade}年生の問題`)
-      }
-    }
-  }
-
-  // 10. 文章全体の学年適合性チェック
-  for (const kanji of kanjiSet) {
-    const kanjiGrade = getKanjiGrade(kanji, gradeKanjiMap)
-    if (kanjiGrade === 0) {
-      errors.push(`学習漢字ではありません: ${kanji}`)
-    } else if (kanjiGrade > targetGrade) {
-      errors.push(`より高学年の漢字が使われています: ${kanji} (${kanjiGrade}年生)`)
-    }
-  }
-
-  // 11. 文法・表現の誤用チェック
-  const grammarErrors: string[] = []
-
-  if (sentence.includes('ありています')) {
-    grammarErrors.push('「ありています」は誤用（「あります」が正しい）')
-  }
-
-  if (sentence.includes('なのです')) {
-    grammarErrors.push('「なのです」が不自然')
-  }
-
-  if (sentence.includes('いなのです')) {
-    grammarErrors.push('「いなのです」は文法的に誤り')
-  }
-
-  if (sentence.includes('てきました') && !sentence.includes('してきました')) {
-    // 「見てきました」「来てきました」など自然なものは除外
-    if (!sentence.match(/[見来行帰戻持連運送]/)) {
-      grammarErrors.push('「てきました」の使い方が不自然な可能性')
-    }
-  }
-
-  // 不自然に長くなった文章を検出
-  if (sentence.includes('ことができます')) {
-    const base = sentence.replace('ことができます。', '')
-    if (!(base.includes('する') || base.includes('できる'))) {
-      grammarErrors.push('「ことができます」が不自然')
-    }
-  }
-
-  if (grammarErrors.length > 0) {
-    errors.push(...grammarErrors)
-  }
-
-  return errors
 }
 
 // メイン処理
@@ -385,23 +66,19 @@ function main() {
   }
 
   // 利用可能なエラータイプを表示
-  if (listIdsMode && !['higher-grade', 'inappropriate-grade', 'grammar-nanode', 'consecutive-input', 'all'].includes(listIdsMode)) {
+  if (listIdsMode && !['higher-grade', 'inappropriate-grade', 'grammar-nanode', 'consecutive-input', 'no-input', 'all'].includes(listIdsMode)) {
     console.error('エラー: 無効なエラータイプです。')
     console.error('利用可能なエラータイプ:')
     console.error('  higher-grade      - より高学年の漢字が使われているエラー')
     console.error('  inappropriate-grade - 入力漢字の学年が不適切なエラー')
     console.error('  grammar-nanode    - 「なのです」が不自然なエラー')
     console.error('  consecutive-input - 入力項目が連続しているエラー')
+    console.error('  no-input         - 入力項目がありません')
     console.error('  all              - すべてのエラー')
     process.exit(1)
   }
-  // 漢字読みデータを読み込む
-  const kanjiReadingsPath = join(__dirname, '../data/kanji-readings/kanji-readings.json')
-  const kanjiReadings: KanjiReading = JSON.parse(readFileSync(kanjiReadingsPath, 'utf-8'))
-
-  // 複合語の読みデータも読み込む
-  const compoundReadingsPath = join(__dirname, '../data/kanji-readings/compound-readings.json')
-  const compoundReadings: CompoundReading = JSON.parse(readFileSync(compoundReadingsPath, 'utf-8'))
+  // 読みデータを読み込む
+  const { kanjiReadings, compoundReadings } = loadReadingData()
 
   // 学年別漢字リストを取得
   const gradeKanjiMap = getGradeKanjiList()
@@ -424,6 +101,29 @@ function main() {
     gradeKanjiUsageMap.set(grade, gradeMap)
   }
 
+  // ID重複チェック用
+  const idMap = new Map<string, string[]>()
+  // 文章重複チェック用
+  const sentenceMap = new Map<string, Array<{ file: string; id: string }>>()
+  // 短い文章チェック用
+  const shortSentences: ShortSentence[] = []
+  // 入力漢字重複チェック用
+  const duplicateKanjiErrors: DuplicateKanjiError[] = []
+
+  // 学年別統計用
+  const gradeStats = new Map<
+    string,
+    {
+      totalQuestions: number
+      kanjiRatioErrors: number
+    }
+  >()
+  // 初期化
+  const grades = ['1', '2', '3', '4', '5', '6', 'junior']
+  for (const grade of grades) {
+    gradeStats.set(grade, { totalQuestions: 0, kanjiRatioErrors: 0 })
+  }
+
   // 各ファイルを検証
   const allResults: ValidationResult[] = []
   let totalErrors = 0
@@ -435,6 +135,7 @@ function main() {
     'inappropriate-grade': [],
     'grammar-nanode': [],
     'consecutive-input': [],
+    'no-input': [],
     all: [],
   }
 
@@ -450,13 +151,73 @@ function main() {
 
     const errors: ProblemError[] = []
 
+    // ファイル名から学年を判定
+    let currentGrade = 'junior'
+    if (fileName.includes('elementary1')) currentGrade = '1'
+    else if (fileName.includes('elementary2')) currentGrade = '2'
+    else if (fileName.includes('elementary3')) currentGrade = '3'
+    else if (fileName.includes('elementary4')) currentGrade = '4'
+    else if (fileName.includes('elementary5')) currentGrade = '5'
+    else if (fileName.includes('elementary6')) currentGrade = '6'
+
+    const stats = gradeStats.get(currentGrade)
+    if (stats) {
+      stats.totalQuestions += questions.length
+    }
+
     questions.forEach((question, index) => {
+      // ID重複チェック
+      if (idMap.has(question.id)) {
+        idMap.get(question.id)?.push(fileName)
+      } else {
+        idMap.set(question.id, [fileName])
+      }
+
+      // 文章重複チェック
+      if (sentenceMap.has(question.sentence)) {
+        sentenceMap.get(question.sentence)?.push({ file: fileName, id: question.id })
+      } else {
+        sentenceMap.set(question.sentence, [{ file: fileName, id: question.id }])
+      }
+
       // 問題の検証
       const questionErrors = validateQuestion(question, index, fileName, kanjiReadings, compoundReadings, gradeKanjiMap, allKanjiSet)
+
+      // validateQuestionの結果から短い文章エラーと入力漢字重複エラーを抽出
+      const hasShortSentence = questionErrors.some((err) => err.includes('文章が短すぎます'))
+      const duplicateKanjiMatches = questionErrors.filter((err) => err.includes('が文章内に重複しています'))
+      const hasKanjiRatioError = questionErrors.some((err) => err.includes('漢字含有率が低すぎます'))
+
+      if (hasKanjiRatioError && stats) {
+        stats.kanjiRatioErrors++
+      }
+
+      if (hasShortSentence) {
+        const cleanSentence = question.sentence.replace(/\[([^|]+)\|[^\]]+\]/g, '$1')
+        shortSentences.push({
+          file: fileName,
+          id: question.id,
+          sentence: question.sentence,
+          length: cleanSentence.length,
+        })
+      }
+
+      for (const duplicateError of duplicateKanjiMatches) {
+        const kanjiMatch = duplicateError.match(/入力漢字「(.+?)」が文章内に重複しています/)
+        if (kanjiMatch) {
+          duplicateKanjiErrors.push({
+            file: fileName,
+            id: question.id,
+            sentence: question.sentence,
+            kanjiChar: kanjiMatch[1],
+          })
+        }
+      }
 
       if (questionErrors.length > 0) {
         errors.push({
           questionIndex: index,
+          id: question.id,
           sentence: question.sentence,
           errors: questionErrors,
         })
@@ -468,6 +229,7 @@ function main() {
           const hasInappropriateGrade = questionErrors.some((err) => err.includes('入力漢字の学年が不適切'))
           const hasGrammarNanode = questionErrors.some((err) => err.includes('「なのです」が不自然'))
           const hasConsecutiveInput = questionErrors.some((err) => err.includes('入力項目が連続しています'))
+          const hasNoInput = questionErrors.some((err) => err.includes('入力項目がありません'))
 
           if (hasHigherGrade && (listIdsMode === 'higher-grade' || listIdsMode === 'all')) {
             errorIdsByType['higher-grade'].push(question.id)
@@ -480,6 +242,9 @@ function main() {
           }
           if (hasConsecutiveInput && (listIdsMode === 'consecutive-input' || listIdsMode === 'all')) {
             errorIdsByType['consecutive-input'].push(question.id)
+          }
+          if (hasNoInput && (listIdsMode === 'no-input' || listIdsMode === 'all')) {
+            errorIdsByType['no-input'].push(question.id)
           }
           if (listIdsMode === 'all') {
             errorIdsByType.all.push(question.id)
@@ -526,7 +291,7 @@ function main() {
         const kanjiGrade = getKanjiGrade(kanji, gradeKanjiMap)
         if (kanjiGrade === fileGrade) {
           const gradeMap = gradeKanjiUsageMap.get(kanjiGrade)
-          if (gradeMap && gradeMap.has(kanji)) {
+          if (gradeMap?.has(kanji)) {
             const usage = gradeMap.get(kanji)
             if (usage) {
               usage.count++
@@ -559,6 +324,15 @@ function main() {
     if (listIdsMode === 'all' || listIdsMode === 'inappropriate-grade') {
       console.log(`  入力漢字の学年不適切: ${errorIdsByType['inappropriate-grade'].length}個`)
     }
+    if (listIdsMode === 'all' || listIdsMode === 'grammar-nanode') {
+      console.log(`  「なのです」が不自然: ${errorIdsByType['grammar-nanode'].length}個`)
+    }
+    if (listIdsMode === 'all' || listIdsMode === 'consecutive-input') {
+      console.log(`  入力項目が連続: ${errorIdsByType['consecutive-input'].length}個`)
+    }
+    if (listIdsMode === 'all' || listIdsMode === 'no-input') {
+      console.log(`  入力項目がありません: ${errorIdsByType['no-input'].length}個`)
+    }
     return
   }
 
@@ -584,10 +358,36 @@ function main() {
 
   const hasLowFreqError = totalGradeLowFreqCount > 0
 
-  if (allResults.length === 0 && !hasLowFreqError) {
+  // ID重複を検出
+  const duplicateIds: Array<{ id: string; files: string[] }> = []
+  for (const [id, files] of idMap) {
+    if (files.length > 1) {
+      duplicateIds.push({ id, files })
+    }
+  }
+
+  // 文章重複を検出
+  const duplicateSentences: DuplicateSentence[] = []
+  for (const [sentence, locations] of sentenceMap) {
+    if (locations.length > 1) {
+      const files = [...new Set(locations.map((l) => l.file))]
+      const ids = locations.map((l) => l.id)
+      duplicateSentences.push({ sentence, files, ids })
+    }
+  }
+
+  if (
+    allResults.length === 0 &&
+    !hasLowFreqError &&
+    duplicateIds.length === 0 &&
+    duplicateSentences.length === 0 &&
+    shortSentences.length === 0 &&
+    duplicateKanjiErrors.length === 0
+  ) {
     console.log('✅ すべての問題が検証をパスしました！\n')
   } else {
-    const totalErrorsWithFreq = totalErrors + totalGradeLowFreqCount
+    const totalErrorsWithFreq =
+      totalErrors + totalGradeLowFreqCount + duplicateIds.length + duplicateSentences.length + shortSentences.length + duplicateKanjiErrors.length
     console.log(`❌ ${totalErrorsWithFreq}個のエラーが見つかりました\n`)
 
     for (const result of allResults) {
@@ -595,7 +395,7 @@ function main() {
       console.log('─'.repeat(60))
 
       for (const error of result.errors) {
-        console.log(`\n問題 #${error.questionIndex}`)
+        console.log(`\n問題 #${error.questionIndex} [ID: ${error.id}]`)
         console.log(`文章: ${error.sentence}`)
         console.log('エラー:')
         for (const e of error.errors) {
@@ -614,6 +414,51 @@ function main() {
         // 最初の10個を表示
         const displayCount = Math.min(10, lowFreq.length)
         console.log(`  対象漢字: ${lowFreq.slice(0, displayCount).join('、')}${lowFreq.length > 10 ? ` ... 他${lowFreq.length - 10}字` : ''}`)
+      }
+    }
+
+    // ID重複エラーを表示
+    if (duplicateIds.length > 0) {
+      console.log('\n📁 ID重複エラー')
+      console.log('─'.repeat(60))
+      for (const { id, files } of duplicateIds) {
+        console.log(`\nID: ${id}`)
+        console.log(`ファイル: ${files.join(', ')}`)
+      }
+    }
+
+    // 文章重複エラーを表示
+    if (duplicateSentences.length > 0) {
+      console.log('\n📁 文章重複エラー')
+      console.log('─'.repeat(60))
+      for (const { sentence, files, ids } of duplicateSentences) {
+        console.log(`\n文章: ${sentence}`)
+        console.log(`ファイル: ${files.join(', ')}`)
+        console.log(`ID: ${ids.join(', ')}`)
+      }
+    }
+
+    // 短い文章エラーを表示
+    if (shortSentences.length > 0) {
+      console.log('\n📁 短い文章エラー（9文字未満）')
+      console.log('─'.repeat(60))
+      for (const { file, id, sentence, length } of shortSentences) {
+        console.log(`\nファイル: ${file}`)
+        console.log(`ID: ${id}`)
+        console.log(`文章: ${sentence}`)
+        console.log(`文字数: ${length}`)
+      }
+    }
+
+    // 入力漢字重複エラーを表示
+    if (duplicateKanjiErrors.length > 0) {
+      console.log('\n📁 入力漢字重複エラー')
+      console.log('─'.repeat(60))
+      for (const { file, id, sentence, kanjiChar } of duplicateKanjiErrors) {
+        console.log(`\nファイル: ${file}`)
+        console.log(`ID: ${id}`)
+        console.log(`文章: ${sentence}`)
+        console.log(`重複漢字: ${kanjiChar}`)
       }
     }
   }
@@ -672,6 +517,34 @@ function main() {
   console.log('\n=== サマリー ===')
   console.log(`検証ファイル数: ${questionFiles.length}`)
   console.log(`学年別低頻度漢字エラー: ${totalGradeLowFreqCount}個`)
+  console.log(`ID重複エラー: ${duplicateIds.length}個`)
+  console.log(`文章重複エラー: ${duplicateSentences.length}個`)
+  console.log(`短い文章エラー: ${shortSentences.length}個`)
+  console.log(`入力漢字重複エラー: ${duplicateKanjiErrors.length}個`)
+
+  // 学年別漢字含有率エラー統計
+  console.log('\n=== 学年別漢字含有率エラー統計 ===')
+  const gradeNames = new Map([
+    ['1', '小学1年'],
+    ['2', '小学2年'],
+    ['3', '小学3年'],
+    ['4', '小学4年'],
+    ['5', '小学5年'],
+    ['6', '小学6年'],
+    ['junior', '中学校'],
+  ])
+
+  for (const [grade, stats] of gradeStats) {
+    const gradeName = gradeNames.get(grade) || grade
+    const errorRate = stats.totalQuestions > 0 ? ((stats.kanjiRatioErrors / stats.totalQuestions) * 100).toFixed(1) : '0.0'
+    console.log(`${gradeName}: ${stats.kanjiRatioErrors}/${stats.totalQuestions}問 (${errorRate}%)`)
+  }
+
+  // 全体の漢字含有率エラー
+  const totalQuestions = Array.from(gradeStats.values()).reduce((sum, stats) => sum + stats.totalQuestions, 0)
+  const totalKanjiRatioErrors = Array.from(gradeStats.values()).reduce((sum, stats) => sum + stats.kanjiRatioErrors, 0)
+  const totalErrorRate = totalQuestions > 0 ? ((totalKanjiRatioErrors / totalQuestions) * 100).toFixed(1) : '0.0'
+  console.log(`\n合計: ${totalKanjiRatioErrors}/${totalQuestions}問 (${totalErrorRate}%)`)
 }
 
 // 実行

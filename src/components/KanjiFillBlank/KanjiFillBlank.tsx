@@ -1,5 +1,7 @@
 import { type MouseEvent, type TouchEvent, useCallback, useEffect, useRef, useState } from 'react'
 
+import { type BoundingBox, drawNormalizedImage, drawReferenceKanjiWithFont, getBoundingBox } from '../../utils/kanjiRecognition'
+
 interface QuestionData {
   sentence: string
   kanji: string
@@ -162,80 +164,7 @@ export function KanjiFillBlank() {
     context.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height)
   }
 
-  const getBoundingBox = (imageData: ImageData) => {
-    const data = imageData.data
-    const width = imageData.width
-    const height = imageData.height
-
-    let minX = width
-    let minY = height
-    let maxX = 0
-    let maxY = 0
-
-    for (let y = 0; y < height; y++) {
-      for (let x = 0; x < width; x++) {
-        const idx = (y * width + x) * 4
-        if (data[idx + 3] > 50) {
-          minX = Math.min(minX, x)
-          minY = Math.min(minY, y)
-          maxX = Math.max(maxX, x)
-          maxY = Math.max(maxY, y)
-        }
-      }
-    }
-
-    return {
-      x: minX,
-      y: minY,
-      width: maxX - minX + 1,
-      height: maxY - minY + 1,
-    }
-  }
-
-  const drawNormalizedImage = (sourceCanvas: HTMLCanvasElement, targetCanvas: HTMLCanvasElement, boundingBox: ReturnType<typeof getBoundingBox>) => {
-    const targetCtx = targetCanvas.getContext('2d')
-    if (!targetCtx) return null
-
-    targetCtx.clearRect(0, 0, targetCanvas.width, targetCanvas.height)
-
-    if (boundingBox.width > 0 && boundingBox.height > 0) {
-      const scale = Math.min((targetCanvas.width * 0.8) / boundingBox.width, (targetCanvas.height * 0.8) / boundingBox.height)
-
-      const scaledWidth = boundingBox.width * scale
-      const scaledHeight = boundingBox.height * scale
-      const offsetX = (targetCanvas.width - scaledWidth) / 2
-      const offsetY = (targetCanvas.height - scaledHeight) / 2
-
-      targetCtx.drawImage(sourceCanvas, boundingBox.x, boundingBox.y, boundingBox.width, boundingBox.height, offsetX, offsetY, scaledWidth, scaledHeight)
-    }
-
-    return targetCtx.getImageData(0, 0, targetCanvas.width, targetCanvas.height)
-  }
-
-  const drawReferenceKanjiWithFont = (kanji: string, fontFamily: string) => {
-    const tempCanvas = document.createElement('canvas')
-    tempCanvas.width = 250
-    tempCanvas.height = 250
-    const tempCtx = tempCanvas.getContext('2d')
-
-    if (!tempCtx) return tempCanvas
-
-    tempCtx.clearRect(0, 0, tempCanvas.width, tempCanvas.height)
-
-    tempCtx.font = `bold 200px ${fontFamily}`
-    tempCtx.textAlign = 'center'
-    tempCtx.textBaseline = 'middle'
-    tempCtx.fillStyle = '#000'
-    tempCtx.fillText(kanji, tempCanvas.width / 2, tempCanvas.height / 2)
-
-    tempCtx.strokeStyle = '#000'
-    tempCtx.lineWidth = 3
-    tempCtx.strokeText(kanji, tempCanvas.width / 2, tempCanvas.height / 2)
-
-    return tempCanvas
-  }
-
-  const calculateSimilarityWithFont = (_userImageData: ImageData, userBBox: ReturnType<typeof getBoundingBox>, fontFamily: string) => {
+  const calculateSimilarityWithFont = (_userImageData: ImageData, userBBox: BoundingBox, fontFamily: string) => {
     if (!(currentQuestion && canvasRef.current)) return { f1Score: 0, precision: 0, recall: 0, matchingPixels: 0, userPixels: 0, refPixels: 0 }
 
     const refCanvas = drawReferenceKanjiWithFont(currentQuestion.kanji, fontFamily)
@@ -251,8 +180,8 @@ export function KanjiFillBlank() {
     userNormCanvas.width = userNormCanvas.height = normalizedSize
     refNormCanvas.width = refNormCanvas.height = normalizedSize
 
-    const normalizedUserData = drawNormalizedImage(canvasRef.current, userNormCanvas, userBBox)
-    const normalizedRefData = drawNormalizedImage(refCanvas, refNormCanvas, refBBox)
+    const normalizedUserData = drawNormalizedImage(canvasRef.current, userNormCanvas, userBBox, 0.8)
+    const normalizedRefData = drawNormalizedImage(refCanvas, refNormCanvas, refBBox, 0.8)
 
     if (!(normalizedUserData && normalizedRefData)) {
       return { f1Score: 0, precision: 0, recall: 0, matchingPixels: 0, userPixels: 0, refPixels: 0 }

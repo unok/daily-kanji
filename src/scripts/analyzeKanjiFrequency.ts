@@ -2,6 +2,8 @@ import * as fs from 'node:fs/promises'
 import * as path from 'node:path'
 import { fileURLToPath } from 'node:url'
 
+import { GRADES } from '../utils/constants.js'
+
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
 
@@ -112,15 +114,7 @@ async function main() {
   const gradeKanjiCount = await countKanjiUsage()
 
   // 各学年の分析結果を表示
-  const grades = [
-    { key: '1', name: '小学1年生' },
-    { key: '2', name: '小学2年生' },
-    { key: '3', name: '小学3年生' },
-    { key: '4', name: '小学4年生' },
-    { key: '5', name: '小学5年生' },
-    { key: '6', name: '小学6年生' },
-    { key: 'junior', name: '中学校' },
-  ]
+  const grades = GRADES
 
   let totalUnderUsed = 0
 

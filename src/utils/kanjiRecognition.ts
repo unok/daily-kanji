@@ -12,7 +12,7 @@ const FONT_LIST = [
   'serif', // 標準セリフ体
 ]
 
-interface BoundingBox {
+export interface BoundingBox {
   x: number
   y: number
   width: number
@@ -31,7 +31,7 @@ interface SimilarityResult {
 /**
  * 画像の境界ボックスを取得
  */
-function getBoundingBox(imageData: ImageData): BoundingBox {
+export function getBoundingBox(imageData: ImageData): BoundingBox {
   const data = imageData.data
   const width = imageData.width
   const height = imageData.height
@@ -64,15 +64,19 @@ function getBoundingBox(imageData: ImageData): BoundingBox {
 /**
  * 正規化されたキャンバスに描画
  */
-function drawNormalizedImage(sourceCanvas: HTMLCanvasElement, targetCanvas: HTMLCanvasElement, boundingBox: BoundingBox): ImageData {
+export function drawNormalizedImage(
+  sourceCanvas: HTMLCanvasElement,
+  targetCanvas: HTMLCanvasElement,
+  boundingBox: BoundingBox,
+  scaleRatio = 0.9
+): ImageData | null {
   const targetCtx = targetCanvas.getContext('2d')
-  if (!targetCtx) throw new Error('Failed to get 2D context')
+  if (!targetCtx) return null
   targetCtx.clearRect(0, 0, targetCanvas.width, targetCanvas.height)
 
   if (boundingBox.width > 0 && boundingBox.height > 0) {
-    // 縦横比を保持しながら、キャンバスの90%のサイズに拡大
-    // 0.9にすることで、端の判定を改善
-    const scale = Math.min((targetCanvas.width * 0.9) / boundingBox.width, (targetCanvas.height * 0.9) / boundingBox.height)
+    // 縦横比を保持しながら、キャンバスの指定割合のサイズに拡大
+    const scale = Math.min((targetCanvas.width * scaleRatio) / boundingBox.width, (targetCanvas.height * scaleRatio) / boundingBox.height)
 
     const scaledWidth = boundingBox.width * scale
     const scaledHeight = boundingBox.height * scale
@@ -88,7 +92,7 @@ function drawNormalizedImage(sourceCanvas: HTMLCanvasElement, targetCanvas: HTML
 /**
  * 正解の漢字を指定フォントで描画
  */
-function drawReferenceKanjiWithFont(kanji: string, fontFamily: string): HTMLCanvasElement {
+export function drawReferenceKanjiWithFont(kanji: string, fontFamily: string): HTMLCanvasElement {
   const tempCanvas = document.createElement('canvas')
   tempCanvas.width = 250
   tempCanvas.height = 250
@@ -148,6 +152,10 @@ function calculateSimilarityWithFont(userCanvas: HTMLCanvasElement, userBBox: Bo
 
   const normalizedUserData = drawNormalizedImage(userCanvas, userNormCanvas, userBBox)
   const normalizedRefData = drawNormalizedImage(refCanvas, refNormCanvas, refBBox)
+
+  if (!(normalizedUserData && normalizedRefData)) {
+    return { f1Score: 0, precision: 0, recall: 0, matchingPixels: 0, userPixels: 0, refPixels: 0 }
+  }
 
   const userData = normalizedUserData.data
   const refData = normalizedRefData.data
