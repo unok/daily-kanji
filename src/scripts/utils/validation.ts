@@ -269,10 +269,10 @@ export function validateQuestion(
     errors.push('入力項目がありません: [漢字|読み]形式の入力欄が必要です')
   }
 
-  // 6-1. 短い文章チェック（7文字未満）
+  // 6-1. 短い文章チェック（10文字未満、[|]の3文字を含む）
   const cleanSentence = sentence.replace(/\[([^|]+)\|[^\]]+\]/g, '$1')
-  if (cleanSentence.length < 7) {
-    errors.push(`文章が短すぎます（${cleanSentence.length}文字）: 7文字以上必要です（その学年までに習う漢字をひらがなにするの禁止）`)
+  if (sentence.length < 10) {
+    errors.push(`文章が短すぎます（${sentence.length}文字）: 10文字以上必要です（[|]の3文字を含む）（その学年までに習う漢字をひらがなにするの禁止）`)
   }
 
   // 6-2. 同じ文章内での入力漢字の重複チェック

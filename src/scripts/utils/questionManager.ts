@@ -74,7 +74,7 @@ export async function addQuestionToFile(
 
       console.error('\n【チェック結果】')
       const requiredRatio = targetGradeNum === 1 ? 20 : targetGradeNum === 2 ? 25 : 30
-      console.error(`  ✓ 最低文字数: 7文字以上 → ${cleanSentence.length >= 7 ? '○' : '×'} (${cleanSentence.length}文字: "${cleanSentence}")`)
+      console.error(`  ✓ 最低文字数: 10文字以上 → ${sentence.length >= 10 ? '○' : '×'} (${sentence.length}文字: "${sentence}")`)
       console.error(`  ✓ 漢字含有率: ${requiredRatio}%以上 → ${Number.parseFloat(kanjiRatio) >= requiredRatio ? '○' : '×'} (${kanjiRatio}%)`)
       console.error(`  ✓ 学年の漢字のみ使用 → ${validationErrors.some((e) => e.includes('より高学年')) ? '×' : '○'}`)
       console.error(`  ✓ 読みの正確性 → ${validationErrors.some((e) => e.includes('読み誤り')) ? '×' : '○'}`)
