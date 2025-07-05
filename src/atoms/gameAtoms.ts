@@ -14,11 +14,6 @@ export interface Answer {
   timestamp: number
 }
 
-export interface PracticeSession {
-  kanji: string
-  count: number
-}
-
 // 問題関連のatoms
 export const questionsAtom = atom<Question[]>([])
 export const currentQuestionIndexAtom = atom<number>(0)
@@ -30,14 +25,6 @@ export const currentQuestionAtom = atom((get) => {
   const index = get(currentQuestionIndexAtom)
   return questions[index] || null
 })
-
-// 練習モード関連のatoms
-export const isPracticeModeAtom = atom<boolean>(false)
-export const practiceSessionAtom = atom<PracticeSession | null>(null)
-export const practiceCountAtom = atom<number>(0)
-
-// ゲーム状態
-export const gameStateAtom = atom<'menu' | 'playing' | 'practice' | 'result' | 'fillblank'>('menu')
 
 // 間違えた漢字のリスト
 export const incorrectKanjisAtom = atom((get) => {

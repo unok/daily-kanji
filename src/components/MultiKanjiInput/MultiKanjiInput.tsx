@@ -33,7 +33,7 @@ export function MultiKanjiInput({ inputs, onSubmit, disabled = false, results, s
           // キャンバスをクリア
           context.clearRect(0, 0, canvas.width, canvas.height)
 
-          context.lineWidth = 20
+          context.lineWidth = 10
           context.lineCap = 'round'
           context.strokeStyle = '#000'
 
@@ -213,7 +213,7 @@ export function MultiKanjiInput({ inputs, onSubmit, disabled = false, results, s
                           }}
                           width={400}
                           height={400}
-                          className={`border-4 ${
+                          className={`border-2 ${
                             showResults && results?.[index]
                               ? results[index].isCorrect
                                 ? 'border-green-500 bg-green-50'
@@ -266,7 +266,7 @@ export function MultiKanjiInput({ inputs, onSubmit, disabled = false, results, s
                       <button
                         type="button"
                         onClick={() => clearCanvas(index)}
-                        className="mt-4 text-xl px-6 py-2 text-red-600 hover:text-red-700 disabled:opacity-50 border-2 border-red-300 rounded-lg hover:bg-red-50 font-medium"
+                        className="mt-4 text-xl px-6 py-2 text-red-600 hover:text-red-700 disabled:opacity-50 border border-red-300 rounded-lg hover:bg-red-50 font-medium"
                         disabled={disabled}
                       >
                         消す
