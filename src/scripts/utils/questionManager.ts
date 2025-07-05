@@ -59,10 +59,32 @@ export async function addQuestionToFile(
     }
 
     if (validationErrors.length > 0) {
-      console.error('❌ バリデーションエラー:')
+      console.error('\n❌ バリデーションエラー')
+      console.error('=====================================')
+      console.error('【入力内容】')
+      console.error(`  文章: ${sentence}`)
+      console.error(`  学年: ${targetGradeNum}年生`)
+      console.error(`  文字数: ${sentence.replace(/\[([^|]+)\|[^\]]+\]/g, '$1').length}文字`)
+
+      // 漢字含有率を計算
+      const cleanSentence = sentence.replace(/\[([^|]+)\|[^\]]+\]/g, '$1')
+      const kanjiCount = cleanSentence.split('').filter((char) => (char >= '\u4E00' && char <= '\u9FFF') || (char >= '\u20000' && char <= '\u2A6DF')).length
+      const kanjiRatio = ((kanjiCount / cleanSentence.length) * 100).toFixed(1)
+      console.error(`  漢字含有率: ${kanjiRatio}%`)
+
+      console.error('\n【チェック結果】')
+      const requiredRatio = targetGradeNum === 1 ? 20 : targetGradeNum === 2 ? 25 : 30
+      console.error(`  ✓ 最低文字数: 7文字以上 → ${cleanSentence.length >= 7 ? '○' : '×'} (${cleanSentence.length}文字: "${cleanSentence}")`)
+      console.error(`  ✓ 漢字含有率: ${requiredRatio}%以上 → ${Number.parseFloat(kanjiRatio) >= requiredRatio ? '○' : '×'} (${kanjiRatio}%)`)
+      console.error(`  ✓ 学年の漢字のみ使用 → ${validationErrors.some((e) => e.includes('より高学年')) ? '×' : '○'}`)
+      console.error(`  ✓ 読みの正確性 → ${validationErrors.some((e) => e.includes('読み誤り')) ? '×' : '○'}`)
+      console.error(`  ✓ 入力漢字の重複なし → ${validationErrors.some((e) => e.includes('重複')) ? '×' : '○'}`)
+
+      console.error('\n【エラー詳細】')
       for (const error of validationErrors) {
         console.error(`  ・${error}`)
       }
+      console.error('=====================================\n')
       throw new Error('問題文が検証に失敗しました。')
     }
   }

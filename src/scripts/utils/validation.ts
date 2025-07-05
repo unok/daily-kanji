@@ -269,16 +269,31 @@ export function validateQuestion(
     errors.push('入力項目がありません: [漢字|読み]形式の入力欄が必要です')
   }
 
-  // 6-1. 短い文章チェック（8文字未満）
+  // 6-1. 短い文章チェック（7文字未満）
   const cleanSentence = sentence.replace(/\[([^|]+)\|[^\]]+\]/g, '$1')
-  if (cleanSentence.length < 8) {
-    errors.push(`文章が短すぎます（${cleanSentence.length}文字）: 8文字以上必要です`)
+  if (cleanSentence.length < 7) {
+    errors.push(`文章が短すぎます（${cleanSentence.length}文字）: 7文字以上必要です（その学年までに習う漢字をひらがなにするの禁止）`)
   }
 
-  // 7. 入力項目数チェック（2個以下）
+  // 6-2. 同じ文章内での入力漢字の重複チェック
+  const inputKanjiCounts = new Map<string, number>()
+  for (const inputText of inputs) {
+    const inputKanjiArray = extractKanji(inputText)
+    for (const kanji of inputKanjiArray) {
+      inputKanjiCounts.set(kanji, (inputKanjiCounts.get(kanji) || 0) + 1)
+    }
+  }
+
+  for (const [kanji, count] of inputKanjiCounts) {
+    if (count > 1) {
+      errors.push(`同じ文章内で入力漢字「${kanji}」が${count}回使用されています（入力項目間での重複は禁止）`)
+    }
+  }
+
+  // 7. 入力項目数チェック（1個以下）
   const inputCount = inputs.length
-  if (inputCount > 2) {
-    errors.push(`入力項目が多すぎます（${inputCount}個）: 2個以下にしてください`)
+  if (inputCount > 1) {
+    errors.push(`入力項目が多すぎます（${inputCount}個）: 1個以下にしてください`)
   }
 
   // 8. 入力項目の連続性チェック

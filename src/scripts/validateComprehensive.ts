@@ -253,7 +253,7 @@ function main() {
       }
 
       // 漢字使用頻度を更新
-      // [漢字|読み]形式から漢字部分だけを抽出
+      // [漢字|読み]形式から漢字部分だけを抽出（入力部分のみカウント）
       const kanjiFromBrackets: string[] = []
       const bracketMatches = question.sentence.matchAll(/\[([^|\]]+)\|[^\]]+\]/g)
       for (const match of bracketMatches) {
@@ -261,12 +261,8 @@ function main() {
         kanjiFromBrackets.push(...kanjiInBracket)
       }
 
-      // 通常のテキストからも漢字を抽出
-      const sentenceWithoutBrackets = question.sentence.replace(/\[[^|\]]+\|[^\]]+\]/g, '')
-      const kanjiFromText = extractKanji(sentenceWithoutBrackets)
-
-      // 両方を結合して重複を排除
-      const uniqueKanji = new Set([...kanjiFromBrackets, ...kanjiFromText])
+      // 入力部分の漢字のみを使用（通常のテキストはカウントしない）
+      const uniqueKanji = new Set(kanjiFromBrackets)
 
       // ファイル名から学年を判定
       let fileGrade = 7 // デフォルトは中学校
